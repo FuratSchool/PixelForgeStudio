@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    //sets the speed of the player.
     [SerializeField] private float speed = 6f;
     [SerializeField] private float TurnSmoothTime = 0.1f;
     [SerializeField] private float gravityMultiplier = 3.0f;
