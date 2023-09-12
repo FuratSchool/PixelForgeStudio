@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class PhycisMovement : MonoBehaviour
 {
+    private float distToGround;
     private Rigidbody _rigidbody;
 
     [SerializeField] private float force = 10;
@@ -13,17 +14,19 @@ public class PhycisMovement : MonoBehaviour
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        distToGround = GetComponent<Collider>().bounds.extents.y;
     }
 
+    bool IsGrounded()
+    {
+         return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
+    }
     // Update is called once per frame
     void Update()
     {
         
     }
-    bool IsGrounded()
-    {
-        return GetComponent<Rigidbody>().velocity.y == 0;
-    }
+    
 
     private void FixedUpdate()
     {
