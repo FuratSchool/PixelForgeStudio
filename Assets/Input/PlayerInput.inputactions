@@ -24,7 +24,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "MoveC",
+                    "name": "MoveCJoystick",
                     "type": "Value",
                     "id": "06f38210-45c1-47e4-bb34-9d8b456d7400",
                     "expectedControlType": "Vector2",
@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "New action",
+                    "name": "MoveC2DVector",
                     "type": "Value",
                     "id": "dfc06404-7261-401f-9269-c70f9f9b6771",
                     "expectedControlType": "Stick",
@@ -125,7 +125,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveC",
+                    "action": "MoveCJoystick",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -136,7 +136,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveC",
+                    "action": "MoveCJoystick",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -147,7 +147,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveC",
+                    "action": "MoveCJoystick",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -158,7 +158,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveC",
+                    "action": "MoveCJoystick",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -169,7 +169,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "MoveC",
+                    "action": "MoveCJoystick",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -191,7 +191,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "MoveC2DVector",
                     "isComposite": true,
                     "isPartOfComposite": false
                 },
@@ -202,7 +202,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "MoveC2DVector",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -213,7 +213,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "MoveC2DVector",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -224,7 +224,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "MoveC2DVector",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
@@ -235,7 +235,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "MoveC2DVector",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }
