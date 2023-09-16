@@ -1,114 +1,83 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class Movement : MonoBehaviour
 {
-    private Vector2 _input;
-    private float _inputLinear;
-    private float _inputRotation;
+    [Header("movement variables")] [SerializeField]
+    private float speed = 7f;
+
+
+    [Header("Gravity")] [SerializeField] private float _gravity = -9.81f;
+
+    [SerializeField] private float gravityMultiplier = 3.0f;
+
+    [Header("Jumping")] [SerializeField] private float jumpPower = 6f;
+
+    private bool _backward;
     private CharacterController _characterController;
     private Vector3 _direction;
-    private Camera _camera;
-
-    [Header("movement variables")]
-    [SerializeField] private float speed;
-    [SerializeField] private float smoothTime = 0.05f;
-    private float _currentVelocity;
-
-    
-    private float _gravity = -9.81f;
-    [Header("Gravity")]
-    [SerializeField] private float gravityMultiplier = 3.0f;
+    private bool _forward;
+    private Vector3 _rotation;
     private float _velocity;
-
-    [Header("Jumping")]
-    [SerializeField] private float jumpPower;
 
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
-        _camera = GetComponent<Camera>();
     }
 
     private void Update()
     {
-        ApplyRotation();
         ApplyMovement();
         ApplyGravity();
-
-
     }
 
-    private void ApplyRotation()
-    {
-        if (_input.sqrMagnitude == 0) return;
-        
-        var targetAngle = Mathf.Atan2(_direction.x, _direction.z) * Mathf.Rad2Deg;
-        var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _currentVelocity, smoothTime);
-        transform.rotation = Quaternion.Euler(0.0f,angle,0.0f);
-    }
 
     private void ApplyMovement()
     {
+        if (_forward)
+            _characterController.Move(_characterController.transform.forward * (speed * Time.deltaTime));
+        else if (_backward)
+            _characterController.Move(-_characterController.transform.forward * (speed * Time.deltaTime));
+        _characterController.transform.Rotate(_rotation * (100f * Time.deltaTime));
         _characterController.Move(_direction * (speed * Time.deltaTime));
     }
 
     private void ApplyGravity()
     {
         if (IsGrounded() && _velocity < 0.0f)
-        {
             _velocity = -1.0f;
-        }
         else
-        {
             _velocity += _gravity * gravityMultiplier * Time.deltaTime;
-        }
-        
+
         _direction.y = _velocity;
     }
 
-    public void Move(InputAction.CallbackContext context)
-    {
-        _input = context.ReadValue<Vector2>();
-        var dir = new Vector3(_input.x, 0.0f, _input.y);
-        Vector3 forward = Camera.main.transform.forward;
-        Vector3 right = Camera.main.transform.right;
-        forward.y = 0;
-        right.y = 0;
-        forward = forward.normalized;
-        right = right.normalized;
-
-        Vector3 forwardRVI = _input.y * forward;
-        Vector3 rightRVI = _input.x * right;
-        _direction = forwardRVI + rightRVI;
-    }
 
     public void MoveLinear(InputAction.CallbackContext context)
     {
-        _inputLinear = context.ReadValue<float>();
-        var forward = Camera.main.transform.forward;
-        forward.y = 0;
-        forward = forward.normalized;
-        var forwardRVI = _inputLinear * forward;
-        _direction = forwardRVI;
-
+        var movement = context.ReadValue<float>();
+        switch (movement)
+        {
+            case > 0:
+                _forward = true;
+                _backward = false;
+                break;
+            case < 0:
+                _forward = false;
+                _backward = true;
+                break;
+            default:
+                _forward = false;
+                _backward = false;
+                break;
+        }
     }
 
     public void Rotate(InputAction.CallbackContext context)
     {
-        _inputRotation = context.ReadValue<float>();
-        var right = Camera.main.transform.right;
-        right.y = 0;
-        right = right.normalized;
-        var rightRVI = _inputRotation * right;
-        //_direction = rightRVI;
-        //transform.rotation = Quaternion.Euler(new Vector3(0,10,0));
-        Vector3 newRotation = new Vector3(0, 10, 0);
-        transform.eulerAngles += newRotation;
-        Debug.Log("rotate");
+        var inp = context.ReadValue<float>();
+
+        _rotation = new Vector3(0, inp, 0);
     }
 
     public void Jump(InputAction.CallbackContext context)
@@ -117,8 +86,10 @@ public class Movement : MonoBehaviour
         if (!IsGrounded()) return;
 
         _velocity += jumpPower;
-
     }
 
-    private bool IsGrounded() => _characterController.isGrounded;
+    private bool IsGrounded()
+    {
+        return _characterController.isGrounded;
+    }
 }

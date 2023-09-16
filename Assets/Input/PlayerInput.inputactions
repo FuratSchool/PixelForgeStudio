@@ -21,7 +21,7 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "MoveCJoystick",
@@ -39,7 +39,7 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 },
                 {
                     "name": "MoveC2DVector",
@@ -52,18 +52,36 @@
                 },
                 {
                     "name": "movelinear",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "1eb06394-c4c7-4d18-9849-9a7614c87c2d",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "movelinearController",
+                    "type": "Button",
+                    "id": "a627b8f9-8c0a-443e-a4cd-8a158488c003",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
                 },
                 {
                     "name": "rotatedirection",
-                    "type": "Value",
+                    "type": "Button",
                     "id": "6f6fd297-d329-480f-8755-798e38b61b04",
-                    "expectedControlType": "Axis",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "rotatedirectionController",
+                    "type": "Button",
+                    "id": "4d068b42-f4a8-4f15-b2df-deb73e3ce67b",
+                    "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -320,6 +338,72 @@
                     "processors": "",
                     "groups": "",
                     "action": "rotatedirection",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "ForwardBackward",
+                    "id": "4dcf22f5-7792-49cc-b559-f85f54f59bbd",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "movelinearController",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "positive",
+                    "id": "73861f24-863f-44ea-ae63-b6399e3b0350",
+                    "path": "<Gamepad>/leftStick/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "movelinearController",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "7fcea1a5-0def-4ea2-8f4d-246a91988c9e",
+                    "path": "<Gamepad>/leftStick/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "movelinearController",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "leftright",
+                    "id": "229cb1e5-f6ff-424e-9235-128b0c407204",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "rotatedirectionController",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Negative",
+                    "id": "9c1eee4a-4fc5-4e11-832e-e32a093fa50a",
+                    "path": "<Gamepad>/leftStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "rotatedirectionController",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Positive",
+                    "id": "875650ed-35ec-4775-a2e3-282b6a2742ae",
+                    "path": "<Gamepad>/leftStick/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "rotatedirectionController",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }
