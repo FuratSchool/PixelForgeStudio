@@ -49,6 +49,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "movelinear",
+                    "type": "Value",
+                    "id": "1eb06394-c4c7-4d18-9849-9a7614c87c2d",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "rotatedirection",
+                    "type": "Value",
+                    "id": "6f6fd297-d329-480f-8755-798e38b61b04",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -236,6 +254,72 @@
                     "processors": "",
                     "groups": "",
                     "action": "MoveC2DVector",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "ForwardBackward",
+                    "id": "036a4361-0d9e-413f-86eb-54b589529c84",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "movelinear",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "positive",
+                    "id": "bf09b8cd-399d-4d8e-888e-2ac900bc035f",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "movelinear",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "negative",
+                    "id": "00ac9d2d-6bfc-444d-a5ec-277af72381d2",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "movelinear",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "leftright",
+                    "id": "9d86bde6-d745-4727-978a-6d146ecab9bb",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "rotatedirection",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Negative",
+                    "id": "ae478525-f7dd-4c16-b637-be531072da6d",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "rotatedirection",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Positive",
+                    "id": "24f327ce-3d23-448c-b976-d0fc35424987",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "rotatedirection",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }

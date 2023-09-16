@@ -7,6 +7,8 @@ using UnityEngine.InputSystem;
 public class Movement : MonoBehaviour
 {
     private Vector2 _input;
+    private float _inputLinear;
+    private float _inputRotation;
     private CharacterController _characterController;
     private Vector3 _direction;
     private Camera _camera;
@@ -82,6 +84,31 @@ public class Movement : MonoBehaviour
         Vector3 forwardRVI = _input.y * forward;
         Vector3 rightRVI = _input.x * right;
         _direction = forwardRVI + rightRVI;
+    }
+
+    public void MoveLinear(InputAction.CallbackContext context)
+    {
+        _inputLinear = context.ReadValue<float>();
+        var forward = Camera.main.transform.forward;
+        forward.y = 0;
+        forward = forward.normalized;
+        var forwardRVI = _inputLinear * forward;
+        _direction = forwardRVI;
+
+    }
+
+    public void Rotate(InputAction.CallbackContext context)
+    {
+        _inputRotation = context.ReadValue<float>();
+        var right = Camera.main.transform.right;
+        right.y = 0;
+        right = right.normalized;
+        var rightRVI = _inputRotation * right;
+        //_direction = rightRVI;
+        //transform.rotation = Quaternion.Euler(new Vector3(0,10,0));
+        Vector3 newRotation = new Vector3(0, 10, 0);
+        transform.eulerAngles += newRotation;
+        Debug.Log("rotate");
     }
 
     public void Jump(InputAction.CallbackContext context)
