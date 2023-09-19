@@ -1,25 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
     //sets the speed of the player.
     [SerializeField] private float speed = 6f;
     [SerializeField] private float TurnSmoothTime = 0.1f;
-    [SerializeField] private float gravityMultiplier = 3.0f;
 
     private float turnSmoothVelocity;
-
-    Vector3 PlayerInput()
-    {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        Vector3 direction = new Vector3(horizontal, 0f, vertical);
-        return direction;
-    }
+    private Vector2 movement = Vector2.zero; 
+    
     void PlayerMove(Vector3 direction)
     {
+        
         //checks if the player is moving.
         if(direction.magnitude  >= 0.1f)
         {
@@ -37,6 +32,12 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        PlayerMove(PlayerInput());        
+        Vector3 direction = new Vector3(x: movement.x, y: 0, z: movement.y);
+        PlayerMove(direction);        
+    }
+
+    void OnMove(InputValue inputValue)
+    {
+        movement = inputValue.Get<Vector2>();
     }
 }
