@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,9 +15,10 @@ public class PlayerCollision : MonoBehaviour
         if (tagList.Contains(collision.gameObject.tag))
         {
             Debug.Log("Triggered");
-            transform.parent = collision.transform;
+            transform.SetParent(collision.transform);
         }
     }
+    
     private void OnCollisionExit(Collision collision)
     {
         transform.parent = null;
