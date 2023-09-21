@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 
 
 public class PhycisMovement : MonoBehaviour
@@ -21,16 +21,10 @@ public class PhycisMovement : MonoBehaviour
     {
          return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.1f);
     }
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     
-
-    private void FixedUpdate()
+    void OnJump(InputValue inputValue)
     {
-        if (Input.GetKey("space") && IsGrounded())
+        if (IsGrounded())
         {
             _rigidbody.AddForce(Vector3.up * force, ForceMode.Impulse);
         }
