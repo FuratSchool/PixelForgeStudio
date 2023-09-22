@@ -20,6 +20,7 @@ public class HoldJumping : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
         distToGround = GetComponent<Collider>().bounds.extents.y;
     }
+    //checks if player is grounded using raycasting
     bool IsGrounded()
     {
         return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.2f);
@@ -27,7 +28,6 @@ public class HoldJumping : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
         if (IsGrounded() && SpacePressed && isJumping == false)
         {
             isJumping = true;
@@ -54,7 +54,7 @@ public class HoldJumping : MonoBehaviour
     }
     void OnJump(InputValue inputValue)
     {
+        //Gives change in state of the space button
         SpacePressed = Convert.ToBoolean(inputValue.Get<float>());
-        Debug.Log(SpacePressed);
     }
 }
