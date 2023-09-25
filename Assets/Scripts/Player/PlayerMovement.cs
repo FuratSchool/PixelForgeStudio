@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +9,16 @@ public class PlayerMovement : MonoBehaviour
     //sets the speed of the player.
     [SerializeField] private float speed = 6f;
     [SerializeField] private float TurnSmoothTime = 0.1f;
-
+    private Rigidbody _rigidbody;
     private float turnSmoothVelocity;
-    private Vector2 movement = Vector2.zero; 
+    private Vector2 movement = Vector2.zero;
     
+
+    private void Start()
+    {
+        _rigidbody = GetComponent<Rigidbody>();
+    }
+
     void PlayerMove(Vector3 direction)
     {
         
