@@ -5909,10 +5909,10 @@ GameObject:
   - component: {fileID: 974011126}
   - component: {fileID: 974011125}
   - component: {fileID: 974011124}
-  - component: {fileID: 974011127}
   - component: {fileID: 974011128}
   - component: {fileID: 974011129}
-  - component: {fileID: 974011130}
+  - component: {fileID: 974011131}
+  - component: {fileID: 974011132}
   m_Layer: 0
   m_Name: PlayerObject
   m_TagString: Player
@@ -5998,19 +5998,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 6
   TurnSmoothTime: 0.1
---- !u!114 &974011127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 974011122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9c881671f11971498824d6a280a4c87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  force: 11
 --- !u!114 &974011128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6048,13 +6035,21 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 88906cd5-e118-41cd-9649-83cb749e4e86
+    m_ActionName: Movement/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a47040c1-b0bf-4696-9ac8-fc134af944fb
+    m_ActionName: Movement/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: KeyboardMouse
   m_DefaultActionMap: Movement
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &974011130
+--- !u!114 &974011131
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6076,6 +6071,21 @@ MonoBehaviour:
   DebugGUI: 1
   IsSwinging: 0
   player: {fileID: 974011122}
+--- !u!114 &974011132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974011122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ede67af7f922c7b4cbbb4293f4cfe4ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpTime: 0.35
+  jumpTimeCounter: 0
+  force: 10
 --- !u!1 &1037184644
 GameObject:
   m_ObjectHideFlags: 0
