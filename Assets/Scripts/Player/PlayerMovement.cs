@@ -22,7 +22,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _isDashing;
     private Vector3 _lastDirection;
     private Vector2 _movement = Vector2.zero;
-    
+    public WhiteScreen _whiteScreen;
     private float _turnSmoothVelocity;
 
     private void Start()
@@ -34,6 +34,7 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         if (_isDashing) return;
+        if (_whiteScreen.isTransitioning && _whiteScreen.lockMovement) return;
         PlayerMove();
     }
 
