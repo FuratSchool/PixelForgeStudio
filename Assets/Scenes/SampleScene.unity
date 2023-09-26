@@ -2541,7 +2541,7 @@ GameObject:
   - component: {fileID: 314602928}
   m_Layer: 0
   m_Name: CapsuleNPC
-  m_TagString: Untagged
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2566,6 +2566,7 @@ MonoBehaviour:
       Element 1
     - Elemen 2
     - Yeah buddy element 3
+  canTalkAgain: 0
 --- !u!136 &314602929
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -2648,7 +2649,7 @@ Transform:
   m_GameObject: {fileID: 314602927}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.038914, y: 5.19, z: 11.998215}
+  m_LocalPosition: {x: 11.038914, y: 5.44, z: 11.998215}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6537,8 +6538,8 @@ GameObject:
   - component: {fileID: 1012708906}
   - component: {fileID: 1012708905}
   m_Layer: 0
-  m_Name: CapsuleNPC (1)
-  m_TagString: Untagged
+  m_Name: CapsuleNPCTWEE
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6562,6 +6563,7 @@ MonoBehaviour:
     - Whole group of dime bitches and they in Vogue
     - Tryna find me a bitch that no one knows
     - I'm tryna find me a bitch that no one knows
+  canTalkAgain: 1
 --- !u!136 &1012708906
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -6644,7 +6646,7 @@ Transform:
   m_GameObject: {fileID: 1012708904}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.038914, y: 5.19, z: 11.998215}
+  m_LocalPosition: {x: -5.88, y: 0.59, z: 11.998215}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9271,7 +9273,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1209454272}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.086376056, y: 0.1370544, z: -0.011997578, w: 0.98671746}
+  m_LocalRotation: {x: 0.086376056, y: 0.13705441, z: -0.01199758, w: 0.98671746}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
