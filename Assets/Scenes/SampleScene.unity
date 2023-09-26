@@ -6064,10 +6064,10 @@ MonoBehaviour:
   swingable:
     serializedVersion: 2
     m_Bits: 256
-  DistanceToObject: 10
+  DistanceToObject: 4
   sphereRadius: 2
   collision: {x: 0, y: 0, z: 0}
-  angle: 0.2
+  angle: 0
   DebugGUI: 1
   IsSwinging: 0
   player: {fileID: 974011122}
@@ -8847,7 +8847,7 @@ Transform:
   m_GameObject: {fileID: 1277083276}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 20.61, y: 9.2, z: 11.9}
+  m_LocalPosition: {x: 23.69, y: 11.87, z: 11.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Swinging : MonoBehaviour
 {
@@ -14,12 +16,13 @@ public class Swinging : MonoBehaviour
     public bool IsSwinging;
     private SpringJoint joint;
     private float maxSwingDistance = 10f;
+    private bool SwingPressed = false;
 
     public GameObject player;
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown("e"))
+        if (SwingPressed && IsSwinging == false)
         {
             var ray = new Ray(this.transform.position,
                 (this.transform.forward.normalized + (this.transform.up * angle).normalized));
@@ -50,14 +53,17 @@ public class Swinging : MonoBehaviour
                 IsSwinging = true;
             }
         }
-
-        if (Input.GetKeyUp("e"))
+        else if (SwingPressed == false && IsSwinging)
         {
             Destroy(joint);
             IsSwinging = false;
         }
     }
 
+    void OnSwing(InputValue input)
+    {
+        SwingPressed = Convert.ToBoolean(input.Get<float>());
+    }
     void OnDrawGizmos()
     {
         if (DebugGUI)
