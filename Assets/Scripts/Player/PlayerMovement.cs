@@ -7,6 +7,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Components")] 
     [SerializeField] private TrailRenderer tr;
     private Rigidbody _rigidbody;
+    public Transform footPrints;
+    public float totalTime = 0;
 
     //sets the speed of the player.
     [Header("Movement")] [SerializeField] private float speed = 6f;
@@ -35,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_isDashing) return;
         PlayerMove();
+        FootPrint();
     }
 
     private void OnMove(InputValue inputValue)
@@ -111,5 +114,17 @@ public class PlayerMovement : MonoBehaviour
         _isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
         _canDash = true;
+    }
+
+    private void FootPrint()
+    {
+        totalTime += Time.deltaTime;
+        if (totalTime > .5f)
+        {
+            var rotAmount = Quaternion.Euler(90, 0, 0);
+            var posOffset = new Vector3(0f, -0.49f, 0f);
+;           Instantiate(footPrints, (transform.position + posOffset), (transform.rotation * rotAmount));
+            totalTime = 0;
+        }
     }
 }
