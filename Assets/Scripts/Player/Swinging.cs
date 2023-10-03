@@ -7,57 +7,88 @@ using UnityEngine.InputSystem;
 public class Swinging : MonoBehaviour
 {
     // Start is called before the first frame update
-    public LayerMask swingable;
-    public float DistanceToObject = 10f;
-    public float sphereRadius = 1;
-    public Vector3 collision = Vector3.zero;
-    public float angle = 0.2f;
-    public bool DebugGUI = false;
-    public bool IsSwinging;
-    private SpringJoint joint;
-    private float maxSwingDistance = 10f;
+    [Header("LayerMask")]
+    [SerializeField] private LayerMask swingable;
+    
+    [Header("Debug")]
+    [SerializeField] private bool DebugGUI = false;
+    
+    [Header("Raycast")]
+    [SerializeField] private float DistanceToObject = 10f;
+    [SerializeField] private float angle = 0.2f;
+    [SerializeField] private float sphereRadius = 1;
+    
+    [Header("SwingSettings")]
+    [SerializeField] private float SwingDistance = 4f;
+    [SerializeField] private LineRenderer lr;
+    
     private bool SwingPressed = false;
+    private Vector3 collision;
+    private bool _isSwinging;
+    private ConfigurableJoint joint;
+    private Vector3 SwingableObjectPos;
+    public bool IsSwinging => _isSwinging;
 
     public GameObject player;
     // Update is called once per frame
     void Update()
     {
-        if (SwingPressed && IsSwinging == false)
+        if (SwingPressed && _isSwinging == false)
         {
-            var ray = new Ray(this.transform.position,
-                (this.transform.forward.normalized + (this.transform.up * angle).normalized));
-            RaycastHit hit;
-            if (Physics.SphereCast(ray, sphereRadius, out hit, DistanceToObject, swingable))
+            CheckSwing();
+        }
+        else if (SwingPressed == false && _isSwinging)
+        {
+            EndSwing();
+        }
+    }
+    
+    private void CheckSwing()
+    {
+        var ray = new Ray(this.transform.position,
+            (this.transform.forward.normalized + (this.transform.up * angle).normalized));
+        RaycastHit hit;
+        if (Physics.SphereCast(ray, sphereRadius, out hit, DistanceToObject, swingable))
+        {
+            collision = hit.point;
+            if (DebugGUI)
             {
-                collision = hit.point;
-                if (DebugGUI)
-                {
-                    Debug.Log(hit.transform.gameObject);
-                    Debug.DrawLine(this.transform.position, collision, Color.green);
-                }
-                
-
-
-                joint = player.gameObject.AddComponent<SpringJoint>();
-                joint.autoConfigureConnectedAnchor = false;
-                joint.connectedAnchor = collision;
-
-                float distanceFormPoint = Vector3.Distance(player.transform.position, collision);
-
-                joint.maxDistance = distanceFormPoint * 0.5f;
-                joint.minDistance = distanceFormPoint * 0.75f;
-
-                joint.spring = 4.5f;
-                joint.damper = 7f;
-                joint.massScale = 1.5f;
-                IsSwinging = true;
+                Debug.Log(hit.transform.gameObject);
+                Debug.DrawLine(this.transform.position, collision, Color.green);
             }
+
+            SwingableObjectPos = hit.transform.gameObject.transform.position;
+            MakeJoint(hit);
+            lr.positionCount = 2;
+            _isSwinging = true;
         }
-        else if (SwingPressed == false && IsSwinging)
-        {
-            Destroy(joint);
-            IsSwinging = false;
-        }
+    }
+
+    private void MakeJoint(RaycastHit hit)
+    {
+        joint = player.gameObject.AddComponent<ConfigurableJoint>();
+        joint.autoConfigureConnectedAnchor = false;
+        joint.connectedBody = hit.rigidbody;
+        joint.xMotion = ConfigurableJointMotion.Limited;
+        joint.yMotion = ConfigurableJointMotion.Limited;
+        joint.zMotion = ConfigurableJointMotion.Limited;
+        var limit = new SoftJointLimit();
+        limit.limit = SwingDistance;
+        limit.bounciness = 0f;
+        limit.contactDistance = 0f;
+        joint.linearLimit = limit;
+    }
+    private void EndSwing()
+    {
+        lr.positionCount = 0;
+        Destroy(joint);
+        _isSwinging = false;
+    }
+    private void LateUpdate()
+    {
+        if (!joint) return;
+        lr.SetPosition(0, player.transform.position);
+        lr.SetPosition(1, SwingableObjectPos);
     }
 
     void OnSwing(InputValue input)

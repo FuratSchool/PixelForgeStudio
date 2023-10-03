@@ -12,11 +12,12 @@ public class PlayerMovement : MonoBehaviour
     //sets the speed of the player.
 
     [Header("Movement")] [SerializeField] private float speed = 6f;
-
+    [SerializeField] private float maxSpeed = 10f;
     [Header("Turning")] [SerializeField] private float turnSmoothTime = 0.1f;
 
     [Header("Dashing")] [SerializeField] private float dashingPower = 12f;
-
+    
+    
     [SerializeField] private float dashingTime = 0.5f;
     [SerializeField] private float dashingCooldown = 1f;
     private Camera _camera;
@@ -63,6 +64,12 @@ public class PlayerMovement : MonoBehaviour
     {
         //moves the player. taking into account the delta time, world space, and the speed.
         transform.Translate(GetDirection(PlayerInput()).normalized * (speed * Time.deltaTime), Space.World);
+        // var velocity = _rigidbody.velocity;
+        // if (velocity.magnitude < maxSpeed)
+        // {
+        //     _rigidbody.AddForce(GetDirection(PlayerInput()).normalized * (speed * Time.deltaTime),ForceMode.VelocityChange);
+        // }
+        
     }
 
     private Vector3 PlayerInput()
