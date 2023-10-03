@@ -63,12 +63,20 @@ public class PlayerMovement : MonoBehaviour
     private void PlayerMove()
     {
         //moves the player. taking into account the delta time, world space, and the speed.
-        transform.Translate(GetDirection(PlayerInput()).normalized * (speed * Time.deltaTime), Space.World);
-        // var velocity = _rigidbody.velocity;
-        // if (velocity.magnitude < maxSpeed)
-        // {
-        //     _rigidbody.AddForce(GetDirection(PlayerInput()).normalized * (speed * Time.deltaTime),ForceMode.VelocityChange);
-        // }
+        if (FindObjectOfType<Swinging>().IsSwinging)
+        {
+            var velocity = _rigidbody.velocity;
+            if (velocity.magnitude < maxSpeed)
+            {
+                _rigidbody.AddForce(GetDirection(PlayerInput()).normalized * (speed * Time.deltaTime),ForceMode.VelocityChange);
+            }
+        }
+        else
+        {
+            transform.Translate(GetDirection(PlayerInput()).normalized * (speed * Time.deltaTime), 
+                Space.World);
+        }
+        
         
     }
 

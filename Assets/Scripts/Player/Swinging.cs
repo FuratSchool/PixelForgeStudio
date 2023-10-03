@@ -20,14 +20,16 @@ public class Swinging : MonoBehaviour
     
     [Header("SwingSettings")]
     [SerializeField] private float SwingDistance = 4f;
+    [SerializeField] private float ExitForce = 4f;
+    [SerializeField] private float SwingTime = 3f;
     [SerializeField] private LineRenderer lr;
     
     private bool SwingPressed = false;
     private Vector3 collision;
     private bool _isSwinging;
+    public bool IsSwinging => _isSwinging;
     private ConfigurableJoint joint;
     private Vector3 SwingableObjectPos;
-    public bool IsSwinging => _isSwinging;
 
     public GameObject player;
     // Update is called once per frame
@@ -56,6 +58,7 @@ public class Swinging : MonoBehaviour
                 Debug.Log(hit.transform.gameObject);
                 Debug.DrawLine(this.transform.position, collision, Color.green);
             }
+            StartCoroutine(TimedSwing());
 
             SwingableObjectPos = hit.transform.gameObject.transform.position;
             MakeJoint(hit);
@@ -68,7 +71,10 @@ public class Swinging : MonoBehaviour
     {
         joint = player.gameObject.AddComponent<ConfigurableJoint>();
         joint.autoConfigureConnectedAnchor = false;
-        joint.connectedBody = hit.rigidbody;
+        //joint.connectedBody = hit.rigidbody;
+        joint.connectedAnchor = hit.transform.position;
+        joint.anchor = new Vector3(0,0,0);
+        
         joint.xMotion = ConfigurableJointMotion.Limited;
         joint.yMotion = ConfigurableJointMotion.Limited;
         joint.zMotion = ConfigurableJointMotion.Limited;
@@ -78,11 +84,21 @@ public class Swinging : MonoBehaviour
         limit.contactDistance = 0f;
         joint.linearLimit = limit;
     }
+
+    private IEnumerator TimedSwing()
+    {
+        yield return new WaitForSeconds(SwingTime);
+        if (joint != null)
+        {
+            EndSwing();
+        }
+    }
     private void EndSwing()
     {
         lr.positionCount = 0;
         Destroy(joint);
         _isSwinging = false;
+        player.GetComponent<Rigidbody>().AddForce(ExitForce * Vector3.up, ForceMode.Impulse);
     }
     private void LateUpdate()
     {
