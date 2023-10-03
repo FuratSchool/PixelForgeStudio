@@ -22,9 +22,11 @@ public class Swinging : MonoBehaviour
     [SerializeField] private float SwingDistance = 4f;
     [SerializeField] private float ExitForce = 4f;
     [SerializeField] private float SwingTime = 3f;
+    [SerializeField] private float SwingDelay = 0.5f;
     [SerializeField] private LineRenderer lr;
     
     private bool SwingPressed = false;
+    private bool _canSwing = true;
     private Vector3 collision;
     private bool _isSwinging;
     public bool IsSwinging => _isSwinging;
@@ -50,7 +52,7 @@ public class Swinging : MonoBehaviour
         var ray = new Ray(this.transform.position,
             (this.transform.forward.normalized + (this.transform.up * angle).normalized));
         RaycastHit hit;
-        if (Physics.SphereCast(ray, sphereRadius, out hit, DistanceToObject, swingable))
+        if (Physics.SphereCast(ray, sphereRadius, out hit, DistanceToObject, swingable) && _canSwing)
         {
             collision = hit.point;
             if (DebugGUI)
@@ -64,6 +66,7 @@ public class Swinging : MonoBehaviour
             MakeJoint(hit);
             lr.positionCount = 2;
             _isSwinging = true;
+            _canSwing = false;
         }
     }
 
@@ -92,13 +95,23 @@ public class Swinging : MonoBehaviour
         {
             EndSwing();
         }
+        
+        
     }
+
+    private IEnumerator SwingDelayTimer()
+    {
+        yield return new WaitForSeconds(SwingDelay);
+        _canSwing = true;
+    }
+
     private void EndSwing()
     {
         lr.positionCount = 0;
         Destroy(joint);
         _isSwinging = false;
         player.GetComponent<Rigidbody>().AddForce(ExitForce * Vector3.up, ForceMode.Impulse);
+        StartCoroutine(SwingDelayTimer());
     }
     private void LateUpdate()
     {
