@@ -36,8 +36,8 @@ public class Swinging : MonoBehaviour
                     Debug.DrawLine(this.transform.position, collision, Color.green);
                 }
                 
-
-
+                
+                
                 joint = player.gameObject.AddComponent<SpringJoint>();
                 joint.autoConfigureConnectedAnchor = false;
                 joint.connectedAnchor = collision;
@@ -59,7 +59,6 @@ public class Swinging : MonoBehaviour
             IsSwinging = false;
         }
     }
-
     void OnSwing(InputValue input)
     {
         SwingPressed = Convert.ToBoolean(input.Get<float>());

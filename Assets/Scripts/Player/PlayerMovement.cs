@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float dashingCooldown = 1f;
     private Camera _camera;
     private bool _canDash = true;
+    public bool IsDashing => _isDashing;
     private bool _isDashing;
     private Vector3 _lastDirection;
     private Vector2 _movement = Vector2.zero;

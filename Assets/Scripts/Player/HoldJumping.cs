@@ -12,7 +12,13 @@ public class HoldJumping : MonoBehaviour
     private Rigidbody _rigidbody;
     [SerializeField] private float jumpTime = 0.35f;
     [SerializeField] private float jumpTimeCounter;
-    [SerializeField] private float force = 10;
+    [SerializeField] private float force = 10f;
+    [SerializeField] private float forceHoldJump = 1f;
+    [SerializeField] private float fallSpeed = 3f;
+    [SerializeField] private float gravityScale = 1f;
+    private static float globalGravity = -9.81f;
+    
+    private bool isFalling;
 
     private bool isJumping;
     private void Awake()
@@ -38,7 +44,7 @@ public class HoldJumping : MonoBehaviour
         {
             if (jumpTimeCounter > 0)
             {
-                _rigidbody.AddForce(Vector3.up * 0.5f, ForceMode.Impulse);
+                _rigidbody.AddForce(Vector3.up * forceHoldJump, ForceMode.Impulse);
                 jumpTimeCounter -= Time.deltaTime;
                 
             }
@@ -50,6 +56,26 @@ public class HoldJumping : MonoBehaviour
         else
         {
             jumpTimeCounter = 0;
+        }
+
+        if (!isJumping && _rigidbody.velocity.y < fallSpeed)
+        {
+            _rigidbody.useGravity = false;
+            isFalling = true;
+        }
+
+        if (isFalling)
+        {
+            if (FindObjectOfType<PlayerMovement>().IsDashing == false)
+            {
+                Vector3 gravity = globalGravity * gravityScale * Vector3.up;
+                _rigidbody.AddForce(gravity, ForceMode.Acceleration);
+                if (IsGrounded())
+                {
+                    isFalling = false;
+                    _rigidbody.useGravity = true;
+                }
+            }
         }
     }
     void OnJump(InputValue inputValue)

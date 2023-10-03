@@ -6100,9 +6100,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede67af7f922c7b4cbbb4293f4cfe4ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpTime: 0.35
+  jumpTime: 0.2
   jumpTimeCounter: 0
-  force: 10
+  force: 0.7
+  forceHoldJump: 1
+  fallSpeed: 0.05
+  gravityScale: 2
 --- !u!96 &974011133
 TrailRenderer:
   serializedVersion: 3
