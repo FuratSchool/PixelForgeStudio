@@ -15,6 +15,8 @@ public class DialogueManager : MonoBehaviour
     string currentSentence = "";
     List<DialogueTrigger> dialogueTriggers = new List<DialogueTrigger>(); // declare a list of DialogueTrigger scripts
     DialogueTrigger dialogueTrigger;
+    private bool isDialogueActive = false;
+
 
     void Start(){
         sentences = new Queue<string>();
@@ -32,6 +34,8 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue) 
     {
+        FindObjectOfType<PlayerMovement>().SetCanMove(false);
+        FindObjectOfType<HoldJumping>().SetCanJump(false);
         dialogueCanvas.SetActive(true); // show the canvas when dialogue starts
 
         nameText.text = dialogue.name;
@@ -65,6 +69,8 @@ public class DialogueManager : MonoBehaviour
     }
 
     public void EndDialogue() {
+        FindObjectOfType<PlayerMovement>().SetCanMove(true);
+        FindObjectOfType<HoldJumping>().SetCanJump(true);
         dialogueCanvas.SetActive(false); // hide the canvas when dialogue ends
         foreach (DialogueTrigger dialogueTrigger in dialogueTriggers)
         {
@@ -74,7 +80,7 @@ public class DialogueManager : MonoBehaviour
 
         void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             if (isTyping)
             {
