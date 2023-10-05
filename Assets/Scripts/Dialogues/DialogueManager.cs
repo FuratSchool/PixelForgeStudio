@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.InputSystem;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -17,7 +18,7 @@ public class DialogueManager : MonoBehaviour
 
     void Start(){
         sentences = new Queue<string>();
-        dialogueCanvas.SetActive(false); // hideS the canvas when not in dialogue
+        dialogueCanvas.SetActive(false); // hides the canvas when not in dialogue
         GameObject[] npcGameObjects = GameObject.FindGameObjectsWithTag("NPC");
         foreach (GameObject npcGameObject in npcGameObjects)
         {
@@ -31,7 +32,8 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue) 
     {
-        Debug.Log("Starting conversation with " + dialogue.name);
+        dialogueCanvas.SetActive(true); // show the canvas when dialogue starts
+
         nameText.text = dialogue.name;
         sentences.Clear();
         foreach (string sentence in dialogue.sentences)
@@ -39,7 +41,6 @@ public class DialogueManager : MonoBehaviour
             sentences.Enqueue(sentence);
         }
         DisplayNextSentence();
-        dialogueCanvas.SetActive(true); // show the canvas when dialogue starts
     }
 
     public void DisplayNextSentence() {
@@ -65,14 +66,13 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue() {
         dialogueCanvas.SetActive(false); // hide the canvas when dialogue ends
-        Debug.Log("End of conversation");
         foreach (DialogueTrigger dialogueTrigger in dialogueTriggers)
         {
             dialogueTrigger.EndDialogue();
         }
     }
 
-    void Update()
+        void Update()
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
