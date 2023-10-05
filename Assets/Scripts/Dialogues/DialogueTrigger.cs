@@ -31,10 +31,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player")){
             _inTriggeredZone = false;
-            if (!canTalkAgain) // If the dialogue is not repeatable, hide the canvas when exiting.
-            {
-                dialogueTriggerZoneCanvas.SetActive(false);
-            }
+            dialogueTriggerZoneCanvas.SetActive(false);
         }
     }
     private void Update()
