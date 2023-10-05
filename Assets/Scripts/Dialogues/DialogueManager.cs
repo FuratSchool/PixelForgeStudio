@@ -72,6 +72,7 @@ public class DialogueManager : MonoBehaviour
         FindObjectOfType<PlayerMovement>().SetCanMove(true);
         FindObjectOfType<HoldJumping>().SetCanJump(true);
         dialogueCanvas.SetActive(false); // hide the canvas when dialogue ends
+        
         foreach (DialogueTrigger dialogueTrigger in dialogueTriggers)
         {
             dialogueTrigger.EndDialogue();
