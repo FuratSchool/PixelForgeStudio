@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private Vector2 _movement = Vector2.zero;
     
     private float _turnSmoothVelocity;
+    private bool canMove = true;
 
     private void Start()
     {
@@ -33,7 +34,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (_isDashing) return;
+        if (_isDashing || !canMove) return;
         PlayerMove();
     }
 
@@ -111,5 +112,10 @@ public class PlayerMovement : MonoBehaviour
         _isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
         _canDash = true;
+    }
+    
+    public void SetCanMove(bool canMoveValue)
+    {
+        canMove = canMoveValue;
     }
 }
