@@ -10,19 +10,24 @@ public class Swinging : MonoBehaviour
     public LayerMask swingable;
     public float DistanceToObject = 10f;
     public float sphereRadius = 1;
-    public Vector3 collision = Vector3.zero;
     public float angle = 0.2f;
     public bool DebugGUI = false;
-    public bool IsSwinging;
-    private SpringJoint joint;
     private float maxSwingDistance = 10f;
     private bool SwingPressed = false;
 
+    private bool _canSwing = true;
+    private Vector3 collision;
+    private bool _isSwinging;
+    
+    public bool inRange { get; set; }
+    public bool IsSwinging => _isSwinging;
+    private ConfigurableJoint joint;
+    private Vector3 SwingableObjectPos;
     public GameObject player;
     // Update is called once per frame
     void Update()
     {
-        if (SwingPressed && IsSwinging == false)
+        if (SwingPressed && _isSwinging == false && inRange)
         {
             var ray = new Ray(this.transform.position,
                 (this.transform.forward.normalized + (this.transform.up * angle).normalized));
@@ -35,10 +40,7 @@ public class Swinging : MonoBehaviour
                     Debug.Log(hit.transform.gameObject);
                     Debug.DrawLine(this.transform.position, collision, Color.green);
                 }
-                
-                
-                
-                joint = player.gameObject.AddComponent<SpringJoint>();
+                joint = player.gameObject.AddComponent<ConfigurableJoint>();
                 joint.autoConfigureConnectedAnchor = false;
                 joint.connectedAnchor = collision;
 
