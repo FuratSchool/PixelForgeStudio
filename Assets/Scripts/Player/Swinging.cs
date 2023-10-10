@@ -30,6 +30,8 @@ public class Swinging : MonoBehaviour
     private Vector3 collision;
     private bool _isSwinging;
     public bool IsSwinging => _isSwinging;
+    public bool InRange { get; set; }
+
     private ConfigurableJoint joint;
     private Vector3 SwingableObjectPos;
 
@@ -37,7 +39,7 @@ public class Swinging : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SwingPressed && _isSwinging == false)
+        if (_isSwinging == false && InRange)
         {
             CheckSwing();
         }
@@ -54,19 +56,23 @@ public class Swinging : MonoBehaviour
         RaycastHit hit;
         if (Physics.SphereCast(ray, sphereRadius, out hit, DistanceToObject, swingable) && _canSwing)
         {
+            
             collision = hit.point;
             if (DebugGUI)
             {
                 Debug.Log(hit.transform.gameObject);
                 Debug.DrawLine(this.transform.position, collision, Color.green);
             }
-            StartCoroutine(TimedSwing());
+            if(SwingPressed)
+            {
+                StartCoroutine(TimedSwing());
 
-            SwingableObjectPos = hit.transform.gameObject.transform.position;
-            MakeJoint(hit);
-            lr.positionCount = 2;
-            _isSwinging = true;
-            _canSwing = false;
+                SwingableObjectPos = hit.transform.gameObject.transform.position;
+                MakeJoint(hit);
+                lr.positionCount = 2;
+                _isSwinging = true;
+                _canSwing = false;
+            }
         }
     }
 
