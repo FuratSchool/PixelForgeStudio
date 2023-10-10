@@ -29,6 +29,7 @@ public class Swinging : MonoBehaviour
     private bool _canSwing = true;
     private Vector3 collision;
     private bool _isSwinging;
+    private Interactable interactable;
     public bool IsSwinging => _isSwinging;
     public bool InRange { get; set; }
 
@@ -37,6 +38,10 @@ public class Swinging : MonoBehaviour
 
     public GameObject player;
     // Update is called once per frame
+    void Start()
+    {
+        interactable = FindObjectOfType<Interactable>();
+    }
     void Update()
     {
         if (_isSwinging == false && InRange)
@@ -56,7 +61,8 @@ public class Swinging : MonoBehaviour
         RaycastHit hit;
         if (Physics.SphereCast(ray, sphereRadius, out hit, DistanceToObject, swingable) && _canSwing)
         {
-            
+            interactable.InteractText = "Press E to Swing";
+            interactable.InteractableTextActive = true;
             collision = hit.point;
             if (DebugGUI)
             {
@@ -73,6 +79,10 @@ public class Swinging : MonoBehaviour
                 _isSwinging = true;
                 _canSwing = false;
             }
+        }
+        else
+        {
+            interactable.InteractableTextActive = false;
         }
     }
 
@@ -122,8 +132,11 @@ public class Swinging : MonoBehaviour
     private void LateUpdate()
     {
         if (!joint) return;
-        lr.SetPosition(0, player.transform.position);
-        lr.SetPosition(1, SwingableObjectPos);
+        if (lr.positionCount != 0)
+        {
+            lr.SetPosition(0, player.transform.position);
+            lr.SetPosition(1, SwingableObjectPos); 
+        }
     }
 
     void OnSwing(InputValue input)
