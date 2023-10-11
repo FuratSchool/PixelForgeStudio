@@ -61,7 +61,7 @@ public class Swinging : MonoBehaviour
         RaycastHit hit;
         if (Physics.SphereCast(ray, sphereRadius, out hit, DistanceToObject, swingable) && _canSwing)
         {
-            interactable.InteractText = "Press E to Swing";
+            interactable.InteractText = "Hold E to Swing";
             interactable.InteractableTextActive = true;
             collision = hit.point;
             if (DebugGUI)
