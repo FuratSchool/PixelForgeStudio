@@ -134,7 +134,7 @@ public class Swinging : MonoBehaviour
         if (!joint) return;
         if (lr.positionCount != 0)
         {
-            lr.SetPosition(0, player.transform.position);
+            lr.SetPosition(0, player.transform.GetChild(1).transform.position);
             lr.SetPosition(1, SwingableObjectPos); 
         }
     }
