@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -9,12 +10,14 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody _rigidbody;
 
     //sets the speed of the player.
-    [Header("Movement")] [SerializeField] private float speed = 6f;
 
+    [Header("Movement")] [SerializeField] private float speed = 6f;
+    [SerializeField] private float maxSpeed = 10f;
     [Header("Turning")] [SerializeField] private float turnSmoothTime = 0.1f;
 
     [Header("Dashing")] [SerializeField] private float dashingPower = 12f;
-
+    
+    
     [SerializeField] private float dashingTime = 0.5f;
     [SerializeField] private float dashingCooldown = 1f;
     private Camera _camera;
@@ -62,7 +65,21 @@ public class PlayerMovement : MonoBehaviour
     private void PlayerMove()
     {
         //moves the player. taking into account the delta time, world space, and the speed.
-        transform.Translate(GetDirection(PlayerInput()).normalized * (speed * Time.deltaTime), Space.World);
+        if (FindObjectOfType<Swinging>().IsSwinging)
+        {
+            var velocity = _rigidbody.velocity;
+            if (velocity.magnitude < maxSpeed)
+            {
+                _rigidbody.AddForce(GetDirection(PlayerInput()).normalized * (speed * Time.deltaTime),ForceMode.VelocityChange);
+            }
+        }
+        else
+        {
+            transform.Translate(GetDirection(PlayerInput()).normalized * (speed * Time.deltaTime), 
+                Space.World);
+        }
+        
+        
     }
 
     private Vector3 PlayerInput()
