@@ -1,12 +1,11 @@
-/*using System.Collections;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerMovementController : MonoBehaviour
 {
-    [Header("Components")] 
-    [SerializeField] private TrailRenderer tr;
-    private Rigidbody _rigidbody;
+    [Header("Components")] [SerializeField]
+    private TrailRenderer tr;
 
     //sets the speed of the player.
     [Header("Movement")] [SerializeField] private float speed = 6f;
@@ -17,12 +16,13 @@ public class PlayerMovementController : MonoBehaviour
 
     [SerializeField] private float dashingTime = 0.5f;
     [SerializeField] private float dashingCooldown = 1f;
+    public WhiteScreen _whiteScreen;
     private Camera _camera;
     private bool _canDash = true;
     private bool _isDashing;
     private Vector3 _lastDirection;
     private Vector2 _movement = Vector2.zero;
-    public WhiteScreen _whiteScreen;
+    private Rigidbody _rigidbody;
     private float _turnSmoothVelocity;
     private bool canMove = true;
 
@@ -114,13 +114,9 @@ public class PlayerMovementController : MonoBehaviour
         yield return new WaitForSeconds(dashingCooldown);
         _canDash = true;
     }
-<<<<<<< Updated upstream:Assets/Scripts/Player/PlayerMovement.cs
-    
+
     public void SetCanMove(bool canMoveValue)
     {
         canMove = canMoveValue;
     }
 }
-=======
-}*/
->>>>>>> Stashed changes:Assets/Scripts/Player/PlayerMovementController.cs

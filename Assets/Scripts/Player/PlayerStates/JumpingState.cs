@@ -7,20 +7,17 @@ public class JumpingState : IPlayerState
 
     public void EnterState(PlayerStateMachine stateMachine)
     {
-        PlayerController playerController = stateMachine.GetPlayerController();
+        var playerController = stateMachine.GetPlayerController();
         this.stateMachine = stateMachine;
-        Rigidbody rb = stateMachine.GetPlayerController().GetComponent<Rigidbody>();
+        var rb = stateMachine.GetPlayerController().GetComponent<Rigidbody>();
         rb.AddForce(Vector3.up * playerController.jumpForce, ForceMode.Impulse);
         stateMachine.StartCoroutine(JumpingCoroutine());
     }
 
     public void UpdateState(PlayerStateMachine playerStateMachine)
     {
-        PlayerController playerController = playerStateMachine.GetPlayerController();
-        if (playerController.IsGrounded())
-        {
-            stateMachine.ChangeState(new IdleState());
-        }
+        var playerController = playerStateMachine.GetPlayerController();
+        if (playerController.IsGrounded()) stateMachine.ChangeState(new IdleState());
         /*if (!playerController.IsOnTerrain())
         {
             stateMachine.ChangeState(new DeathState());
@@ -34,12 +31,14 @@ public class JumpingState : IPlayerState
 
     private IEnumerator JumpingCoroutine()
     {
-        PlayerController playerController = this.stateMachine.GetPlayerController();
+        var playerController = stateMachine.GetPlayerController();
         var rb = playerController.rb;
         while (stateMachine.GetCurrentState() == this)
         {
-            Vector3 moveDirection = (playerController.rb.transform.forward * playerController.VerticalInput + rb.transform.right * playerController.HorizontalInput).normalized;
-            playerController.rb.velocity = new Vector3(moveDirection.x * playerController.moveSpeed, rb.velocity.y, moveDirection.z * playerController.moveSpeed);
+            var moveDirection = (playerController.rb.transform.forward * playerController.GetVerticalInput() +
+                                 rb.transform.right * playerController.GetHorizontalInput()).normalized;
+            playerController.rb.velocity = new Vector3(moveDirection.x * playerController.moveSpeed, rb.velocity.y,
+                moveDirection.z * playerController.moveSpeed);
 
             UpdateState(stateMachine);
             yield return null;

@@ -1,5 +1,5 @@
-using UnityEngine;
 using System.Collections;
+using UnityEngine;
 
 // Idle State Logic
 public class IdleState : IPlayerState
@@ -14,12 +14,11 @@ public class IdleState : IPlayerState
 
     public void UpdateState(PlayerStateMachine stateMachine)
     {
-        PlayerController playerController = this.stateMachine.GetPlayerController();
+        var playerController = this.stateMachine.GetPlayerController();
 
-        if (Mathf.Abs(playerController.HorizontalInput) > 0.1f || Mathf.Abs(playerController.VerticalInput) > 0.1f)
-        {
-            stateMachine.ChangeState(new WalkingState());
-        }
+        if (Mathf.Abs(playerController.GetHorizontalInput()) > 0.1f ||
+            Mathf.Abs(playerController.GetVerticalInput()) > 0.1f) stateMachine.ChangeState(new WalkingState());
+
         /*if (!playerController.IsOnTerrain())
         {
             stateMachine.ChangeState(new DeathState());
