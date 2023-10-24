@@ -15,6 +15,7 @@ public class HoldJumping : MonoBehaviour
     [SerializeField] private float force = 10f;
     [SerializeField] private float forceHoldJump = 1f;
     private bool isJumping;
+    private bool canJump = true; //for dialogue
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
@@ -28,6 +29,7 @@ public class HoldJumping : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!canJump) return; //for dialogue
         if (IsGrounded() && SpacePressed && isJumping == false)
         {
             isJumping = true;
@@ -54,7 +56,12 @@ public class HoldJumping : MonoBehaviour
     }
     void OnJump(InputValue inputValue)
     {
+        if (!canJump) return; //for dialogue
         //Gives change in state of the space button
         SpacePressed = Convert.ToBoolean(inputValue.Get<float>());
+    }
+    public void SetCanJump(bool canJumpValue)
+    {
+        canJump = canJumpValue;
     }
 }

@@ -12,11 +12,12 @@ public class PlayerMovement : MonoBehaviour
     //sets the speed of the player.
 
     [Header("Movement")] [SerializeField] private float speed = 6f;
-
+    [SerializeField] private float maxSpeed = 10f;
     [Header("Turning")] [SerializeField] private float turnSmoothTime = 0.1f;
 
     [Header("Dashing")] [SerializeField] private float dashingPower = 12f;
-
+    
+    
     [SerializeField] private float dashingTime = 0.5f;
     [SerializeField] private float dashingCooldown = 1f;
     private Camera _camera;
@@ -25,8 +26,9 @@ public class PlayerMovement : MonoBehaviour
     private bool _isDashing;
     private Vector3 _lastDirection;
     private Vector2 _movement = Vector2.zero;
-    
+    public WhiteScreen _whiteScreen;
     private float _turnSmoothVelocity;
+    private bool canMove = true;
 
     private void Start()
     {
@@ -36,7 +38,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        if (_isDashing) return;
+        if (_isDashing || !canMove) return;
+        if (_whiteScreen.isTransitioning && _whiteScreen.lockMovement) return;
         PlayerMove();
     }
 
@@ -63,7 +66,21 @@ public class PlayerMovement : MonoBehaviour
     private void PlayerMove()
     {
         //moves the player. taking into account the delta time, world space, and the speed.
-        transform.Translate(GetDirection(PlayerInput()).normalized * (speed * Time.deltaTime), Space.World);
+        if (FindObjectOfType<Swinging>().IsSwinging)
+        {
+            var velocity = _rigidbody.velocity;
+            if (velocity.magnitude < maxSpeed)
+            {
+                _rigidbody.AddForce(GetDirection(PlayerInput()).normalized * (speed * Time.deltaTime),ForceMode.VelocityChange);
+            }
+        }
+        else
+        {
+            transform.Translate(GetDirection(PlayerInput()).normalized * (speed * Time.deltaTime), 
+                Space.World);
+        }
+        
+        
     }
 
     private Vector3 PlayerInput()
@@ -114,5 +131,10 @@ public class PlayerMovement : MonoBehaviour
         _isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
         _canDash = true;
+    }
+    
+    public void SetCanMove(bool canMoveValue)
+    {
+        canMove = canMoveValue;
     }
 }
