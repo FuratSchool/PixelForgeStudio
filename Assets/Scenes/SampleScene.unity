@@ -6859,7 +6859,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   swingable:
-    serializedVersion: 2
     m_Bits: 256
   DebugGUI: 1
   DistanceToObject: 6
@@ -6883,9 +6882,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ede67af7f922c7b4cbbb4293f4cfe4ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpTime: 0.35
+  jumpTime: 0.2
   jumpTimeCounter: 0
-  force: 10
+  force: 5
+  forceHoldJump: 1
+  fallSpeed: 3
+  gravityScale: 1
 --- !u!96 &974011133
 TrailRenderer:
   serializedVersion: 3

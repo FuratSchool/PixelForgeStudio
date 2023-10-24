@@ -12,8 +12,8 @@ public class HoldJumping : MonoBehaviour
     private Rigidbody _rigidbody;
     [SerializeField] private float jumpTime = 0.35f;
     [SerializeField] private float jumpTimeCounter;
-    [SerializeField] private float force = 10;
-
+    [SerializeField] private float force = 10f;
+    [SerializeField] private float forceHoldJump = 1f;
     private bool isJumping;
     private bool canJump = true; //for dialogue
     private void Awake()
@@ -40,7 +40,7 @@ public class HoldJumping : MonoBehaviour
         {
             if (jumpTimeCounter > 0)
             {
-                _rigidbody.AddForce(Vector3.up * 0.5f, ForceMode.Impulse);
+                _rigidbody.AddForce(Vector3.up * forceHoldJump, ForceMode.Impulse);
                 jumpTimeCounter -= Time.deltaTime;
                 
             }
