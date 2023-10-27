@@ -32,6 +32,7 @@ public class Swinging : MonoBehaviour
     private Interactable interactable;
     public bool IsSwinging => _isSwinging;
     public bool InRange { get; set; }
+    public GameObject SwingableObjectGAME { get; set; }
 
     private ConfigurableJoint joint;
     private Vector3 SwingableObjectPos;
@@ -52,29 +53,30 @@ public class Swinging : MonoBehaviour
         {
             EndSwing();
         }
+        else
+        {
+            interactable.InteractableTextActive = false;
+        }
     }
     
     private void CheckSwing()
     {
-        var ray = new Ray(this.transform.position,
-            (this.transform.forward.normalized + (this.transform.up * angle).normalized));
-        RaycastHit hit;
-        if (Physics.SphereCast(ray, sphereRadius, out hit, DistanceToObject, swingable) && _canSwing)
+        if (_canSwing)
         {
             interactable.InteractText = "Hold E to Swing";
             interactable.InteractableTextActive = true;
-            collision = hit.point;
+            collision = SwingableObjectGAME.transform.position;
             if (DebugGUI)
             {
-                Debug.Log(hit.transform.gameObject);
+                Debug.Log(collision);
                 Debug.DrawLine(this.transform.position, collision, Color.green);
             }
             if(SwingPressed)
             {
                 StartCoroutine(TimedSwing());
 
-                SwingableObjectPos = hit.transform.gameObject.transform.position;
-                MakeJoint(hit);
+                SwingableObjectPos = SwingableObjectGAME.transform.gameObject.transform.position;
+                MakeJoint(collision);
                 lr.positionCount = 2;
                 _isSwinging = true;
                 _canSwing = false;
@@ -86,12 +88,12 @@ public class Swinging : MonoBehaviour
         }
     }
 
-    private void MakeJoint(RaycastHit hit)
+    private void MakeJoint(Vector3 hit)
     {
         joint = player.gameObject.AddComponent<ConfigurableJoint>();
         joint.autoConfigureConnectedAnchor = false;
         //joint.connectedBody = hit.rigidbody;
-        joint.connectedAnchor = hit.transform.position;
+        joint.connectedAnchor = hit;
         joint.anchor = new Vector3(0,0,0);
         
         joint.xMotion = ConfigurableJointMotion.Limited;
