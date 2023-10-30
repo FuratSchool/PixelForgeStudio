@@ -1,41 +1,32 @@
-using System.Collections;
 using UnityEngine;
 
-// Idle State Logic
 public class IdleState : IPlayerState
 {
-    private PlayerStateMachine stateMachine;
+    private PlayerController _playerController;
+    private PlayerMovementController _playerMovement;
+    private PlayerStateMachine _stateMachine;
 
     public void EnterState(PlayerStateMachine stateMachine)
     {
-        this.stateMachine = stateMachine;
-        stateMachine.StartCoroutine(IdleCoroutine());
+        _stateMachine = stateMachine;
+        _playerController = stateMachine.GetPlayerController();
+        _playerMovement = stateMachine.GetPlayerMovementController();
     }
 
     public void UpdateState(PlayerStateMachine stateMachine)
     {
-        var playerController = this.stateMachine.GetPlayerController();
+        if ((_playerController != null && Mathf.Abs(_playerController.HorizontalInput) > 0.1f) ||
+            Mathf.Abs(_playerController.VerticalInput) > 0.1f)
+            _stateMachine.ChangeState(new WalkingState());
 
-        if (Mathf.Abs(playerController.GetHorizontalInput()) > 0.1f ||
-            Mathf.Abs(playerController.GetVerticalInput()) > 0.1f) stateMachine.ChangeState(new WalkingState());
+        if (Input.GetKeyDown(KeyCode.LeftShift)) _playerMovement.OnSprintStart();
 
-        /*if (!playerController.IsOnTerrain())
-        {
-            stateMachine.ChangeState(new DeathState());
-        }*/
+        if (_playerController.IsGrounded() && _playerController.CanJump)
+            if (Input.GetKey(KeyCode.Space))
+                stateMachine.ChangeState(new JumpingState(_playerController));
     }
 
     public void ExitState(PlayerStateMachine stateMachine)
     {
-        stateMachine.StopAllCoroutines();
-    }
-
-    private IEnumerator IdleCoroutine()
-    {
-        while (stateMachine.GetCurrentState() == this)
-        {
-            UpdateState(stateMachine);
-            yield return null;
-        }
     }
 }

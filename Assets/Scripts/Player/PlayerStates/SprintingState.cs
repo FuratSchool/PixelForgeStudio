@@ -1,34 +1,30 @@
 using UnityEngine;
 
-public class WalkingState : IPlayerState
+public class SprintingState : IPlayerState
 {
+    private readonly float runSpeed = 8.0f;
     private PlayerController _playerController;
     private PlayerMovementController _playerMovement;
+    private PlayerStateMachine _stateMachine;
 
     public void EnterState(PlayerStateMachine stateMachine)
     {
         _playerController = stateMachine.GetPlayerController();
         _playerMovement = stateMachine.GetPlayerMovementController();
+        _playerController.MoveSpeed = 12f;
     }
 
     public void UpdateState(PlayerStateMachine stateMachine)
     {
         _playerMovement.OnMove();
-
         if (!_playerController.IsPlayerMoving)
-            stateMachine.ChangeState(new IdleState());
-
-        if (_playerController.IsGrounded() && _playerController.CanJump)
-            if (Input.GetKey(KeyCode.Space))
-                stateMachine.ChangeState(new JumpingState(_playerController));
-
+            _stateMachine.ChangeState(new IdleState());
         if (Input.GetKeyDown(KeyCode.Q) && _playerController.CanDash)
             stateMachine.ChangeState(new DashingState());
-        if (Input.GetKeyDown(KeyCode.LeftShift)) _playerMovement.OnSprintStart();
     }
 
     public void ExitState(PlayerStateMachine stateMachine)
     {
-        // Cleanup or transition logic, if necessary
+        _playerMovement.OnSprintFinish();
     }
 }

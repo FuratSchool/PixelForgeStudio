@@ -1,36 +1,23 @@
-using System.Collections;
-using UnityEngine;
-
 public class DeathState : IPlayerState
 {
+    private PlayerController _playerController;
     private PlayerStateMachine stateMachine;
 
     public void EnterState(PlayerStateMachine stateMachine)
     {
         this.stateMachine = stateMachine;
-        stateMachine.StartCoroutine(DeathCoroutine());
-        Debug.Log("entered death state");
+        _playerController = this.stateMachine.GetPlayerController();
     }
 
     public void UpdateState(PlayerStateMachine stateMachine)
     {
-        Vector3 spawnPoint = PlayerStatus.playerStatus.GetSpawnPoint();
-        stateMachine.transform.position = spawnPoint;
+        var spawnPoint = PlayerStatus.playerStatus.GetSpawnPoint();
+        _playerController.transform.position = spawnPoint;
 
         stateMachine.ChangeState(new IdleState());
     }
 
     public void ExitState(PlayerStateMachine stateMachine)
     {
-        stateMachine.StopAllCoroutines();
-    }
-
-    private IEnumerator DeathCoroutine()
-    {
-        while (stateMachine.GetCurrentState() == this)
-        {
-            UpdateState(stateMachine);
-            yield return null;
-        }
     }
 }

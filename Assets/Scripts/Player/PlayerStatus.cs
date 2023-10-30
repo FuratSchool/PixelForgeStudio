@@ -1,13 +1,11 @@
 using UnityEngine;
 
-using UnityEngine;
-
 public class PlayerStatus : MonoBehaviour
 {
     public static PlayerStatus playerStatus;
-    private int Health { get;  set; }
-    
-    private Vector3 playerSpawnPoint;
+
+    private Vector3 playerSpawnPoint = new(0, 0, 0);
+    private int Health { get; }
 
     private void Awake()
     {

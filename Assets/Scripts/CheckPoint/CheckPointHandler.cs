@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class CheckPointHandler : MonoBehaviour
 {
-    private bool triggered = false;
-    private PlayerStatus playerStatus; // Reference to the PlayerStatus script
+    private PlayerStatus playerStatus;
+    private bool triggered;
 
     private void Start()
     {
@@ -23,7 +23,7 @@ public class CheckPointHandler : MonoBehaviour
             if (playerStatus != null)
             {
                 Debug.Log("test");
-                playerStatus.SetSpawnPoint(new Vector3(transform.position.x, 2, transform.position.z ));
+                playerStatus.SetSpawnPoint(new Vector3(transform.position.x, 2, transform.position.z));
             }
         }
     }

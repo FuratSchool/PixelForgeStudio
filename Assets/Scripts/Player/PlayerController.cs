@@ -1,108 +1,164 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
-    public Rigidbody rb;
-    public float moveSpeed = 5.0f;
-    public float jumpForce = 8.0f;
-    private bool _isJumping;
-    private float HorizontalInput;
+    [FormerlySerializedAs("MoveSpeed")] [Header("Movement")] [SerializeField]
+    private float moveSpeed = 6.0f;
 
+    [SerializeField] private float jumpForce = 12.0f;
 
-    private bool isGrounded; // Add this flag
+    [Header("Dashing")] [SerializeField] private float dashingPower = 12f;
 
-    private Collider[] playerCollider;
-    private PlayerStateMachine stateMachine;
-    private PlayerStateObserver stateObserver;
+    [SerializeField] private float dashingTime = 0.5f;
+    [SerializeField] private float dashingCooldown = 1f;
 
-    private float VerticalInput;
+    [Header("Turning")] [SerializeField] private float turnSmoothTime = 0.1f;
 
+    [Header("Components")] [SerializeField]
+    private TrailRenderer tr;
 
-    private void Start()
+    public WhiteScreen _whiteScreen;
+    public PlayerMovementController _playerMovementController;
+    public bool IsJumping;
+
+    public bool SpacePressed;
+
+    private Camera _camera;
+
+    private bool _isDashing;
+    private bool _isGrounded;
+
+    private Collider[] _playerCollider;
+    private PlayerStatus _playerStatus;
+    private Rigidbody _rigidbody;
+    private PlayerStateMachine _stateMachine;
+    private PlayerStateObserver _stateObserver;
+
+    public bool CanJump { get; set; } = true;
+
+    public Vector3 LastDirection { get; set; }
+    public float MaxSpeed { get; set; } = 10f;
+
+    public float HorizontalInput { get; set; }
+    public float VerticalInput { get; set; }
+    public bool CanDash { get; set; } = true;
+    public bool IsDashing { get; set; }
+
+    public bool CanMove { get; set; }
+
+    public float MoveSpeed
     {
-        rb = GetComponent<Rigidbody>();
-        stateMachine = new PlayerStateMachine();
-        stateObserver = new PlayerStateObserver();
-        playerCollider = GetComponents<Collider>();
-        stateObserver.Subscribe(stateMachine);
-        stateMachine.ChangeState(new IdleState());
+        get => moveSpeed;
+        set => moveSpeed = value;
     }
 
+    public float TurnSmoothTime
+    {
+        get => turnSmoothTime;
+        set => turnSmoothTime = value;
+    }
+
+    public TrailRenderer TR
+    {
+        get => tr;
+        set => tr = value;
+    }
+
+    public float DashingPower
+    {
+        get => dashingPower;
+        set => dashingPower = value;
+    }
+
+    public float DashingTime
+    {
+        get => dashingTime;
+        set => dashingTime = value;
+    }
+
+    public float DashingCooldown
+    {
+        get => dashingCooldown;
+        set => dashingCooldown = value;
+    }
+
+    public bool IsPlayerMoving
+    {
+        get
+        {
+            var movementThreshold = 0.1f;
+            return Mathf.Abs(HorizontalInput) >= movementThreshold || Mathf.Abs(VerticalInput) >= movementThreshold;
+        }
+    }
+
+    private void Awake()
+    {
+        _camera = Camera.main;
+        _rigidbody = GetComponent<Rigidbody>();
+        _stateMachine = GetComponent<PlayerStateMachine>();
+        _playerStatus = GetComponent<PlayerStatus>();
+        _stateObserver = GetComponent<PlayerStateObserver>();
+        _stateMachine.SetPlayerController(this);
+        _playerMovementController = GetComponent<PlayerMovementController>();
+        _playerCollider = GetComponents<Collider>();
+        _stateObserver.Subscribe(_stateMachine);
+        _stateMachine.ChangeState(new IdleState());
+    }
 
     private void Update()
     {
-        stateMachine.UpdateState();
-
-        HorizontalInput = GetHorizontalInput();
-        VerticalInput = GetVerticalInput();
+        HorizontalInput = Input.GetAxis("Horizontal");
+        VerticalInput = Input.GetAxis("Vertical");
+        IsGrounded();
+        _stateMachine.UpdateState();
+        IsOnTerrain();
     }
 
     private void OnDestroy()
     {
-        // Unsubscribe from the observer to avoid memory leaks
-        stateObserver.Unsubscribe(stateMachine);
+        _stateObserver.Unsubscribe(_stateMachine);
     }
-
-
-    // Other methods...
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground")) isGrounded = true; // Player is grounded
+        foreach (var contact in collision.contacts)
+            if (Vector3.Dot(contact.normal, Vector3.up) > 0.9f)
+            {
+                _isGrounded = true;
+                break;
+            }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground")) isGrounded = false; // Player is no longer grounded
-    }
-
-    public float GetMoveSpeed()
-    {
-        return moveSpeed;
-    }
-
-    public float GetJumpForce()
-    {
-        return jumpForce;
+        _isGrounded = false;
+        foreach (var contact in collision.contacts)
+            if (Vector3.Dot(contact.normal, Vector3.up) > 0.9f)
+                return;
     }
 
     public Rigidbody GetRigidbody()
     {
-        return rb;
-    }
-
-    public Transform GetTransform()
-    {
-        return transform; // This returns the Transform component of the player object.
-    }
-
-    public Collider[] GetColliders()
-    {
-        return playerCollider;
+        return _rigidbody;
     }
 
     public bool IsGrounded()
     {
-        return isGrounded;
+        //Debug.Log(_isGrounded);
+        return _isGrounded;
     }
 
-    public bool IsJumping()
+
+    public bool IsOnTerrain()
     {
-        return _isJumping;
+        if (transform.position.y < -10f)
+            _stateMachine.ChangeState(new DeathState());
+        return false;
     }
 
-    public float GetHorizontalInput()
+    public Vector3 PlayerInput()
     {
-        return Input.GetAxis("Horizontal");
-    }
-
-    public float GetVerticalInput()
-    {
-        return Input.GetAxis("Vertical");
-    }
-
-    public void SetIsJumping(bool IsJumping)
-    {
-        _isJumping = IsJumping;
+        return new Vector3(HorizontalInput, 0f, VerticalInput);
     }
 }

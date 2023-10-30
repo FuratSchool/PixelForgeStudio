@@ -47,8 +47,8 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
-        FindObjectOfType<PlayerMovement>().SetCanMove(false);
-        FindObjectOfType<HoldJumping>().SetCanJump(true);
+        FindObjectOfType<PlayerController>().CanMove = false;
+        //FindObjectOfType<HoldJumping>().SetCanJump(true);
         dialogueCanvas.SetActive(true); // show the canvas when dialogue starts
 
         nameText.text = dialogue.name;
@@ -84,8 +84,8 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
-        FindObjectOfType<PlayerMovement>().SetCanMove(true);
-        FindObjectOfType<HoldJumping>().SetCanJump(true);
+        FindObjectOfType<PlayerController>().CanMove = true;
+//        FindObjectOfType<HoldJumping>().SetCanJump(true);
         dialogueCanvas.SetActive(false); // hide the canvas when dialogue ends
 
         foreach (var dialogueTrigger in dialogueTriggers) dialogueTrigger.EndDialogue();
