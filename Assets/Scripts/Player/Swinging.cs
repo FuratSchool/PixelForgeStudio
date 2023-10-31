@@ -29,7 +29,7 @@ public class Swinging : MonoBehaviour
     private bool _canSwing = true;
     private Vector3 collision;
     private bool _isSwinging;
-    private Interactable interactable;
+    private UIController _UIController;
     public bool IsSwinging => _isSwinging;
     public bool InRange { get; set; }
 
@@ -40,7 +40,7 @@ public class Swinging : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        interactable = FindObjectOfType<Interactable>();
+        _UIController = FindObjectOfType<UIController>();
     }
     void Update()
     {
@@ -61,8 +61,8 @@ public class Swinging : MonoBehaviour
         RaycastHit hit;
         if (Physics.SphereCast(ray, sphereRadius, out hit, DistanceToObject, swingable) && _canSwing)
         {
-            interactable.InteractText = "Hold E to Swing";
-            interactable.InteractableTextActive = true;
+            _UIController.SetInteractText("Hold E to Swing");
+            _UIController.SetInteractableTextActive(true);
             collision = hit.point;
             if (DebugGUI)
             {
@@ -82,7 +82,7 @@ public class Swinging : MonoBehaviour
         }
         else
         {
-            interactable.InteractableTextActive = false;
+            _UIController.SetInteractableTextActive(false);
         }
     }
 
