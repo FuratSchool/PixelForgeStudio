@@ -12,22 +12,24 @@ public class HoldJumping : MonoBehaviour
     private Rigidbody _rigidbody;
     [SerializeField] private float jumpTime = 0.35f;
     [SerializeField] private float jumpTimeCounter;
-    [SerializeField] private float force = 10;
-
+    [SerializeField] private float force = 10f;
+    [SerializeField] private float forceHoldJump = 1f;
     private bool isJumping;
+    private bool canJump = true; //for dialogue
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         distToGround = GetComponent<Collider>().bounds.extents.y;
     }
     //checks if player is grounded using raycasting
-    bool IsGrounded()
+    public bool IsGrounded()
     {
         return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.2f);
     }
 
     private void FixedUpdate()
     {
+        if (!canJump) return; //for dialogue
         if (IsGrounded() && SpacePressed && isJumping == false)
         {
             isJumping = true;
@@ -38,7 +40,7 @@ public class HoldJumping : MonoBehaviour
         {
             if (jumpTimeCounter > 0)
             {
-                _rigidbody.AddForce(Vector3.up * 0.5f, ForceMode.Impulse);
+                _rigidbody.AddForce(Vector3.up * forceHoldJump, ForceMode.Impulse);
                 jumpTimeCounter -= Time.deltaTime;
                 
             }
@@ -54,7 +56,12 @@ public class HoldJumping : MonoBehaviour
     }
     void OnJump(InputValue inputValue)
     {
+        if (!canJump) return; //for dialogue
         //Gives change in state of the space button
         SpacePressed = Convert.ToBoolean(inputValue.Get<float>());
+    }
+    public void SetCanJump(bool canJumpValue)
+    {
+        canJump = canJumpValue;
     }
 }
