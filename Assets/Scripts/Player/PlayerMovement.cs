@@ -24,6 +24,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _isDashing;
     private Vector3 _lastDirection;
     private Vector2 _movement = Vector2.zero;
+    private bool _isMoving = false;
     
     private float _turnSmoothVelocity;
 
@@ -37,7 +38,10 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_isDashing) return;
         PlayerMove();
-        FootPrint();
+        if (_isMoving)
+        {
+            FootPrint();
+        }
     }
 
     private void OnMove(InputValue inputValue)
@@ -77,6 +81,7 @@ public class PlayerMovement : MonoBehaviour
         //checks if the player is moving.
         if (direction.magnitude >= 0.1f)
         {
+            _isMoving = true;
             _lastDirection = direction;
             //calculates the angle of the direction the player is moving.
             if (_camera != null)
@@ -92,6 +97,10 @@ public class PlayerMovement : MonoBehaviour
                 var moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 return moveDir;
             }
+        }
+        else
+        {
+            _isMoving = false;
         }
 
         return new Vector3();
