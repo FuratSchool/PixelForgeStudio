@@ -14,13 +14,4 @@ public class MainMenu : MonoBehaviour
         Debug.Log("Quit");
         Application.Quit();
     }
-
-    public void GoToMainMenu(){
-        Debug.Log("Go to Main Menu clicked");
-        SceneManager.LoadScene(0);
-    }
-
-    public void GoToSettings(){
-        SceneManager.LoadScene("SettingsMenu");
-    }
 }
