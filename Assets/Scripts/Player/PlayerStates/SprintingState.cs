@@ -5,7 +5,6 @@ public class SprintingState : IPlayerState
     private readonly float runSpeed = 8.0f;
     private PlayerController _playerController;
     private PlayerMovementController _playerMovement;
-    private PlayerStateMachine _stateMachine;
 
     public void EnterState(PlayerStateMachine stateMachine)
     {
@@ -17,10 +16,19 @@ public class SprintingState : IPlayerState
     public void UpdateState(PlayerStateMachine stateMachine)
     {
         _playerMovement.OnMove();
+
         if (!_playerController.IsPlayerMoving)
-            _stateMachine.ChangeState(new IdleState());
-        if (Input.GetKeyDown(KeyCode.Q) && _playerController.CanDash)
+            stateMachine.ChangeState(new IdleState());
+
+        if (_playerController.IsPlayerMoving && !Input.GetKey(KeyCode.LeftShift))
+            stateMachine.ChangeState(new WalkingState());
+
+        if (Input.GetKeyDown(KeyCode.Q) && _playerController.canDash)
             stateMachine.ChangeState(new DashingState());
+
+        if (_playerController.IsGrounded() && _playerController.canJump)
+            if (Input.GetKey(KeyCode.Space))
+                stateMachine.ChangeState(new JumpingState());
     }
 
     public void ExitState(PlayerStateMachine stateMachine)

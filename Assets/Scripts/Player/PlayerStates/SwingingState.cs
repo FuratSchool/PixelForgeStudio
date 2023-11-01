@@ -1,6 +1,6 @@
 using System;
 
-public class GrapplingState : IPlayerState
+public class SwingingState : IPlayerState
 {
     public void EnterState(PlayerStateMachine stateMachine)
     {

@@ -21,12 +21,11 @@ public class PlayerController : MonoBehaviour
     public WhiteScreen _whiteScreen;
     public PlayerMovementController _playerMovementController;
     public bool IsJumping;
+    public bool canDash = true;
 
-    public bool SpacePressed;
+    public bool canJump = true;
 
     private Camera _camera;
-
-    private bool _isDashing;
     private bool _isGrounded;
 
     private Collider[] _playerCollider;
@@ -35,14 +34,13 @@ public class PlayerController : MonoBehaviour
     private PlayerStateMachine _stateMachine;
     private PlayerStateObserver _stateObserver;
 
-    public bool CanJump { get; set; } = true;
-
     public Vector3 LastDirection { get; set; }
     public float MaxSpeed { get; set; } = 10f;
 
     public float HorizontalInput { get; set; }
     public float VerticalInput { get; set; }
-    public bool CanDash { get; set; } = true;
+    public bool CanSprint { get; set; } = false;
+
     public bool IsDashing { get; set; }
 
     public bool CanMove { get; set; }
@@ -92,9 +90,11 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public float TurnSmoothVelocity { get; set; }
+
     private void Awake()
     {
-        _camera = Camera.main;
+        TR = GetComponent<TrailRenderer>();
         _rigidbody = GetComponent<Rigidbody>();
         _stateMachine = GetComponent<PlayerStateMachine>();
         _playerStatus = GetComponent<PlayerStatus>();
@@ -104,6 +104,11 @@ public class PlayerController : MonoBehaviour
         _playerCollider = GetComponents<Collider>();
         _stateObserver.Subscribe(_stateMachine);
         _stateMachine.ChangeState(new IdleState());
+    }
+
+    private void Start()
+    {
+        _camera = Camera.main;
     }
 
     private void Update()
@@ -123,7 +128,7 @@ public class PlayerController : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         foreach (var contact in collision.contacts)
-            if (Vector3.Dot(contact.normal, Vector3.up) > 0.9f)
+            if (Vector3.Dot(contact.normal, Vector3.up) > 0.2f)
             {
                 _isGrounded = true;
                 break;
@@ -134,7 +139,7 @@ public class PlayerController : MonoBehaviour
     {
         _isGrounded = false;
         foreach (var contact in collision.contacts)
-            if (Vector3.Dot(contact.normal, Vector3.up) > 0.9f)
+            if (Vector3.Dot(contact.normal, Vector3.up) > 0.2f)
                 return;
     }
 
@@ -160,5 +165,10 @@ public class PlayerController : MonoBehaviour
     public Vector3 PlayerInput()
     {
         return new Vector3(HorizontalInput, 0f, VerticalInput);
+    }
+
+    public void SetCanJump(bool canJumpValue)
+    {
+        canJump = canJumpValue;
     }
 }

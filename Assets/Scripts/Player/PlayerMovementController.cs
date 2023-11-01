@@ -1,12 +1,20 @@
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovementController : MonoBehaviour
 {
     public float TurnSmoothVelocity;
+    public bool canDash = true;
+    public bool canJump = true;
     private Camera _camera;
     private PlayerController _playerController;
     private Rigidbody _rigidbody;
     private PlayerStateMachine _stateMachine;
+    private DashController dashController;
+
+    public bool SpacePressed { get; set; }
+
 
     private void Start()
     {
@@ -28,9 +36,18 @@ public class PlayerMovementController : MonoBehaviour
         PlayerMove();
     }
 
+    private void OnJump(InputValue inputValue)
+    {
+        if (!canJump) return; //for dialogue
+        //Gives change in state of the space button
+        SpacePressed = Convert.ToBoolean(inputValue.Get<float>());
+    }
+
     private void OnDash()
     {
-        if (_playerController.CanDash) _stateMachine.ChangeState(new DashingState());
+        var dashController = GetComponent<DashController>();
+        if (canDash)
+            StartCoroutine(dashController.Dash());
     }
 
     public void OnSprintStart()
@@ -62,33 +79,32 @@ public class PlayerMovementController : MonoBehaviour
         //         Space.World);
         // }
         transform.Translate(
-            GetDirection(_playerController.PlayerInput()).normalized *
+            GetDirection().normalized *
             (_playerController.MoveSpeed * Time.deltaTime),
             Space.World);
     }
 
-    public Vector3 GetDirection(Vector3 playerInput)
+    public Vector3 GetDirection()
     {
         var direction = _playerController.PlayerInput();
-        if (_playerController.PlayerInput().magnitude >= 0.1f)
-        {
-            _playerController.LastDirection = _playerController.PlayerInput();
+        //checks if the player is moving.
+        if (direction.magnitude >= 0.1f)
             //calculates the angle of the direction the player is moving.
             if (_camera != null)
             {
                 var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg +
                                   _camera.transform.eulerAngles.y;
                 //it smooths the transition between the transform.eulerAngles.y and the targetAngle.
+                var playerControllerTurnSmoothVelocity = _playerController.TurnSmoothVelocity;
                 var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle,
-                    ref TurnSmoothVelocity,
+                    ref playerControllerTurnSmoothVelocity,
                     _playerController.TurnSmoothTime);
-                //sets the rotation of the player to the angle.
+                //sets the rotation of the player to the angle.ß
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
                 //rotates the player to the direction they are moving.
                 var moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 return moveDir;
             }
-        }
 
         return new Vector3();
     }

@@ -18,12 +18,13 @@ public class WalkingState : IPlayerState
         if (!_playerController.IsPlayerMoving)
             stateMachine.ChangeState(new IdleState());
 
-        if (_playerController.IsGrounded() && _playerController.CanJump)
+        if (_playerController.IsGrounded() && _playerController.canJump)
             if (Input.GetKey(KeyCode.Space))
-                stateMachine.ChangeState(new JumpingState(_playerController));
+                stateMachine.ChangeState(new JumpingState());
 
-        if (Input.GetKeyDown(KeyCode.Q) && _playerController.CanDash)
+        if (Input.GetKeyDown(KeyCode.Q) && _playerController.canDash)
             stateMachine.ChangeState(new DashingState());
+
         if (Input.GetKeyDown(KeyCode.LeftShift)) _playerMovement.OnSprintStart();
     }
 

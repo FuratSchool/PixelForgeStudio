@@ -1,46 +1,31 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class DashController
+public class DashController : MonoBehaviour
 {
-    private readonly Vector3 _lastDirection;
-    private readonly PlayerMovementController _playerMovement;
-    private readonly Rigidbody _rigidbody;
-    private readonly float dashingCooldown;
-    private readonly float dashingPower;
-    private readonly float dashingTime;
-    private readonly TrailRenderer tr;
-    private bool _canDash;
+    [SerializeField] private readonly float dashingCooldown = 2.0f;
+
+    [SerializeField] private readonly float dashingPower = 10.0f;
+
+    [SerializeField] private readonly float dashingTime = 1.0f;
     private bool _isDashing;
+    private PlayerController _playerController;
+    private PlayerMovementController _playerMovement;
+    private Rigidbody _rigidbody;
+    private PlayerStateMachine _stateMachine;
 
-    public DashController(
-        bool canDash,
-        bool isDashing,
-        Rigidbody rigidbody,
-        TrailRenderer transform,
-        Vector3 lastDirection,
-        float power,
-        float time,
-        float cooldown,
-        PlayerMovementController playerMovement)
-
+    public void Start()
     {
-        _canDash = canDash;
-        _isDashing = isDashing;
-        _rigidbody = rigidbody;
-        tr = transform;
-        _lastDirection = lastDirection;
-        dashingPower = power;
-        dashingTime = time;
-        dashingCooldown = cooldown;
-        _playerMovement = playerMovement;
+        _playerController = FindObjectOfType<PlayerController>();
+        _stateMachine = FindObjectOfType<PlayerStateMachine>();
+        _playerMovement = FindObjectOfType<PlayerMovementController>();
+        _rigidbody = _playerController.GetRigidbody();
     }
 
     public IEnumerator Dash()
     {
         PrepareForDash();
-        PerformDash();
+        yield return StartCoroutine(PerformDash());
         FinishDash();
         yield return new WaitForSeconds(dashingCooldown);
         EnableDashing();
@@ -48,18 +33,17 @@ public class DashController
 
     private void PrepareForDash()
     {
-        _canDash = false;
+        _playerController.canDash = false;
         _isDashing = true;
         _rigidbody.useGravity = false;
     }
 
-    private IEnumerable<WaitForSeconds> PerformDash()
+    private IEnumerator PerformDash()
     {
-        _rigidbody.velocity = _playerMovement.GetDirection(_lastDirection).normalized * dashingPower;
-        tr.emitting = true;
+        _rigidbody.velocity = _playerMovement.GetDirection().normalized * dashingPower;
+        _playerController.TR.emitting = true;
         yield return new WaitForSeconds(dashingTime);
-
-        tr.emitting = false;
+        _playerController.TR.emitting = false;
     }
 
     private void FinishDash()
@@ -71,6 +55,6 @@ public class DashController
 
     private void EnableDashing()
     {
-        _canDash = true;
+        _playerController.canDash = true;
     }
 }

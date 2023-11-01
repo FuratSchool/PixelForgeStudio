@@ -1,52 +1,72 @@
+using Player.PlayerStates;
 using UnityEngine;
 
-public class JumpingController
+public class JumpingController : MonoBehaviour
 {
-    private readonly PlayerController _playerController;
-    private readonly Rigidbody _rigidbody;
-    [SerializeField] private readonly float force = 10f;
-    [SerializeField] private readonly float forceHoldJump = 1f;
-    [SerializeField] private readonly float jumpTime = 0.35f;
-    private float jumpTimeCounter;
+    [SerializeField] private float jumpTime = 0.35f;
+    [SerializeField] private float jumpTimeCounter;
+    [SerializeField] private float force = 10f;
+    [SerializeField] private float forceHoldJump = 1f;
+    private PlayerController _playerController;
+    private PlayerMovementController _playerMovement;
+    private Rigidbody _rigidbody;
+    private PlayerStateMachine _stateMachine;
 
-    public JumpingController(PlayerController playerController)
+    private void Awake()
     {
-        _playerController = playerController;
-        _rigidbody = _playerController.GetRigidbody();
+        _rigidbody = GetComponent<Rigidbody>();
+        _playerController = GetComponent<PlayerController>();
+        _playerMovement = GetComponent<PlayerMovementController>();
+        _stateMachine = FindObjectOfType<PlayerStateMachine>();
     }
 
-    public void Jump()
+    private void FixedUpdate()
     {
-        if (!_playerController.CanJump) return; //for dialogue
-        if (_playerController.IsGrounded() && _playerController.SpacePressed && _playerController.IsJumping == false)
+        if (CanPerformJump()) return;
         {
-            _playerController.IsJumping = true;
-            jumpTimeCounter = jumpTime;
-            _rigidbody.AddForce(Vector3.up * force, ForceMode.Impulse);
+            if (!_playerController.canJump) return;
         }
+        if (CanJump()) StartJump();
 
-        if (_playerController.IsJumping && _playerController.SpacePressed)
+        if (IsJumping())
+            ContinueJump();
+        else
+            jumpTimeCounter = 0;
+    }
+
+    private bool CanPerformJump()
+    {
+        return !_playerController.canJump;
+    }
+
+    private bool CanJump()
+    {
+        return _playerController.IsGrounded() && _playerMovement.SpacePressed && !_playerController.IsJumping;
+    }
+
+    private void StartJump()
+    {
+        _playerController.IsJumping = true;
+        jumpTimeCounter = jumpTime;
+        _rigidbody.AddForce(Vector3.up * force, ForceMode.Impulse);
+    }
+
+    private bool IsJumping()
+    {
+        return _playerController.IsJumping && _playerMovement.SpacePressed;
+    }
+
+    private void ContinueJump()
+    {
+        if (jumpTimeCounter > 0)
         {
-            if (jumpTimeCounter > 0)
-            {
-                _rigidbody.AddForce(Vector3.up * forceHoldJump, ForceMode.Impulse);
-                jumpTimeCounter -= Time.deltaTime;
-            }
-            else
-            {
-                _playerController.IsJumping = false;
-            }
+            _rigidbody.AddForce(Vector3.up * forceHoldJump, ForceMode.Impulse);
+            jumpTimeCounter -= Time.deltaTime;
         }
         else
         {
-            jumpTimeCounter = 0;
+            _playerController.IsJumping = false;
+            _stateMachine.ChangeState(new FallingState());
         }
-    }
-
-    public void OnJump()
-    {
-        if (!_playerController.CanJump) return;
-        _playerController.SpacePressed = true;
-        Jump();
     }
 }
