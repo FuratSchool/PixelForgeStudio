@@ -24,6 +24,7 @@ public class PlayerController : MonoBehaviour
     public bool canDash = true;
 
     public bool canJump = true;
+    public Swinging _swingingComponent;
 
     private Camera _camera;
     private bool _isGrounded;
@@ -101,6 +102,8 @@ public class PlayerController : MonoBehaviour
         _stateObserver = GetComponent<PlayerStateObserver>();
         _stateMachine.SetPlayerController(this);
         _playerMovementController = GetComponent<PlayerMovementController>();
+        _swingingComponent = GetComponent<Swinging>();
+
         _playerCollider = GetComponents<Collider>();
         _stateObserver.Subscribe(_stateMachine);
         _stateMachine.ChangeState(new IdleState());

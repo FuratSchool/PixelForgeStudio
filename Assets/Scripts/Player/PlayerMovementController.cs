@@ -7,14 +7,16 @@ public class PlayerMovementController : MonoBehaviour
     public float TurnSmoothVelocity;
     public bool canDash = true;
     public bool canJump = true;
+    public bool _canSwing = true;
     private Camera _camera;
     private PlayerController _playerController;
     private Rigidbody _rigidbody;
     private PlayerStateMachine _stateMachine;
-    private DashController dashController;
 
+    private DashController dashController;
     public bool SpacePressed { get; set; }
 
+    public bool SwingPressed { get; set; }
 
     private void Start()
     {
@@ -33,7 +35,7 @@ public class PlayerMovementController : MonoBehaviour
 
     public void OnMove()
     {
-        PlayerMove();
+        if (_playerController.CanMove) PlayerMove();
     }
 
     private void OnJump(InputValue inputValue)
@@ -63,28 +65,26 @@ public class PlayerMovementController : MonoBehaviour
         _playerController.MoveSpeed = 6f;
     }
 
+    private void OnSwing(InputValue input)
+    {
+        SwingPressed = Convert.ToBoolean(input.Get<float>());
+    }
+
     public void PlayerMove()
     {
-        // if (FindObjectOfType<Swinging>().IsSwinging)
-        // {
-        //     var velocity = _rigidbody.velocity;
-        //     if (velocity.magnitude < _playerController.MaxSpeed)
-        //         _rigidbody.AddForce(
-        //             GetDirection(_playerController.PlayerInput()).normalized *
-        //             (_playerController.MoveSpeed * Time.deltaTime),
-        //             ForceMode.VelocityChange);
-        // }
-        // else
-        // {
-        //     transform.Translate(
-        //         GetDirection(_playerController.PlayerInput()).normalized *
-        //         (_playerController.MoveSpeed * Time.deltaTime),
-        //         Space.World);
-        // }
-        transform.Translate(
-            GetDirection().normalized *
-            (_playerController.MoveSpeed * Time.deltaTime),
-            Space.World);
+        //moves the player. taking into account the delta time, world space, and the speed.
+        if (FindObjectOfType<Swinging>().IsSwinging)
+        {
+            var velocity = _rigidbody.velocity;
+            if (velocity.magnitude < _playerController.MaxSpeed)
+                _rigidbody.AddForce(GetDirection().normalized * (-_playerController.MoveSpeed * Time.deltaTime),
+                    ForceMode.VelocityChange);
+        }
+        else
+        {
+            transform.Translate(GetDirection().normalized * (_playerController.MoveSpeed * Time.deltaTime),
+                Space.World);
+        }
     }
 
     public Vector3 GetDirection()

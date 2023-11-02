@@ -1,4 +1,5 @@
 using Player.PlayerStates;
+using UnityEngine;
 
 public class JumpingState : IPlayerState
 {
@@ -12,13 +13,18 @@ public class JumpingState : IPlayerState
     public void UpdateState(PlayerStateMachine playerStateMachine)
     {
         if (!_playerController.IsGrounded() && playerStateMachine.GetCurrentState() is JumpingState)
-            playerStateMachine.ChangeState(new FallingState());
+        {
+            if (_playerController._swingingComponent.InRange) // Check if the player is in range of the swinging object
+            {
+                Debug.Log("ts");
 
-        if (_playerController.IsPlayerMoving && _playerController.IsGrounded())
-            playerStateMachine.GetPlayerMovementController().OnMove();
-        //
-        // if (Input.GetKeyDown(KeyCode.Q) && _playerController.canDash)
-        //     playerStateMachine.ChangeState(new DashingState());
+                playerStateMachine.ChangeState(new SwingingState());
+            }
+        }
+        else
+        {
+            playerStateMachine.ChangeState(new FallingState());
+        }
     }
 
     public void ExitState(PlayerStateMachine playerStateMachine)

@@ -26,33 +26,32 @@ public class SwingingController : MonoBehaviour
     public GameObject player;
     private bool _canSwing = true;
     private Vector3 collision;
+    private Interactable interactable;
 
     private ConfigurableJoint joint;
     private Vector3 SwingableObjectPos;
 
     private bool SwingPressed;
-
-    //   private Interactable interactable;
     public bool IsSwinging { get; private set; }
 
     public bool InRange { get; set; }
 
+    public GameObject SwingableObjectGAME { get; set; }
+
     // Update is called once per frame
     private void Start()
     {
-        //interactable = FindObjectOfType<Interactable>();
+        interactable = FindObjectOfType<Interactable>();
     }
 
     private void Update()
     {
         if (IsSwinging == false && InRange)
-        {
-            //  CheckSwing();
-        }
+            CheckSwing();
         else if (SwingPressed == false && IsSwinging)
-        {
             EndSwing();
-        }
+        else
+            interactable.InteractableTextActive = false;
     }
 
     private void LateUpdate()
@@ -74,44 +73,40 @@ public class SwingingController : MonoBehaviour
         }
     }
 
-    // private void CheckSwing()
-    // {
-    //     var ray = new Ray(this.transform.position,
-    //         (this.transform.forward.normalized + (this.transform.up * angle).normalized));
-    //     RaycastHit hit;
-    //     if (Physics.SphereCast(ray, sphereRadius, out hit, DistanceToObject, swingable) && _canSwing)
-    //     {
-    //         interactable.InteractText = "Hold E to Swing";
-    //         interactable.InteractableTextActive = true;
-    //         collision = hit.point;
-    //         if (DebugGUI)
-    //         {
-    //             Debug.Log(hit.transform.gameObject);
-    //             Debug.DrawLine(this.transform.position, collision, Color.green);
-    //         }
-    //         if(SwingPressed)
-    //         {
-    //             StartCoroutine(TimedSwing());
-    //
-    //             SwingableObjectPos = hit.transform.gameObject.transform.position;
-    //             MakeJoint(hit);
-    //             lr.positionCount = 2;
-    //             _isSwinging = true;
-    //             _canSwing = false;
-    //         }
-    //     }
-    //     else
-    //     {
-    //         interactable.InteractableTextActive = false;
-    //     }
-    // }
+    private void CheckSwing()
+    {
+        if (_canSwing)
+        {
+            interactable.InteractText = "Hold E to Swing";
+            interactable.InteractableTextActive = true;
+            collision = SwingableObjectGAME.transform.position;
+            if (DebugGUI)
+                //Debug.Log(collision);
+                Debug.DrawLine(transform.position, collision, Color.green);
 
-    private void MakeJoint(RaycastHit hit)
+            if (SwingPressed)
+            {
+                StartCoroutine(TimedSwing());
+
+                SwingableObjectPos = SwingableObjectGAME.transform.gameObject.transform.position;
+                MakeJoint(collision);
+                lr.positionCount = 2;
+                IsSwinging = true;
+                _canSwing = false;
+            }
+        }
+        else
+        {
+            interactable.InteractableTextActive = false;
+        }
+    }
+
+    private void MakeJoint(Vector3 hit)
     {
         joint = player.gameObject.AddComponent<ConfigurableJoint>();
         joint.autoConfigureConnectedAnchor = false;
         //joint.connectedBody = hit.rigidbody;
-        joint.connectedAnchor = hit.transform.position;
+        joint.connectedAnchor = hit;
         joint.anchor = new Vector3(0, 0, 0);
 
         joint.xMotion = ConfigurableJointMotion.Limited;

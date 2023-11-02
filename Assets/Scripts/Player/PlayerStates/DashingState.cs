@@ -19,7 +19,7 @@ public class DashingState : IPlayerState
     {
         if (Time.time - dashStartTime >= _playerController.DashingTime) playerStateMachine.ChangeState(new IdleState());
         if (Time.time - dashStartTime >= _playerController.DashingTime && _playerController.IsPlayerMoving)
-            playerStateMachine.ChangeState(new IdleState());
+            playerStateMachine.ChangeState(new WalkingState());
     }
 
     public void ExitState(PlayerStateMachine playerStateMachine)

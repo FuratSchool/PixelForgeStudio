@@ -18,8 +18,6 @@ public class IdleState : IPlayerState
 
         if (Input.GetKeyDown(KeyCode.LeftShift)) _playerMovement.OnSprintStart();
 
-        if (Input.GetKeyDown(KeyCode.Q) && _playerController.canDash)
-            stateMachine.ChangeState(new DashingState());
 
         if (_playerController.IsGrounded() && _playerController.canJump)
             if (Input.GetKey(KeyCode.Space))

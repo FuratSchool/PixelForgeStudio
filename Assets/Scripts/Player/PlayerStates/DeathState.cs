@@ -1,12 +1,12 @@
 public class DeathState : IPlayerState
 {
     private PlayerController _playerController;
-    private PlayerStateMachine stateMachine;
+    private PlayerStateMachine _stateMachine;
 
     public void EnterState(PlayerStateMachine stateMachine)
     {
-        this.stateMachine = stateMachine;
-        _playerController = this.stateMachine.GetPlayerController();
+        _stateMachine = stateMachine;
+        _playerController = stateMachine.GetPlayerController();
     }
 
     public void UpdateState(PlayerStateMachine stateMachine)

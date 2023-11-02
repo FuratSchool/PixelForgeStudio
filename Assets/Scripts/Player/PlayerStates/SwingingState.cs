@@ -1,19 +1,28 @@
-using System;
+using UnityEngine;
 
 public class SwingingState : IPlayerState
 {
+    private PlayerController _playerController;
+    private PlayerMovementController _playerMovement;
+    private Rigidbody _rigidbody;
+
     public void EnterState(PlayerStateMachine stateMachine)
     {
-        throw new NotImplementedException();
+        _playerController = stateMachine.GetPlayerController();
+        _playerMovement = stateMachine.GetPlayerMovementController();
+        _rigidbody = _playerController.GetRigidbody();
     }
 
     public void UpdateState(PlayerStateMachine stateMachine)
     {
-        throw new NotImplementedException();
+        if (_playerController.IsGrounded() && !_playerController.IsPlayerMoving)
+            stateMachine.ChangeState(new IdleState());
+
+        if (_playerController.IsGrounded() && _playerController.IsPlayerMoving)
+            stateMachine.ChangeState(new WalkingState());
     }
 
     public void ExitState(PlayerStateMachine stateMachine)
     {
-        throw new NotImplementedException();
     }
 }
