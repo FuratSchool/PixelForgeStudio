@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
     public bool IsDashing { get; set; }
 
-    public bool CanMove { get; set; }
+    public bool CanMove { get; set; } = true;
 
     public float MoveSpeed
     {
