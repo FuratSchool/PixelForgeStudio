@@ -45,10 +45,13 @@ public class PlayerMovementController : MonoBehaviour
 
     private void OnDash()
     {
-        var dashController = GetComponent<DashController>();
-        if (canDash)
+        if (canDash && !(_stateMachine.GetCurrentState() is IdleState))
+        {
+            var dashController = GetComponent<DashController>();
             StartCoroutine(dashController.Dash());
+        }
     }
+
 
     public void OnSprintStart()
     {

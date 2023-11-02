@@ -1,3 +1,5 @@
+using Player.PlayerStates;
+
 public class JumpingState : IPlayerState
 {
     private PlayerController _playerController;
@@ -9,11 +11,11 @@ public class JumpingState : IPlayerState
 
     public void UpdateState(PlayerStateMachine playerStateMachine)
     {
-        if (_playerController.PlayerInput().magnitude >= 0.1f && !_playerController.IsGrounded())
-            playerStateMachine.GetPlayerMovementController().OnMove();
+        if (!_playerController.IsGrounded() && playerStateMachine.GetCurrentState() is JumpingState)
+            playerStateMachine.ChangeState(new FallingState());
 
-        // if (_playerController.IsGrounded())
-        //     playerStateMachine.ChangeState(new IdleState());
+        if (_playerController.IsPlayerMoving && _playerController.IsGrounded())
+            playerStateMachine.GetPlayerMovementController().OnMove();
         //
         // if (Input.GetKeyDown(KeyCode.Q) && _playerController.canDash)
         //     playerStateMachine.ChangeState(new DashingState());

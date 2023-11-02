@@ -1,4 +1,3 @@
-using Player.PlayerStates;
 using UnityEngine;
 
 public class JumpingController : MonoBehaviour
@@ -66,7 +65,6 @@ public class JumpingController : MonoBehaviour
         else
         {
             _playerController.IsJumping = false;
-            _stateMachine.ChangeState(new FallingState());
         }
     }
 }
