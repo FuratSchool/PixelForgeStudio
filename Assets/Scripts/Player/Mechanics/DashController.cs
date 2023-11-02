@@ -40,6 +40,7 @@ public class DashController : MonoBehaviour
         _playerMovement.canDash = false;
         _playerMovement.IsDashing = true;
         _playerController.CanMove = false;
+        _playerMovement.canJump = false;
         _rigidbody.useGravity = false;
     }
 
@@ -57,6 +58,7 @@ public class DashController : MonoBehaviour
         _rigidbody.velocity = Vector3.zero;
         _playerMovement.IsDashing = false;
         _playerController.CanMove = true;
+        _playerMovement.canJump = true;
 
     }
 
