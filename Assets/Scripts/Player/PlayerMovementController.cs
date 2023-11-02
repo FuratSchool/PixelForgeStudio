@@ -12,6 +12,7 @@ public class PlayerMovementController : MonoBehaviour
     private PlayerController _playerController;
     private Rigidbody _rigidbody;
     private PlayerStateMachine _stateMachine;
+    public bool IsDashing { get; set; }
 
     private DashController dashController;
     public bool SpacePressed { get; set; }
@@ -25,11 +26,12 @@ public class PlayerMovementController : MonoBehaviour
         _stateMachine.SetPlayerMovementController(this);
         _rigidbody = _playerController.GetRigidbody();
         _camera = Camera.main;
+        IsDashing = false;
     }
 
     private void Update()
     {
-        if (_playerController.IsDashing || !_playerController.CanMove) return;
+        if (IsDashing || !_playerController.CanMove) return;
         if (_playerController._whiteScreen.isTransitioning && _playerController._whiteScreen.lockMovement) return;
     }
 
@@ -40,16 +42,18 @@ public class PlayerMovementController : MonoBehaviour
 
     private void OnJump(InputValue inputValue)
     {
-        if (!canJump) return; //for dialogue
-        //Gives change in state of the space button
-        SpacePressed = Convert.ToBoolean(inputValue.Get<float>());
+        if (canJump) 
+            SpacePressed = Convert.ToBoolean(inputValue.Get<float>());
+
     }
 
     private void OnDash()
     {
-        if (canDash && !(_stateMachine.GetCurrentState() is IdleState))
+        var dashController = GetComponent<DashController>();
+
+        if (canDash && !IsDashing && _stateMachine.GetCurrentState() is not IdleState)
         {
-            var dashController = GetComponent<DashController>();
+            IsDashing = true;
             StartCoroutine(dashController.Dash());
         }
     }

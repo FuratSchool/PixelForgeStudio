@@ -3,38 +3,43 @@ using UnityEngine;
 
 public class DashController : MonoBehaviour
 {
-    [SerializeField] private readonly float dashingCooldown = 2.0f;
+    [SerializeField] private float dashingCooldown = 2.0f;
+    [SerializeField] private float dashingPower = 10.0f;
+    [SerializeField] private float dashingTime = 1.0f;
 
-    [SerializeField] private readonly float dashingPower = 10.0f;
-
-    [SerializeField] private readonly float dashingTime = 1.0f;
-    private bool _isDashing;
     private PlayerController _playerController;
     private PlayerMovementController _playerMovement;
     private Rigidbody _rigidbody;
-    private PlayerStateMachine _stateMachine;
 
     public void Start()
     {
         _playerController = FindObjectOfType<PlayerController>();
-        _stateMachine = FindObjectOfType<PlayerStateMachine>();
         _playerMovement = FindObjectOfType<PlayerMovementController>();
         _rigidbody = _playerController.GetRigidbody();
     }
 
     public IEnumerator Dash()
     {
+        Debug.Log("Starting Dash");
+
         PrepareForDash();
         yield return StartCoroutine(PerformDash());
         FinishDash();
+        Debug.Log("Finished Dash");
+
         yield return new WaitForSeconds(dashingCooldown);
         EnableDashing();
+        Debug.Log("Can Dash");
+
+        _playerMovement.IsDashing = false;
+
     }
 
     private void PrepareForDash()
     {
-        _playerController.canDash = false;
-        _isDashing = true;
+        _playerMovement.canDash = false;
+        _playerMovement.IsDashing = true;
+        _playerController.CanMove = false;
         _rigidbody.useGravity = false;
     }
 
@@ -50,11 +55,13 @@ public class DashController : MonoBehaviour
     {
         _rigidbody.useGravity = true;
         _rigidbody.velocity = Vector3.zero;
-        _isDashing = false;
+        _playerMovement.IsDashing = false;
+        _playerController.CanMove = true;
+
     }
 
     private void EnableDashing()
     {
-        _playerController.canDash = true;
+        _playerMovement.canDash = true;
     }
 }

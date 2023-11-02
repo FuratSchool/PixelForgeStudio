@@ -6953,6 +6953,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3741fdad9234a1998cfe9fd0cd9fbc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dashingCooldown: 10
+  dashingPower: 10
+  dashingTime: 1
 --- !u!114 &974011427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7007,17 +7010,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 6
   jumpForce: 12
-  dashingPower: 12
-  dashingTime: 0.5
-  dashingCooldown: 1
-  turnSmoothTime: 0.1
+  turnSmoothTime: 0
   tr: {fileID: 974011133}
   _whiteScreen: {fileID: 228464935}
   _playerMovementController: {fileID: 974011126}
   IsJumping: 0
   canDash: 1
   canJump: 1
-  _swingingComponent: {fileID: 0}
+  _swingingComponent: {fileID: 974011131}
 --- !u!114 &974011431
 MonoBehaviour:
   m_ObjectHideFlags: 0

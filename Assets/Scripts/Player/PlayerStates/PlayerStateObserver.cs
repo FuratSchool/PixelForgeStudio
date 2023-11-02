@@ -21,6 +21,6 @@ public class PlayerStateObserver : MonoBehaviour
 
     private void HandlePlayerStateChanged(IPlayerState newState)
     {
-        Debug.Log($"Player's state changed to {newState.GetType().Name}");
+        //Debug.Log($"Player's state changed to {newState.GetType().Name}");
     }
 }

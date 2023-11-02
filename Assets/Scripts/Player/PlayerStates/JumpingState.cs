@@ -10,24 +10,24 @@ public class JumpingState : IPlayerState
         _playerController = stateMachine.GetPlayerController();
     }
 
-    public void UpdateState(PlayerStateMachine playerStateMachine)
+    public void UpdateState(PlayerStateMachine stateMachine)
     {
-        if (!_playerController.IsGrounded() && playerStateMachine.GetCurrentState() is JumpingState)
+        if (!_playerController.IsGrounded() && stateMachine.GetCurrentState() is JumpingState)
         {
-            if (_playerController._swingingComponent.InRange) // Check if the player is in range of the swinging object
-            {
-                Debug.Log("ts");
 
-                playerStateMachine.ChangeState(new SwingingState());
+            if (_playerController._swingingComponent.InRange && Input.GetKeyDown(KeyCode.E))
+            {
+                Debug.Log("In range of the swinging object");
+                stateMachine.ChangeState(new SwingingState());
             }
         }
         else
         {
-            playerStateMachine.ChangeState(new FallingState());
+            stateMachine.ChangeState(new FallingState());
         }
     }
 
-    public void ExitState(PlayerStateMachine playerStateMachine)
+    public void ExitState(PlayerStateMachine stateMachine)
     {
     }
 }

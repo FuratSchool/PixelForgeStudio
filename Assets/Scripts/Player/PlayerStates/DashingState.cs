@@ -15,14 +15,16 @@ public class DashingState : IPlayerState
         dashStartTime = Time.time;
     }
 
-    public void UpdateState(PlayerStateMachine playerStateMachine)
+    public void UpdateState(PlayerStateMachine stateMachine)
     {
-        if (Time.time - dashStartTime >= _playerController.DashingTime) playerStateMachine.ChangeState(new IdleState());
-        if (Time.time - dashStartTime >= _playerController.DashingTime && _playerController.IsPlayerMoving)
-            playerStateMachine.ChangeState(new WalkingState());
+        if (Time.time - dashStartTime >= 3f) stateMachine.ChangeState(new IdleState());
+        if (_playerMovement.IsDashing == false && _playerController.IsGrounded() && _playerController.IsPlayerMoving)
+        {
+            stateMachine.ChangeState(new WalkingState());
+        }
     }
 
-    public void ExitState(PlayerStateMachine playerStateMachine)
+    public void ExitState(PlayerStateMachine stateMachine)
     {
     }
 }

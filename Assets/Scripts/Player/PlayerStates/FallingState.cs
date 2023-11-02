@@ -27,7 +27,10 @@ namespace Player.PlayerStates
             if (_playerController.IsGrounded() && !_playerMovement.SpacePressed)
                 stateMachine.ChangeState(new IdleState());
 
-            if (Input.GetKeyDown(KeyCode.Q) && _playerController.canDash) stateMachine.ChangeState(new DashingState());
+
+            if (Input.GetKeyDown(KeyCode.Q) && _playerMovement.canDash)
+                stateMachine.ChangeState(new DashingState());
+            
         }
 
 

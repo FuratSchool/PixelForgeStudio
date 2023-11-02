@@ -8,11 +8,6 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private float jumpForce = 12.0f;
 
-    [Header("Dashing")] [SerializeField] private float dashingPower = 12f;
-
-    [SerializeField] private float dashingTime = 0.5f;
-    [SerializeField] private float dashingCooldown = 1f;
-
     [Header("Turning")] [SerializeField] private float turnSmoothTime = 0.1f;
 
     [Header("Components")] [SerializeField]
@@ -41,9 +36,7 @@ public class PlayerController : MonoBehaviour
     public float HorizontalInput { get; set; }
     public float VerticalInput { get; set; }
     public bool CanSprint { get; set; } = false;
-
-    public bool IsDashing { get; set; }
-
+    
     public bool CanMove { get; set; } = true;
 
     public float MoveSpeed
@@ -62,24 +55,6 @@ public class PlayerController : MonoBehaviour
     {
         get => tr;
         set => tr = value;
-    }
-
-    public float DashingPower
-    {
-        get => dashingPower;
-        set => dashingPower = value;
-    }
-
-    public float DashingTime
-    {
-        get => dashingTime;
-        set => dashingTime = value;
-    }
-
-    public float DashingCooldown
-    {
-        get => dashingCooldown;
-        set => dashingCooldown = value;
     }
 
     public bool IsPlayerMoving
@@ -116,8 +91,8 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        HorizontalInput = Input.GetAxis("Horizontal");
-        VerticalInput = Input.GetAxis("Vertical");
+        HorizontalInput = Input.GetAxisRaw("Horizontal");
+        VerticalInput = Input.GetAxisRaw("Vertical");
         IsGrounded();
         _stateMachine.UpdateState();
         IsOnTerrain();
