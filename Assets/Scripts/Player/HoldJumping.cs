@@ -1,48 +1,56 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using UnityEngine.Serialization;
 
 public class HoldJumping : MonoBehaviour
 {
     private bool SpacePressed;
-    private float distToGround;
     private Rigidbody _rigidbody;
-    [SerializeField] private float jumpTime = 0.35f;
+    [SerializeField] private float jumpTime = 0.3f;
     [SerializeField] private float jumpTimeCounter;
-    [SerializeField] private float force = 10f;
+    [SerializeField] private float force = 5f;
     [SerializeField] private float forceHoldJump = 1f;
+    [SerializeField] private bool grounded = false;
     private bool isJumping;
     private bool canJump = true; //for dialogue
+
+    [SerializeField] private float raycastDistance = .05f;
     private void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        distToGround = GetComponent<Collider>().bounds.extents.y;
+        //distToGround = GetComponent<Collider>().bounds.extents.y;
     }
     //checks if player is grounded using raycasting
     public bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, -Vector3.up, distToGround + 0.2f);
+        int layermask = 1 << 6;
+        return Physics.Raycast(transform.position, Vector3.down, raycastDistance, ~layermask); 
     }
+    
 
     private void FixedUpdate()
     {
-        if (!canJump) return; //for dialogue
+        grounded = IsGrounded();
+         if (!canJump) return; //for dialogue
         if (IsGrounded() && SpacePressed && isJumping == false)
         {
             isJumping = true;
             jumpTimeCounter = jumpTime;
             _rigidbody.AddForce(Vector3.up * force, ForceMode.Impulse);
+            //Debug.Log(_rigidbody.velocity.y);
         }
         if(isJumping && SpacePressed)
         {
             if (jumpTimeCounter > 0)
             {
                 _rigidbody.AddForce(Vector3.up * forceHoldJump, ForceMode.Impulse);
+                //Debug.Log(_rigidbody.velocity.y);
                 jumpTimeCounter -= Time.deltaTime;
-                
             }
             else
             {
@@ -51,6 +59,7 @@ public class HoldJumping : MonoBehaviour
         }
         else
         {
+            //Debug.Log(_rigidbody.velocity.y);
             jumpTimeCounter = 0;
         }
     }

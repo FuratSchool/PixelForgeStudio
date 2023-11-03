@@ -13,12 +13,12 @@ public class PlayerMovement : MonoBehaviour
 
     //sets the speed of the player.
 
-    [Header("Movement")] [SerializeField] private float speed = 6f;
-    [SerializeField] private float maxSpeed = 10f;
-    [SerializeField] private float _footprintOffset = 0.1f;
-    [Header("Turning")] [SerializeField] private float turnSmoothTime = 0.1f;
+    [Header("Movement")] [SerializeField] private float speed = 10f;
+    [SerializeField] private float maxSpeed = 15f;
+    [SerializeField] private float normalSpeed = 10f;
+    [Header("Turning")] [SerializeField] private float turnSmoothTime = 0.15f;
 
-    [Header("Dashing")] [SerializeField] private float dashingPower = 12f;
+    [Header("Dashing")] [SerializeField] private float dashingPower = 30;
     
     
     [SerializeField] private float dashingTime = 0.5f;
@@ -58,12 +58,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnSprintStart()
     {
-        speed = 12f;
+        speed = maxSpeed;
     }
 
     private void OnSprintFinish()
     {
-        speed = 6f;
+        speed = normalSpeed;
     }
 
     private void OnDash()
