@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0002911765, g: 0.00041669578, b: 0.000982383, a: 1}
+  m_IndirectSpecularColor: {r: 0.00029117582, g: 0.00041669465, b: 0.0009823793, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6496,10 +6496,14 @@ GameObject:
   - component: {fileID: 974011125}
   - component: {fileID: 974011128}
   - component: {fileID: 974011129}
-  - component: {fileID: 974011131}
-  - component: {fileID: 974011132}
   - component: {fileID: 974011425}
   - component: {fileID: 974011133}
+  - component: {fileID: 974011432}
+  - component: {fileID: 974011431}
+  - component: {fileID: 974011430}
+  - component: {fileID: 974011429}
+  - component: {fileID: 974011428}
+  - component: {fileID: 974011427}
   - component: {fileID: 974011426}
   m_Layer: 0
   m_Name: PlayerObject
@@ -6564,14 +6568,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80e4637063c3db849a4ed781364e1e42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tr: {fileID: 974011133}
-  speed: 6
-  maxSpeed: 10
   turnSmoothTime: 0.1
-  dashingPower: 12
-  dashingTime: 0.5
-  dashingCooldown: 1
-  _whiteScreen: {fileID: 228464935}
+  TurnSmoothVelocity: 0
+  canDash: 1
+  canJump: 1
+  _canSwing: 1
+  _lastDirection: {x: 0, y: 0, z: 0}
+  _movement: {x: 0, y: 0}
 --- !u!114 &974011128
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6635,47 +6638,6 @@ MonoBehaviour:
   m_DefaultActionMap: Movement
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!114 &974011131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 974011122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd31dcf499532164c8880c1f5c11dcd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  swingable:
-    serializedVersion: 2
-    m_Bits: 256
-  DebugGUI: 1
-  DistanceToObject: 6
-  angle: 0
-  sphereRadius: 2
-  SwingDistance: 6
-  ExitForce: 4
-  SwingTime: 3
-  SwingDelay: 0.5
-  lr: {fileID: 968640586}
-  player: {fileID: 974011122}
---- !u!114 &974011132
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 974011122}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ede67af7f922c7b4cbbb4293f4cfe4ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpTime: 0.2
-  jumpTimeCounter: 0
-  force: 5
-  forceHoldJump: 1
 --- !u!96 &974011133
 TrailRenderer:
   serializedVersion: 3
@@ -6812,7 +6774,109 @@ MonoBehaviour:
   m_GameObject: {fileID: 974011122}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2576c2f02d2c1b047a269114b507bff5, type: 3}
+  m_Script: {fileID: 11500000, guid: ce53e14468534ea6aab8cd51f74f8b37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpTime: 0.35
+  jumpTimeCounter: 0
+  force: 10
+  forceHoldJump: 1
+--- !u!114 &974011427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974011122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3741fdad9234a1998cfe9fd0cd9fbc1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dashingCooldown: 2
+  dashingPower: 10
+  dashingTime: 1
+--- !u!114 &974011428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974011122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41849311ba9f43c98b782d9e6a720914, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  swingable:
+    serializedVersion: 2
+    m_Bits: 0
+  DebugGUI: 0
+  DistanceToObject: 10
+  angle: 0.2
+  sphereRadius: 1
+  SwingDistance: 4
+  ExitForce: 4
+  SwingTime: 3
+  SwingDelay: 0.5
+  lr: {fileID: 968640586}
+  player: {fileID: 974011122}
+--- !u!114 &974011429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974011122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0fcbd09c3e834ac68d711e4ca4df586b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 6
+  jumpForce: 12
+  turnSmoothTime: 0.1
+  tr: {fileID: 974011133}
+  _whiteScreen: {fileID: 228464935}
+  _playerMovement: {fileID: 974011126}
+  IsJumping: 0
+  canDash: 1
+  canJump: 1
+  _swingingComponent: {fileID: 974011428}
+--- !u!114 &974011430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974011122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7525e5712ce9b49f3b6a123fedfe2307, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &974011431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974011122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 182a271d683674aaf81128686e96b98c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &974011432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 974011122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c8f4ea5c82754774ab1f2b6962dd6ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &975829595
@@ -9169,7 +9233,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1128849859}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.24876297, y: 0.000000008332743, z: -0.0000000021401554, w: 0.9685644}
+  m_LocalRotation: {x: 0.24876297, y: -0.000000008332746, z: 0.000000002140156, w: 0.9685644}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
