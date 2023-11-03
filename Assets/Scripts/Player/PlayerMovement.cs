@@ -16,6 +16,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement")] [SerializeField] private float speed = 10f;
     [SerializeField] private float maxSpeed = 15f;
     [SerializeField] private float normalSpeed = 10f;
+    [SerializeField] private float _footprintOffset = 0f; 
     [Header("Turning")] [SerializeField] private float turnSmoothTime = 0.15f;
 
     [Header("Dashing")] [SerializeField] private float dashingPower = 30;
