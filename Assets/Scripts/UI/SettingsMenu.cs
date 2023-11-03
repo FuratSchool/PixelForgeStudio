@@ -14,6 +14,7 @@ public class SettingsMenu : MonoBehaviour
     Resolution[] _resolutions;
     private SettingsData settings;
     public InputActionAsset actions;
+    [SerializeField] private Color TextColor;
     private void Awake()
     {
         InitResolutions();
@@ -32,7 +33,6 @@ public class SettingsMenu : MonoBehaviour
     {
         settings = FindObjectOfType<SceneController>().Settings;
         actions = FindObjectOfType<SceneController>().act;
-        UpdateElementsWithSettings();
     }
     
     public AudioMixer audioMixer;
@@ -99,7 +99,7 @@ public class SettingsMenu : MonoBehaviour
             }
         }
         resolutionDropdown.AddOptions(options);
-        resolutionDropdown.value = currentResolutionIndex;
+        //resolutionDropdown.value = currentResolutionIndex;
         resolutionDropdown.RefreshShownValue();
     }
     
@@ -110,23 +110,39 @@ public class SettingsMenu : MonoBehaviour
         settings.resolutionWidth = resolution.width;
         Screen.SetResolution(settings.resolutionWidth,settings.resolutionHeight,Screen.fullScreen);
     }
-
-    void UpdateElementsWithSettings()
+    public void UpdateAudio()
     {
         GameObject.Find("MasterVolume").transform.GetChild(0).GetComponent<Slider>().value = settings.masterVolume;
         GameObject.Find("BackgroundVolume").transform.GetChild(0).GetComponent<Slider>().value = settings.backgroundVolume;
         GameObject.Find("EffectsVolume").transform.GetChild(0).GetComponent<Slider>().value = settings.effectsVolume;
+    }
+
+    public void UpdateVideo()
+    {
+        int index = Array.FindIndex(_resolutions, res => res.width == settings.resolutionWidth && res.height == settings.resolutionHeight);
+        GameObject.Find("Resolution").transform.GetChild(0).GetComponent<TMP_Dropdown>().value = index;
         GameObject.Find("Fullscreen").transform.GetChild(0).GetComponent<Toggle>().isOn = settings.fullscreen;
+    }
+
+    public void UpdateControls()
+    {
         GameObject.Find("InvertedCamera").transform.GetChild(2).GetComponent<Toggle>().isOn = settings.invertedY;
         GameObject.Find("InvertedCamera").transform.GetChild(0).GetComponent<Toggle>().isOn = settings.invertedX;
         GameObject.Find("CameraSpeedY").transform.GetChild(0).GetComponent<Slider>().value = settings.sensitivityY;
         GameObject.Find("CameraSpeedX").transform.GetChild(0).GetComponent<Slider>().value = settings.sensitivityX;
-        GameObject.Find("Resolution").transform.GetChild(0).GetComponent<TMP_Dropdown>().value = settings.resolutionHeight;
     }
-    
-    public void openSettings()
+    public void UpdateKeybinds()
     {
         if (!string.IsNullOrEmpty(FindObjectOfType<SceneController>().Settings.rebinds))
             actions.LoadBindingOverridesFromJson(FindObjectOfType<SceneController>().Settings.rebinds);
+    }
+
+    public void SetColorBlack(TMP_Text text)
+    {
+        text.color = Color.black;
+    }
+    public void SetColorOptionsMenu(TMP_Text text)
+    {
+        text.color = TextColor;
     }
 }
