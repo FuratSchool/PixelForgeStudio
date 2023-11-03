@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -15,5 +16,14 @@ public class MainMenu : MonoBehaviour
     public void quitGame(){
         Debug.Log("Quit");
         Application.Quit();
+    }
+
+    public void OptionsButtonHighLight(bool enable)
+    {
+        GameObject.Find("optionsButton").GetComponent<TMP_Text>().fontStyle = FontStyles.Underline;
+    }
+    public void OptionsButtonHighLightDisable()
+    {
+        GameObject.Find("optionsButton").GetComponent<TMP_Text>().fontStyle ^= FontStyles.Underline;
     }
 }
