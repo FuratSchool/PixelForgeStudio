@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
     private TrailRenderer tr;
 
     public WhiteScreen _whiteScreen;
-    public PlayerMovementController _playerMovementController;
+    public PlayerMovementController _playerMovement;
     public bool IsJumping;
     public bool canDash = true;
 
@@ -30,11 +30,8 @@ public class PlayerController : MonoBehaviour
     private PlayerStateMachine _stateMachine;
     private PlayerStateObserver _stateObserver;
 
-    public Vector3 LastDirection { get; set; }
     public float MaxSpeed { get; set; } = 10f;
 
-    public float HorizontalInput { get; set; }
-    public float VerticalInput { get; set; }
     public bool CanSprint { get; set; } = false;
     
     public bool CanMove { get; set; } = true;
@@ -44,12 +41,7 @@ public class PlayerController : MonoBehaviour
         get => moveSpeed;
         set => moveSpeed = value;
     }
-
-    public float TurnSmoothTime
-    {
-        get => turnSmoothTime;
-        set => turnSmoothTime = value;
-    }
+    
 
     public TrailRenderer TR
     {
@@ -62,12 +54,10 @@ public class PlayerController : MonoBehaviour
         get
         {
             var movementThreshold = 0.1f;
-            return Mathf.Abs(HorizontalInput) >= movementThreshold || Mathf.Abs(VerticalInput) >= movementThreshold;
+            return Mathf.Abs(_playerMovement._movement.x) >= movementThreshold || Mathf.Abs(_playerMovement._movement.y) >= movementThreshold;
         }
     }
-
-    public float TurnSmoothVelocity { get; set; }
-
+    
     private void Awake()
     {
         TR = GetComponent<TrailRenderer>();
@@ -76,7 +66,7 @@ public class PlayerController : MonoBehaviour
         _playerStatus = GetComponent<PlayerStatus>();
         _stateObserver = GetComponent<PlayerStateObserver>();
         _stateMachine.SetPlayerController(this);
-        _playerMovementController = GetComponent<PlayerMovementController>();
+        _playerMovement = GetComponent<PlayerMovementController>();
         _swingingComponent = GetComponent<Swinging>();
 
         _playerCollider = GetComponents<Collider>();
@@ -91,8 +81,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        HorizontalInput = Input.GetAxisRaw("Horizontal");
-        VerticalInput = Input.GetAxisRaw("Vertical");
         IsGrounded();
         _stateMachine.UpdateState();
         IsOnTerrain();
@@ -139,11 +127,7 @@ public class PlayerController : MonoBehaviour
             _stateMachine.ChangeState(new DeathState());
         return false;
     }
-
-    public Vector3 PlayerInput()
-    {
-        return new Vector3(HorizontalInput, 0f, VerticalInput);
-    }
+    
 
     public void SetCanJump(bool canJumpValue)
     {

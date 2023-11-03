@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovementController : MonoBehaviour
 {
+    [Header("Turning")] [SerializeField] private float turnSmoothTime = 0.1f;
+
     public float TurnSmoothVelocity;
     public bool canDash = true;
     public bool canJump = true;
@@ -12,6 +14,10 @@ public class PlayerMovementController : MonoBehaviour
     private PlayerController _playerController;
     private Rigidbody _rigidbody;
     private PlayerStateMachine _stateMachine;
+    public Vector3 _lastDirection;
+    public Vector2 _movement = Vector2.zero;
+
+    private float _turnSmoothVelocity;
     public bool IsDashing { get; set; }
 
     private DashController dashController;
@@ -33,11 +39,13 @@ public class PlayerMovementController : MonoBehaviour
     {
         if (IsDashing || !_playerController.CanMove) return;
         if (_playerController._whiteScreen.isTransitioning && _playerController._whiteScreen.lockMovement) return;
+        PlayerMove();
     }
 
     public void OnMove()
     {
-        if (_playerController.CanMove) PlayerMove();
+        _movement.x = Input.GetAxisRaw("Horizontal");
+        _movement.y = Input.GetAxisRaw("Vertical");
     }
 
     private void OnJump(InputValue inputValue)
@@ -81,38 +89,47 @@ public class PlayerMovementController : MonoBehaviour
         {
             var velocity = _rigidbody.velocity;
             if (velocity.magnitude < _playerController.MaxSpeed)
-                _rigidbody.AddForce(GetDirection().normalized * (-_playerController.MoveSpeed * Time.deltaTime),
-                    ForceMode.VelocityChange);
+            {
+                _rigidbody.AddForce(GetDirection(PlayerInput()).normalized * (_playerController.MoveSpeed * Time.deltaTime),ForceMode.VelocityChange);
+            }
         }
         else
         {
-            transform.Translate(GetDirection().normalized * (_playerController.MoveSpeed * Time.deltaTime),
+            transform.Translate(GetDirection(PlayerInput()).normalized * (_playerController.MoveSpeed * Time.deltaTime), 
                 Space.World);
         }
+        
+        
     }
 
-    public Vector3 GetDirection()
+    public Vector3 GetDirection(Vector3 direction)
     {
-        var direction = _playerController.PlayerInput();
         //checks if the player is moving.
         if (direction.magnitude >= 0.1f)
+        {
+            _lastDirection = direction;
             //calculates the angle of the direction the player is moving.
             if (_camera != null)
             {
                 var targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg +
                                   _camera.transform.eulerAngles.y;
                 //it smooths the transition between the transform.eulerAngles.y and the targetAngle.
-                var playerControllerTurnSmoothVelocity = _playerController.TurnSmoothVelocity;
-                var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle,
-                    ref playerControllerTurnSmoothVelocity,
-                    _playerController.TurnSmoothTime);
-                //sets the rotation of the player to the angle.ß
+                var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity,
+                    turnSmoothTime);
+                //sets the rotation of the player to the angle.
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
                 //rotates the player to the direction they are moving.
                 var moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 return moveDir;
             }
+        }
 
         return new Vector3();
+    }
+    
+    public Vector3 PlayerInput()
+    {
+        var direction = new Vector3(_movement.x, 0, _movement.y);
+        return direction;
     }
 }

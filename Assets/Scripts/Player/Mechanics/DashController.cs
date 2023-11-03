@@ -46,7 +46,7 @@ public class DashController : MonoBehaviour
 
     private IEnumerator PerformDash()
     {
-        _rigidbody.velocity = _playerMovement.GetDirection().normalized * dashingPower;
+        _rigidbody.velocity = _playerMovement.GetDirection(_playerMovement._lastDirection).normalized * dashingPower;
         _playerController.TR.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         _playerController.TR.emitting = false;
