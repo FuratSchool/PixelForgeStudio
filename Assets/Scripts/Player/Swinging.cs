@@ -10,14 +10,6 @@ public class Swinging : MonoBehaviour
     [Header("LayerMask")]
     [SerializeField] private LayerMask swingable;
     
-    [Header("Debug")]
-    [SerializeField] private bool DebugGUI = false;
-    
-    [Header("Raycast")]
-    [SerializeField] private float DistanceToObject = 10f;
-    [SerializeField] private float angle = 0.2f;
-    [SerializeField] private float sphereRadius = 1;
-    
     [Header("SwingSettings")]
     [SerializeField] private float SwingDistance = 4f;
     [SerializeField] private float ExitForce = 4f;
@@ -43,6 +35,7 @@ public class Swinging : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
+        InRange = false;
         _UIController = FindObjectOfType<UIController>();
     }
     void Update()
@@ -71,11 +64,6 @@ public class Swinging : MonoBehaviour
             _dialueActive = true;
             _UIController.SetInteractableTextActive(true);
             collision = SwingableObjectGAME.transform.position;
-            if (DebugGUI)
-            {
-                Debug.Log(collision);
-                Debug.DrawLine(this.transform.position, collision, Color.green);
-            }
             if(SwingPressed)
             {
                 StartCoroutine(TimedSwing());
@@ -145,13 +133,5 @@ public class Swinging : MonoBehaviour
     void OnSwing(InputValue input)
     {
         SwingPressed = Convert.ToBoolean(input.Get<float>());
-    }
-    void OnDrawGizmos()
-    {
-        if (DebugGUI)
-        { 
-            Gizmos.color = Color.red;
-            Gizmos.DrawSphere(collision, sphereRadius);
-        }
     }
 }
