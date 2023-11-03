@@ -25,6 +25,11 @@ public class JumpingState : IPlayerState
         {
             stateMachine.ChangeState(new FallingState());
         }
+
+        if (_playerController.IsGrounded())
+        {
+            stateMachine.ChangeState(new IdleState());
+        }
     }
 
     public void ExitState(PlayerStateMachine stateMachine)

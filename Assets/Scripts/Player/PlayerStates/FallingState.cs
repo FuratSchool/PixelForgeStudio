@@ -24,7 +24,7 @@ namespace Player.PlayerStates
                 stateMachine.ChangeState(new SwingingState());
             }
 
-            if (_playerController.IsGrounded() && !_playerMovement.SpacePressed)
+            if (_playerController.IsGrounded() && !_playerController.IsPlayerMoving)
                 stateMachine.ChangeState(new IdleState());
 
 

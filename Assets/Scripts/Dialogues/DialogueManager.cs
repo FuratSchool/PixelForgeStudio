@@ -48,6 +48,7 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Dialogue dialogue)
     {
         FindObjectOfType<PlayerController>().CanMove = false;
+        FindObjectOfType<PlayerStateMachine>().CurrentState = null;
         FindObjectOfType<PlayerController>().SetCanJump(false);
         dialogueCanvas.SetActive(true); // show the canvas when dialogue starts
 
@@ -86,6 +87,8 @@ public class DialogueManager : MonoBehaviour
     {
         FindObjectOfType<PlayerController>().CanMove = true;
         FindObjectOfType<PlayerController>().SetCanJump(true);
+        FindObjectOfType<PlayerStateMachine>().ChangeState(new IdleState());
+
         dialogueCanvas.SetActive(false); // hide the canvas when dialogue ends
 
         foreach (var dialogueTrigger in dialogueTriggers) dialogueTrigger.EndDialogue();

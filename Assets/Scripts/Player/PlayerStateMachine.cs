@@ -6,6 +6,13 @@ public class PlayerStateMachine : MonoBehaviour
     private PlayerController _playerController;
     private PlayerMovementController _playerMovement;
     private IPlayerState currentState;
+
+    public IPlayerState CurrentState
+    {
+        get => currentState;
+        set => currentState = value;
+    }
+
     private IPlayerState previousState; // Add this variable to track the previous state
 
     public event Action<IPlayerState> OnStateChanged;

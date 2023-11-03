@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Swinging : MonoBehaviour
+public class SwingingController : MonoBehaviour
 {
     // Start is called before the first frame update
     [Header("LayerMask")]

@@ -85,7 +85,7 @@ public class PlayerMovementController : MonoBehaviour
     public void PlayerMove()
     {
         //moves the player. taking into account the delta time, world space, and the speed.
-        if (FindObjectOfType<Swinging>().IsSwinging)
+        if (FindObjectOfType<SwingingController>().IsSwinging)
         {
             var velocity = _rigidbody.velocity;
             if (velocity.magnitude < _playerController.MaxSpeed)
