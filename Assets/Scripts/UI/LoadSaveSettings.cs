@@ -28,7 +28,7 @@ public static class LoadSaveSettings
     
     public static SettingsData NewData()
     {
-        var settings = new SettingsData("",1920,1080,0,0,0,true,false,false,1,1);
+        var settings = new SettingsData("",1920,1080,0,0,0,true,false,false,5f,5f);
         SaveData(settings);
         return settings;
     }

@@ -24,12 +24,13 @@ public class SettingsMenu : MonoBehaviour
         
         var rebinds = actions.SaveBindingOverridesAsJson();
         settings.rebinds = rebinds;
+        FindObjectOfType<SceneController>().Settings = settings;
         LoadSaveSettings.SaveData(settings);
     }
 
     private void Start()
     {
-        settings = FindObjectOfType<SceneController>().settings;
+        settings = FindObjectOfType<SceneController>().Settings;
         actions = FindObjectOfType<SceneController>().act;
         UpdateElementsWithSettings();
     }
@@ -125,7 +126,7 @@ public class SettingsMenu : MonoBehaviour
     
     public void openSettings()
     {
-        if (!string.IsNullOrEmpty(FindObjectOfType<SceneController>().settings.rebinds))
-            actions.LoadBindingOverridesFromJson(FindObjectOfType<SceneController>().settings.rebinds);
+        if (!string.IsNullOrEmpty(FindObjectOfType<SceneController>().Settings.rebinds))
+            actions.LoadBindingOverridesFromJson(FindObjectOfType<SceneController>().Settings.rebinds);
     }
 }
