@@ -29,9 +29,11 @@ public class Swinging : MonoBehaviour
     private bool _canSwing = true;
     private Vector3 collision;
     private bool _isSwinging;
-    private Interactable interactable;
+    private UIController _UIController;
     public bool IsSwinging => _isSwinging;
     public bool InRange { get; set; }
+    
+    private bool _dialueActive = false;
     public GameObject SwingableObjectGAME { get; set; }
 
     private ConfigurableJoint joint;
@@ -41,7 +43,7 @@ public class Swinging : MonoBehaviour
     // Update is called once per frame
     void Start()
     {
-        interactable = FindObjectOfType<Interactable>();
+        _UIController = FindObjectOfType<UIController>();
     }
     void Update()
     {
@@ -49,13 +51,15 @@ public class Swinging : MonoBehaviour
         {
             CheckSwing();
         }
+
+        if (_dialueActive && !InRange)
+        {
+            _UIController.SetInteractableTextActive(false);
+            _dialueActive = false;
+        }
         else if (SwingPressed == false && _isSwinging)
         {
             EndSwing();
-        }
-        else
-        {
-            interactable.InteractableTextActive = false;
         }
     }
     
@@ -63,8 +67,9 @@ public class Swinging : MonoBehaviour
     {
         if (_canSwing)
         {
-            interactable.InteractText = "Hold E to Swing";
-            interactable.InteractableTextActive = true;
+            _UIController.SetInteractText("Hold E to Swing");
+            _dialueActive = true;
+            _UIController.SetInteractableTextActive(true);
             collision = SwingableObjectGAME.transform.position;
             if (DebugGUI)
             {
@@ -81,10 +86,6 @@ public class Swinging : MonoBehaviour
                 _isSwinging = true;
                 _canSwing = false;
             }
-        }
-        else
-        {
-            interactable.InteractableTextActive = false;
         }
     }
 

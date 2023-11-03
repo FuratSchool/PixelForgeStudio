@@ -10,11 +10,11 @@ public class DialogueTrigger : MonoBehaviour
     private bool hasBeenTalkedTo = false;
     private bool _inTriggeredZone = false;
     private bool _dialogueActive = false;
-    public GameObject dialogueTriggerZoneCanvas;
+    private UIController _uiController;
 
     private void Start()
     {
-        dialogueTriggerZoneCanvas.SetActive(false);
+        _uiController = FindObjectOfType<UIController>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -23,7 +23,8 @@ public class DialogueTrigger : MonoBehaviour
             _inTriggeredZone = true;
             if ((canTalkAgain || !hasBeenTalkedTo))
             {
-                dialogueTriggerZoneCanvas.SetActive(true);
+                _uiController.SetInteractText("Press F to talk");
+                _uiController.SetInteractableTextActive(true);
             }
         }
     }
@@ -31,7 +32,7 @@ public class DialogueTrigger : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player")){
             _inTriggeredZone = false;
-            dialogueTriggerZoneCanvas.SetActive(false);
+            _uiController.SetInteractableTextActive(false);
         }
     }
     private void Update()
@@ -43,7 +44,7 @@ public class DialogueTrigger : MonoBehaviour
             {
                 hasBeenTalkedTo = true;
             }
-            dialogueTriggerZoneCanvas.SetActive(false);
+            _uiController.SetInteractableTextActive(false);
         }
     }
 
@@ -52,7 +53,8 @@ public class DialogueTrigger : MonoBehaviour
         _dialogueActive = false;
         if (canTalkAgain && _inTriggeredZone) // Show the canvas again for repeatable dialogues.
         {
-            dialogueTriggerZoneCanvas.SetActive(true);
+            _uiController.SetInteractText("Press F to talk");
+            _uiController.SetInteractableTextActive(true);
         }
     }
 }
