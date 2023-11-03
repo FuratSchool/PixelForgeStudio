@@ -1,9 +1,12 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerStatus : MonoBehaviour
 {
     public static PlayerStatus playerStatus;
-
+    private int coins = 0;
+    
     private Vector3 playerSpawnPoint = new(0, 0, 0);
     private int Health { get; }
 
@@ -33,5 +36,10 @@ public class PlayerStatus : MonoBehaviour
     public Vector3 GetSpawnPoint()
     {
         return playerSpawnPoint;
+    }
+    public void AddCoin()
+    {
+        coins++;
+        FindObjectOfType<UIController>().SetCoinText(coins);
     }
 }
