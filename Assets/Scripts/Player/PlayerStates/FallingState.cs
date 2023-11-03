@@ -27,7 +27,9 @@ namespace Player.PlayerStates
             if (_playerController.IsGrounded() && !_playerController.IsPlayerMoving)
                 stateMachine.ChangeState(new IdleState());
 
-
+            if (_playerController.IsGrounded() && _playerController.IsPlayerMoving)
+                stateMachine.ChangeState(new WalkingState());
+            
             if (Input.GetKeyDown(KeyCode.Q) && _playerMovement.canDash)
                 stateMachine.ChangeState(new DashingState());
             
