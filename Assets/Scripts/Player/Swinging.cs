@@ -15,7 +15,7 @@ public class Swinging : MonoBehaviour
     [SerializeField] private float ExitForce = 4f;
     [SerializeField] private float SwingTime = 3f;
     [SerializeField] private float SwingDelay = 0.5f;
-    [SerializeField] private LineRenderer lr;
+    private LineRenderer lr;
     
     private bool SwingPressed = false;
     private bool _canSwing = true;
@@ -36,6 +36,7 @@ public class Swinging : MonoBehaviour
     void Start()
     {
         InRange = false;
+        lr = GetComponent<LineRenderer>();
         _UIController = FindObjectOfType<UIController>();
     }
     void Update()
