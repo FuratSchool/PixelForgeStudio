@@ -32,6 +32,7 @@ public class WhiteScreen : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             player = other.gameObject;
+            if (other.transform.parent != null) return;
             Debug.Log(player);
             InRange = true;
         }
