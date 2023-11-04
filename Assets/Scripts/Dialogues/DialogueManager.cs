@@ -11,7 +11,6 @@ public class DialogueManager : MonoBehaviour
     private readonly List<DialogueTrigger> dialogueTriggers = new(); // declare a list of DialogueTrigger scripts
     private string currentSentence = "";
     private DialogueTrigger dialogueTrigger;
-    private bool isDialogueActive = false;
     private bool isTyping;
     private Queue<string> sentences; // FIFO data structure
 
@@ -82,9 +81,7 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
-
         dialogueCanvas.SetActive(false); // hide the canvas when dialogue ends
-
-        foreach (var dialogueTrigger in dialogueTriggers) dialogueTrigger.EndDialogue();
+        FindObjectOfType<PlayerController>().DialogueActive = false;
     }
 }

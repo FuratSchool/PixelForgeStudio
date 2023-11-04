@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour
     public bool ShiftPressed { get; set; }
     public Vector2 Movement { get; set; }
     
-    [Header("Turning")] [SerializeField] private float turnSmoothTime = 0.1f;
     private TrailRenderer tr;
 
     [Header("Jumping")]
@@ -47,10 +46,17 @@ public class PlayerController : MonoBehaviour
     
     public GameObject SwingableObjectGAME { get; set; }
     
-    public WhiteScreen _whiteScreen;
+    public bool InteractPressed { get; set; }
+    public bool InDialogeTriggerZone { get; set; }
+    public bool DialogueActive { get; set; }
+    public DialogueTrigger NPC { get; set; }
+    
     private Rigidbody _rigidbody;
     private PlayerStateMachine _stateMachine;
     private UIController _uiController;
+    private DialogueManager _dialogueManager;
+    
+    public bool isTransitioning = false;
     public float MoveSpeed
     {
         get => moveSpeed;
@@ -109,6 +115,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _uiController = FindObjectOfType<UIController>();
+        _dialogueManager = FindObjectOfType<DialogueManager>();
         _stateMachine.ChangeState(_stateMachine.IdleState);
     }
 
@@ -122,10 +129,20 @@ public class PlayerController : MonoBehaviour
         return _uiController;
     }
     
+    public DialogueManager GetDialogueManager()
+    {
+        return _dialogueManager;
+    }
     public bool IsOnTerrain()
     {
         if (transform.position.y < -10f)
-            _stateMachine.ChangeState(new DeathState());
+            _stateMachine.ChangeState(_stateMachine.DeathState);
+        return false;
+    }
+    public bool IsTransitioning()
+    {
+        if (isTransitioning && _stateMachine.CurrentState != _stateMachine.TransitionState)
+            _stateMachine.ChangeState(_stateMachine.TransitionState);
         return false;
     }
     
@@ -153,8 +170,15 @@ public class PlayerController : MonoBehaviour
     {
         SwingPressed = Convert.ToBoolean(inputValue.Get<float>());
     }
+
+    public void OnInteract(InputValue inputValue)
+    {
+        InteractPressed = Convert.ToBoolean(inputValue.Get<float>());
+    }
     public void DestroyJoint(ConfigurableJoint joint)
     {
         Destroy(joint);
     }
+    
+    
 }

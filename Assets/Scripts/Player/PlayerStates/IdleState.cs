@@ -22,9 +22,22 @@ public class IdleState : IPlayerState
             stateMachine.ChangeState(stateMachine.WalkingState);
         else if (_playerController.ShiftPressed)
             stateMachine.ChangeState(stateMachine.SprintingState);
+        if (_playerController.InDialogeTriggerZone && _playerController.NPC.hasBeenTalkedTo == false)
+        {
+            stateMachine.TalkingState.EnableInteractDialogueActive(_playerController.GetUIController());
+            if (_playerController.InteractPressed)
+            {
+                stateMachine.ChangeState(stateMachine.TalkingState);
+            }
+        }
+        else
+        {
+            stateMachine.TalkingState.DisableInteractDialogueActive(_playerController.GetUIController());
+        }
     }
     public void ExitState(PlayerStateMachine stateMachine)
     {
+        stateMachine.TalkingState.DisableInteractDialogueActive(_playerController.GetUIController());
     }
     public void LateUpdateState(PlayerStateMachine stateMachine)
     {}

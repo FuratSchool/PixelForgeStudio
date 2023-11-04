@@ -14,6 +14,9 @@ public class PlayerStateMachine : MonoBehaviour
     public FallingState FallingState = new FallingState();
     public SwingingState SwingingState = new SwingingState();
     public SprintingState SprintingState = new SprintingState();
+    public TalkingState TalkingState = new TalkingState();
+    public TransitionState TransitionState = new TransitionState();
+    public DeathState DeathState = new DeathState();
     
     
     private void Awake()
@@ -46,6 +49,7 @@ public class PlayerStateMachine : MonoBehaviour
     public void Update()
     {
         _playerController.IsOnTerrain();
+        _playerController.IsTransitioning();
         if (currentState != null) currentState.UpdateState(this);
     }
 

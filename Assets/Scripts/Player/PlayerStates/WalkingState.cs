@@ -35,11 +35,24 @@ public class WalkingState : IPlayerState
             stateMachine.ChangeState(stateMachine.SprintingState);
         else if (_playerController.canDash && _playerController.DashPressed)
             stateMachine.ChangeState(stateMachine.DashingState);
+        if (_playerController.InDialogeTriggerZone)
+        {
+            stateMachine.TalkingState.EnableInteractDialogueActive(_playerController.GetUIController());
+            if (_playerController.InteractPressed)
+            {
+                stateMachine.ChangeState(stateMachine.TalkingState);
+            }
+        }
+        else
+        {
+            stateMachine.TalkingState.DisableInteractDialogueActive(_playerController.GetUIController());
+        }
     }
 
     public void ExitState(PlayerStateMachine stateMachine)
     {
         // Cleanup or transition logic, if necessary
+        stateMachine.TalkingState.DisableInteractDialogueActive(_playerController.GetUIController());
     }
     
     public void PlayerMove(PlayerStateMachine stateMachine)
