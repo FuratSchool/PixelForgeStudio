@@ -1,12 +1,27 @@
 using System;
+using Player.PlayerStates;
 using UnityEngine;
 
 public class PlayerStateMachine : MonoBehaviour
 {
     private PlayerController _playerController;
-    private PlayerMovementController _playerMovement;
     private IPlayerState currentState;
-
+    
+    public WalkingState WalkingState = new WalkingState();
+    public IdleState IdleState = new IdleState();
+    public DashingState DashingState = new DashingState();
+    public JumpingState JumpingState = new JumpingState();
+    public FallingState FallingState = new FallingState();
+    public SwingingState SwingingState = new SwingingState();
+    public SprintingState SprintingState = new SprintingState();
+    
+    
+    private void Awake()
+    {
+        _playerController = GetComponent<PlayerController>();
+    }
+    
+    
     public IPlayerState CurrentState
     {
         get => currentState;
@@ -15,10 +30,9 @@ public class PlayerStateMachine : MonoBehaviour
 
     private IPlayerState previousState; // Add this variable to track the previous state
 
-    public event Action<IPlayerState> OnStateChanged;
-
     public void ChangeState(IPlayerState newState)
     {
+        Debug.Log($"Player's state changed to {newState.GetType().Name}");
         if (currentState != null)
         {
             previousState = currentState; // Store the current state as the previous state
@@ -27,12 +41,22 @@ public class PlayerStateMachine : MonoBehaviour
 
         currentState = newState;
         currentState.EnterState(this);
-        OnStateChanged?.Invoke(currentState);
     }
 
-    public void UpdateState()
+    public void Update()
     {
+        _playerController.IsOnTerrain();
         if (currentState != null) currentState.UpdateState(this);
+    }
+
+    public void FixedUpdate()
+    {
+        if (currentState != null) currentState.FixedUpdateState(this);
+    }
+
+    public void LateUpdate()
+    {
+        if (currentState != null) currentState.LateUpdateState(this);
     }
 
     public IPlayerState GetPreviousState()
@@ -48,16 +72,6 @@ public class PlayerStateMachine : MonoBehaviour
     public PlayerController GetPlayerController()
     {
         return _playerController;
-    }
-
-    public void SetPlayerMovementController(PlayerMovementController playerMovement)
-    {
-        _playerMovement = playerMovement;
-    }
-
-    public PlayerMovementController GetPlayerMovementController()
-    {
-        return _playerMovement;
     }
 
     public IPlayerState GetCurrentState()

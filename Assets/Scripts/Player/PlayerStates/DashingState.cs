@@ -1,30 +1,57 @@
+using System.Collections;
 using UnityEngine;
 
 public class DashingState : IPlayerState
 {
     private PlayerController _playerController;
-    private PlayerMovementController _playerMovement;
     private Rigidbody _rigidbody;
-    private float dashStartTime;
+    private bool _isDashing;
 
     public void EnterState(PlayerStateMachine stateMachine)
     {
         _playerController = stateMachine.GetPlayerController();
-        _playerMovement = stateMachine.GetPlayerMovementController();
+        _playerController.DashPressed = false;
         _rigidbody = _playerController.GetRigidbody();
-        dashStartTime = Time.time;
+        _rigidbody.useGravity = false;
+        _isDashing = true;
+        _playerController.canDash = false;
+        _rigidbody.velocity = stateMachine.WalkingState.GetDirection(stateMachine.WalkingState._lastDirection, stateMachine).normalized * _playerController.dashSpeed;
+        _playerController.StartCoroutine(Dash());
     }
-
+    public void FixedUpdateState(PlayerStateMachine stateMachine)
+    {
+    }
     public void UpdateState(PlayerStateMachine stateMachine)
     {
-        if (Time.time - dashStartTime >= 3f) stateMachine.ChangeState(new IdleState());
-        if (_playerMovement.IsDashing == false && _playerController.IsGrounded() && _playerController.IsPlayerMoving)
+        if (_isDashing == false)
         {
-            stateMachine.ChangeState(new WalkingState());
+            if(!stateMachine.JumpingState.IsGrounded(stateMachine))
+                stateMachine.ChangeState(stateMachine.FallingState);
+            else if (_playerController.ShiftPressed && _playerController.IsPlayerMoving)
+                stateMachine.ChangeState(stateMachine.SprintingState);
+            else if (_playerController.IsPlayerMoving)
+                stateMachine.ChangeState(stateMachine.WalkingState);
+            else
+                stateMachine.ChangeState(stateMachine.IdleState);
+            
         }
     }
 
     public void ExitState(PlayerStateMachine stateMachine)
     {
     }
+    
+    private IEnumerator Dash()
+    {
+        _playerController.TR.emitting = true;
+        yield return new WaitForSeconds(_playerController.dashingTime);
+        _playerController.TR.emitting = false;
+        _rigidbody.useGravity = true;
+        _isDashing = false;
+        _rigidbody.velocity = new Vector3(0f, 0f, 0f);
+        yield return new WaitForSeconds(_playerController.dashingCooldown);
+        _playerController.canDash = true;
+    }
+    public void LateUpdateState(PlayerStateMachine stateMachine)
+    {}
 }

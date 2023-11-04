@@ -2,37 +2,37 @@ using UnityEngine;
 
 public class SprintingState : IPlayerState
 {
-    private readonly float runSpeed = 8.0f;
     private PlayerController _playerController;
-    private PlayerMovementController _playerMovement;
 
     public void EnterState(PlayerStateMachine stateMachine)
     {
         _playerController = stateMachine.GetPlayerController();
-        _playerMovement = stateMachine.GetPlayerMovementController();
-        _playerController.MoveSpeed = 12f;
+        _playerController.MoveSpeed = _playerController.SprintSpeed;
     }
-
+    public void FixedUpdateState(PlayerStateMachine stateMachine)
+    {
+    }
     public void UpdateState(PlayerStateMachine stateMachine)
     {
-        _playerMovement.OnMove();
+        stateMachine.WalkingState.PlayerMove(stateMachine);
+        if (stateMachine.JumpingState.IsGrounded(stateMachine) && _playerController.SpacePressed)
+            stateMachine.ChangeState(stateMachine.JumpingState);
+        
+        else if (_playerController.IsPlayerMoving && !_playerController.ShiftPressed)
+            stateMachine.ChangeState(stateMachine.WalkingState);
 
-        if (!_playerController.IsPlayerMoving)
-            stateMachine.ChangeState(new IdleState());
-
-        if (_playerController.IsPlayerMoving && !Input.GetKey(KeyCode.LeftShift))
-            stateMachine.ChangeState(new WalkingState());
-
-        if (Input.GetKeyDown(KeyCode.Q) && _playerController.canDash)
-            stateMachine.ChangeState(new DashingState());
-
-        if (_playerController.IsGrounded() && _playerController.canJump)
-            if (Input.GetKey(KeyCode.Space))
-                stateMachine.ChangeState(new JumpingState());
+        else if (Input.GetKeyDown(KeyCode.Q) && _playerController.canDash)
+            stateMachine.ChangeState(stateMachine.DashingState);
+        else if (_playerController.canDash && _playerController.DashPressed)
+            stateMachine.ChangeState(stateMachine.DashingState);
+        else if (!_playerController.IsPlayerMoving)
+            stateMachine.ChangeState(stateMachine.IdleState);
     }
 
     public void ExitState(PlayerStateMachine stateMachine)
     {
-        _playerMovement.OnSprintFinish();
+        _playerController.MoveSpeed = _playerController.WalkSpeed;
     }
+    public void LateUpdateState(PlayerStateMachine stateMachine)
+    {}
 }

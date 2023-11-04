@@ -1,126 +1,127 @@
+using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 public class PlayerController : MonoBehaviour
 {
-    [FormerlySerializedAs("MoveSpeed")] [Header("Movement")] [SerializeField]
-    private float moveSpeed = 6.0f;
-
-    [SerializeField] private float jumpForce = 12.0f;
-
+    
+    
+    [Header("Movement")]
+    [SerializeField] private float walkSpeed = 6.0f;
+    [SerializeField] private float sprintSpeed = 12.0f;
+    private float moveSpeed;
+    public bool ShiftPressed { get; set; }
+    public Vector2 Movement { get; set; }
+    
     [Header("Turning")] [SerializeField] private float turnSmoothTime = 0.1f;
-
-    [Header("Components")] [SerializeField]
     private TrailRenderer tr;
 
-    public WhiteScreen _whiteScreen;
-    public PlayerMovementController _playerMovement;
+    [Header("Jumping")]
+    [SerializeField] public float jumpTime = 0.35f;
+    [SerializeField] public float jumpTimeCounter;
+    [SerializeField] public float force = 10f;
+    [SerializeField] public float forceHoldJump = 1f;
+    [SerializeField] public float raycastDistance = .2f;
     public bool IsJumping;
+    public bool SpacePressed { get; set; }
+    public float MaxSpeed { get; set; } = 10f;
+    
+    [Header("Dashing")]
+    [SerializeField] public float dashingTime = 0.35f;
+    [SerializeField] public float dashingCooldown = 0.35f;
+    [SerializeField] public float dashSpeed = 10f;
     public bool canDash = true;
+    public bool DashPressed { get; set; }
+    
+    [Header("Swinging")]
+    [SerializeField] private float swingDistance = 4f;
+    [SerializeField] private float exitForce = 4f;
+    [SerializeField] private float swingTime = 3f;
+    
+    public bool SwingPressed { get; set; }
+    public bool IsSwinging { get; set; } = false;
+    public bool canSwing { get; set; } = true;
 
-    public bool canJump = true;
-    public SwingingController _swingingComponent;
-
-    private Camera _camera;
-    private bool _isGrounded;
-
-    private Collider[] _playerCollider;
-    private PlayerStatus _playerStatus;
+    public bool inSwingingRange { get; set; }
+    
+    public GameObject SwingableObjectGAME { get; set; }
+    
+    public WhiteScreen _whiteScreen;
     private Rigidbody _rigidbody;
     private PlayerStateMachine _stateMachine;
-    private PlayerStateObserver _stateObserver;
-
-    public float MaxSpeed { get; set; } = 10f;
-
-    public bool CanSprint { get; set; } = false;
-    
-    public bool CanMove { get; set; } = true;
-
+    private UIController _uiController;
     public float MoveSpeed
     {
         get => moveSpeed;
         set => moveSpeed = value;
     }
     
-
+    public float SprintSpeed
+    {
+        get => sprintSpeed;
+        set => sprintSpeed = value;
+    }
+    
+    public float WalkSpeed
+    {
+        get => walkSpeed;
+        set => walkSpeed = value;
+    }
+    public float SwingDistance
+    {
+        get => swingDistance;
+        set => swingDistance = value;
+    }
+    
+    public float ExitForce
+    {
+        get => exitForce;
+        set => exitForce = value;
+    }
+    public float SwingTime
+    {
+        get => swingTime;
+        set => swingTime = value;
+    }
     public TrailRenderer TR
     {
         get => tr;
         set => tr = value;
     }
-
+    
     public bool IsPlayerMoving
     {
         get
         {
             var movementThreshold = 0.1f;
-            return Mathf.Abs(_playerMovement._movement.x) >= movementThreshold || Mathf.Abs(_playerMovement._movement.y) >= movementThreshold;
+            return Mathf.Abs(Movement.x) >= movementThreshold || Mathf.Abs(Movement.y) >= movementThreshold;
         }
     }
-    
     private void Awake()
     {
         TR = GetComponent<TrailRenderer>();
         _rigidbody = GetComponent<Rigidbody>();
         _stateMachine = GetComponent<PlayerStateMachine>();
-        _playerStatus = GetComponent<PlayerStatus>();
-        _stateObserver = GetComponent<PlayerStateObserver>();
         _stateMachine.SetPlayerController(this);
-        _playerMovement = GetComponent<PlayerMovementController>();
-        _swingingComponent = GetComponent<SwingingController>();
-
-        _playerCollider = GetComponents<Collider>();
-        _stateObserver.Subscribe(_stateMachine);
-        _stateMachine.ChangeState(new IdleState());
     }
 
     private void Start()
     {
-        _camera = Camera.main;
-    }
-
-    private void Update()
-    {
-        IsGrounded();
-        _stateMachine.UpdateState();
-        IsOnTerrain();
-    }
-
-    private void OnDestroy()
-    {
-        _stateObserver.Unsubscribe(_stateMachine);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        foreach (var contact in collision.contacts)
-            if (Vector3.Dot(contact.normal, Vector3.up) > 0.2f)
-            {
-                _isGrounded = true;
-                break;
-            }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        _isGrounded = false;
-        foreach (var contact in collision.contacts)
-            if (Vector3.Dot(contact.normal, Vector3.up) > 0.2f)
-                return;
+        _uiController = FindObjectOfType<UIController>();
+        _stateMachine.ChangeState(_stateMachine.IdleState);
     }
 
     public Rigidbody GetRigidbody()
     {
         return _rigidbody;
     }
-
-    public bool IsGrounded()
+    
+    public UIController GetUIController()
     {
-        //Debug.Log(_isGrounded);
-        return _isGrounded;
+        return _uiController;
     }
-
-
+    
     public bool IsOnTerrain()
     {
         if (transform.position.y < -10f)
@@ -128,9 +129,32 @@ public class PlayerController : MonoBehaviour
         return false;
     }
     
-
-    public void SetCanJump(bool canJumpValue)
+    private void OnMove(InputValue inputValue)
     {
-        canJump = canJumpValue;
+        Movement = inputValue.Get<Vector2>();
+    }
+
+    private void OnJump(InputValue inputValue)
+    {
+        SpacePressed = Convert.ToBoolean(inputValue.Get<float>());
+    }
+    
+    private void OnSprint(InputValue inputValue)
+    {
+        ShiftPressed = Convert.ToBoolean(inputValue.Get<float>());
+    }
+    
+    private void OnDash(InputValue inputValue)
+    {
+        DashPressed = Convert.ToBoolean(inputValue.Get<float>());
+    }
+    
+    private void OnSwing(InputValue inputValue)
+    {
+        SwingPressed = Convert.ToBoolean(inputValue.Get<float>());
+    }
+    public void DestroyJoint(ConfigurableJoint joint)
+    {
+        Destroy(joint);
     }
 }

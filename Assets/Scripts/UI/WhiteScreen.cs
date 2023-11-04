@@ -34,8 +34,6 @@ public class WhiteScreen : MonoBehaviour
             player = other.gameObject;
             Debug.Log(player);
             InRange = true;   
-            FindObjectOfType<PlayerController>().CanMove = false;
-
         }
         
     }
@@ -45,8 +43,6 @@ public class WhiteScreen : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             InRange = false;
-            FindObjectOfType<PlayerController>().CanMove = true;
-
         }
     }
 

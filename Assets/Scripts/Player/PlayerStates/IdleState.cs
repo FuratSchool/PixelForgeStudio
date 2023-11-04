@@ -1,30 +1,31 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class IdleState : IPlayerState
 {
     private PlayerController _playerController;
-    private PlayerMovementController _playerMovement;
 
     public void EnterState(PlayerStateMachine stateMachine)
     {
         _playerController = stateMachine.GetPlayerController();
-        _playerMovement = stateMachine.GetPlayerMovementController();
     }
-
+    public void FixedUpdateState(PlayerStateMachine stateMachine)
+    {
+    }
     public void UpdateState(PlayerStateMachine stateMachine)
     {
-        if (_playerController.IsPlayerMoving)
-            stateMachine.ChangeState(new WalkingState());
-
-        if (Input.GetKeyDown(KeyCode.LeftShift)) _playerMovement.OnSprintStart();
-
-
-        if (_playerController.IsGrounded() && _playerController.canJump)
-            if (Input.GetKey(KeyCode.Space))
-                stateMachine.ChangeState(new JumpingState());
+        if (stateMachine.JumpingState.IsGrounded(stateMachine) && _playerController.SpacePressed)
+            stateMachine.ChangeState(stateMachine.JumpingState);
+        else if (!stateMachine.JumpingState.IsGrounded(stateMachine))
+            stateMachine.ChangeState(stateMachine.FallingState);
+        else if (_playerController.IsPlayerMoving)
+            stateMachine.ChangeState(stateMachine.WalkingState);
+        else if (_playerController.ShiftPressed)
+            stateMachine.ChangeState(stateMachine.SprintingState);
     }
-
     public void ExitState(PlayerStateMachine stateMachine)
     {
     }
+    public void LateUpdateState(PlayerStateMachine stateMachine)
+    {}
 }

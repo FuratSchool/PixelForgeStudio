@@ -1,11 +1,9 @@
 public class DeathState : IPlayerState
 {
     private PlayerController _playerController;
-    private PlayerStateMachine _stateMachine;
 
     public void EnterState(PlayerStateMachine stateMachine)
     {
-        _stateMachine = stateMachine;
         _playerController = stateMachine.GetPlayerController();
     }
 
@@ -14,10 +12,14 @@ public class DeathState : IPlayerState
         var spawnPoint = PlayerStatus.playerStatus.GetSpawnPoint();
         _playerController.transform.position = spawnPoint;
 
-        stateMachine.ChangeState(new IdleState());
+        stateMachine.ChangeState(stateMachine.IdleState);
     }
-
+    public void FixedUpdateState(PlayerStateMachine stateMachine)
+    {
+    }
     public void ExitState(PlayerStateMachine stateMachine)
     {
     }
+    public void LateUpdateState(PlayerStateMachine stateMachine)
+    {}
 }
