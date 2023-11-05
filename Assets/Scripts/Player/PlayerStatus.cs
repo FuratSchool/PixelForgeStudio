@@ -35,11 +35,27 @@ public class PlayerStatus : MonoBehaviour
 
     public Vector3 GetSpawnPoint()
     {
+        loseCoin();
         return playerSpawnPoint;
     }
     public void AddCoin()
     {
         coins++;
         FindObjectOfType<UIController>().SetCoinText(coins);
+    }
+    
+    public void loseCoin()
+    {
+        if (coins > 0)
+        {
+            coins -= Random.Range(2, 4);
+            FindObjectOfType<UIController>().SetCoinText(coins);
+        }
+        if(coins <= 0)
+        {
+            coins = 0;
+            FindObjectOfType<UIController>().SetCoinText(coins);
+        }
+        
     }
 }
