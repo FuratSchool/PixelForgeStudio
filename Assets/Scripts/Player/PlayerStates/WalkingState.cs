@@ -15,8 +15,11 @@ public class WalkingState : IPlayerState
     private float totalTime;
     public void EnterState(PlayerStateMachine stateMachine)
     {
+        
         _stateMachine = stateMachine;
         _playerController = stateMachine.GetPlayerController();
+        _playerController.GetAudio().clip = _playerController.WalkingSound;
+        _playerController.GetAudio().Play();
         _rb = _playerController.GetRigidbody();
         _camera = Camera.main;
         _playerController.MoveSpeed = _playerController.WalkSpeed;
@@ -55,7 +58,7 @@ public class WalkingState : IPlayerState
     public void ExitState(PlayerStateMachine stateMachine)
     {
         stateMachine.Animator.SetBool("IsWalking", false);        
-
+        _playerController.GetAudio().Stop();
         // Cleanup or transition logic, if necessary
         stateMachine.TalkingState.DisableInteractDialogueActive(_playerController.GetUIController());
 
