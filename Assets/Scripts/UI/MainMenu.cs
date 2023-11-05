@@ -1,13 +1,16 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
     // Start is called before the first frame update
     public void playGame(){
-        SceneManager.LoadScene("SampleScene"); //goes to the next scene.
+        FindObjectOfType<SceneController>().LoadScene("SampleScene"); //goes to the next scene.
     }
 
     public void quitGame(){
@@ -15,12 +18,14 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    public void GoToMainMenu(){
-        Debug.Log("Go to Main Menu clicked");
-        SceneManager.LoadScene(0);
+    public void OptionsButtonHighLightEnable(GameObject Object)
+    {
+        Object.GetComponent<TMP_Text>().fontStyle |= FontStyles.Underline;
     }
-
-    public void GoToSettings(){
-        SceneManager.LoadScene("SettingsMenu");
+    public void OptionsButtonHighLightDisable(GameObject Object)
+    {
+        
+        Object.GetComponent<TMP_Text>().fontStyle ^= FontStyles.Underline;
     }
+    
 }
