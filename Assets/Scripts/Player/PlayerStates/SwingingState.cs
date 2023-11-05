@@ -46,7 +46,7 @@ public class SwingingState : IPlayerState
     
     public void EnableSwingText(UIController uiController)
     {
-        uiController.SetInteractText("Hold E to swing");
+        uiController.SetInteractText("Hold [E][Y] to swing");
         uiController.SetInteractableTextActive(true);
     }
     
