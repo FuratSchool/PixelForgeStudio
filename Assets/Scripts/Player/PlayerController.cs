@@ -135,7 +135,7 @@ public class PlayerController : MonoBehaviour
     }
     public bool IsOnTerrain()
     {
-        if (transform.position.y < -10f)
+        if (transform.position.y < -36f)
             _stateMachine.ChangeState(_stateMachine.DeathState);
         return false;
     }
