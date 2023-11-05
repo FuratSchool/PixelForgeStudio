@@ -1,14 +1,9 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour
 {
-    private List<string> tagList = new List<string>() { "platform", "Checkpoint" }; 
-    void Update()
-    {
-    }
+    private readonly List<string> tagList = new() { "platform", "Checkpoint" };
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -18,7 +13,7 @@ public class PlayerCollision : MonoBehaviour
             transform.SetParent(collision.transform);
         }
     }
-    
+
     private void OnCollisionExit(Collision collision)
     {
         transform.parent = null;
