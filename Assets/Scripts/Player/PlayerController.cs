@@ -50,6 +50,15 @@ public class PlayerController : MonoBehaviour
     public bool InDialogeTriggerZone { get; set; }
     public bool DialogueActive { get; set; }
     public DialogueTrigger NPC { get; set; }
+    [Header("footprints")]
+    
+    public float footstepIntervalWalking = 0.1f;
+    public float footstepIntervalRunning = 0.1f;
+    [SerializeField] private float _footprintOffset = 0.1f;
+    [HideInInspector] public float footstepInterval;
+    public GameObject FootprintPrefab;
+    public bool FootprintEnabled = true;
+    public float FootprintOffset => _footprintOffset;
     
     private Rigidbody _rigidbody;
     private PlayerStateMachine _stateMachine;
@@ -180,5 +189,9 @@ public class PlayerController : MonoBehaviour
         Destroy(joint);
     }
     
+    public void InstantiateObject(GameObject prefab, Vector3 position, Quaternion rotation)
+    {
+        Instantiate(prefab, position, rotation);
+    }
     
 }

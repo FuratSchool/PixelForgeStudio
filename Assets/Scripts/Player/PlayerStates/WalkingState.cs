@@ -12,6 +12,7 @@ public class WalkingState : IPlayerState
     private float _turnSmoothVelocity;
     private float turnSmoothTime = 0.15f;
     private Rigidbody _rb;
+    private float totalTime;
     public void EnterState(PlayerStateMachine stateMachine)
     {
         _stateMachine = stateMachine;
@@ -19,6 +20,7 @@ public class WalkingState : IPlayerState
         _rb = _playerController.GetRigidbody();
         _camera = Camera.main;
         _playerController.MoveSpeed = _playerController.WalkSpeed;
+        _playerController.footstepInterval = _playerController.footstepIntervalWalking;
         stateMachine.Animator.SetBool("IsWalking", true);        
 
     }
@@ -61,6 +63,7 @@ public class WalkingState : IPlayerState
     
     public void PlayerMove(PlayerStateMachine stateMachine)
     {
+        if(stateMachine.GetPlayerController().FootprintEnabled)FootPrint(stateMachine);
         var playerControl = stateMachine.GetPlayerController();
         //moves the player. taking into account the delta time, world space, and the speed.
         if (stateMachine.CurrentState is SwingingState)
@@ -115,4 +118,20 @@ public class WalkingState : IPlayerState
     
     public void LateUpdateState(PlayerStateMachine stateMachine)
     {}
+    
+    private void FootPrint(PlayerStateMachine stateMachine)
+    {
+        var PlayerControl = stateMachine.GetPlayerController();
+        totalTime += Time.deltaTime;
+        if (totalTime > PlayerControl.footstepInterval)
+        {
+            var rotAmount = Quaternion.Euler(90, 0, 0);
+            
+            if(Physics.Raycast(PlayerControl.transform.position, -Vector3.up, out var hit, 0.5f, ~LayerMask.GetMask("Player"))){
+                var posOffset = new Vector3(0f, PlayerControl.FootprintOffset, 0f);
+                PlayerControl.InstantiateObject(PlayerControl.FootprintPrefab, hit.point + posOffset, (PlayerControl.transform.rotation * rotAmount));
+            }
+            totalTime = 0;
+        }
+    }
 }
