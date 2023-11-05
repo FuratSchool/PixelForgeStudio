@@ -8,12 +8,15 @@ public class PlayerMovement : MonoBehaviour
     [Header("Components")] 
     [SerializeField] private TrailRenderer tr;
     private Rigidbody _rigidbody;
+    public Transform footPrints;
+    public float totalTime = 0;
 
     //sets the speed of the player.
 
     [Header("Movement")] [SerializeField] private float speed = 10f;
     [SerializeField] private float maxSpeed = 15f;
     [SerializeField] private float normalSpeed = 10f;
+    [SerializeField] private float _footprintOffset = 0f; 
     [Header("Turning")] [SerializeField] private float turnSmoothTime = 0.15f;
 
     [Header("Dashing")] [SerializeField] private float dashingPower = 30;
@@ -27,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
     private bool _isDashing;
     private Vector3 _lastDirection;
     private Vector2 _movement = Vector2.zero;
+    private bool _isMoving = false;
     public WhiteScreen _whiteScreen;
     private float _turnSmoothVelocity;
     private bool canMove = true;
@@ -42,6 +46,10 @@ public class PlayerMovement : MonoBehaviour
         if (_isDashing || !canMove) return;
         if (_whiteScreen.isTransitioning && _whiteScreen.lockMovement) return;
         PlayerMove();
+        if (_isMoving && FindObjectOfType<HoldJumping>().IsGrounded())
+        {
+            FootPrint();
+        }
     }
 
     private void OnMove(InputValue inputValue)
@@ -95,6 +103,7 @@ public class PlayerMovement : MonoBehaviour
         //checks if the player is moving.
         if (direction.magnitude >= 0.1f)
         {
+            _isMoving = true;
             _lastDirection = direction;
             //calculates the angle of the direction the player is moving.
             if (_camera != null)
@@ -110,6 +119,10 @@ public class PlayerMovement : MonoBehaviour
                 var moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 return moveDir;
             }
+        }
+        else
+        {
+            _isMoving = false;
         }
 
         return new Vector3();
@@ -132,6 +145,21 @@ public class PlayerMovement : MonoBehaviour
         _isDashing = false;
         yield return new WaitForSeconds(dashingCooldown);
         _canDash = true;
+    }
+
+    private void FootPrint()
+    {
+        totalTime += Time.deltaTime;
+        if (totalTime > .5f)
+        {
+            var rotAmount = Quaternion.Euler(90, 0, 0);
+            
+            if(Physics.Raycast(transform.position, -Vector3.up, out var hit, 0.5f)){
+                var posOffset = new Vector3(0f, _footprintOffset, 0f);
+                Instantiate(footPrints, hit.point + posOffset, (transform.rotation * rotAmount));
+            }
+            totalTime = 0;
+        }
     }
     
     public void SetCanMove(bool canMoveValue)

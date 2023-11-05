@@ -27,7 +27,7 @@ public class HoldJumping : MonoBehaviour
         //distToGround = GetComponent<Collider>().bounds.extents.y;
     }
     //checks if player is grounded using raycasting
-    bool IsGrounded()
+    public bool IsGrounded()
     {
         int layermask = 1 << 6;
         return Physics.Raycast(transform.position, Vector3.down, raycastDistance, ~layermask); 

@@ -6571,9 +6571,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tr: {fileID: 974011133}
+  footPrints: {fileID: 4681874753066359916, guid: 06d3623a661d9c942bb0c4392d846fcf,
+    type: 3}
+  totalTime: 0
   speed: 10
   maxSpeed: 15
   normalSpeed: 10
+  _footprintOffset: 0
   turnSmoothTime: 0.15
   dashingPower: 30
   dashingTime: 0.5
