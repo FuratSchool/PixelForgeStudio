@@ -23,7 +23,7 @@ public class CheckPointHandler : MonoBehaviour
             if (playerStatus != null)
             {
                 Debug.Log("test");
-                playerStatus.SetSpawnPoint(new Vector3(transform.position.x, 2, transform.position.z));
+                playerStatus.SetSpawnPoint(new Vector3(transform.position.x, transform.position.y, transform.position.z));
             }
         }
     }
