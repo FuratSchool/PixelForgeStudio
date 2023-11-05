@@ -8,6 +8,8 @@ public class SprintingState : IPlayerState
     {
         _playerController = stateMachine.GetPlayerController();
         _playerController.MoveSpeed = _playerController.SprintSpeed;
+        stateMachine.Animator.SetBool("IsSprinting", true);        
+
     }
     public void FixedUpdateState(PlayerStateMachine stateMachine)
     {
@@ -23,6 +25,7 @@ public class SprintingState : IPlayerState
 
         else if (Input.GetKeyDown(KeyCode.Q) && _playerController.canDash)
             stateMachine.ChangeState(stateMachine.DashingState);
+        
         else if (_playerController.canDash && _playerController.DashPressed)
             stateMachine.ChangeState(stateMachine.DashingState);
         else if (!_playerController.IsPlayerMoving)
@@ -32,6 +35,8 @@ public class SprintingState : IPlayerState
     public void ExitState(PlayerStateMachine stateMachine)
     {
         _playerController.MoveSpeed = _playerController.WalkSpeed;
+        stateMachine.Animator.SetBool("IsSprinting", false);        
+
     }
     public void LateUpdateState(PlayerStateMachine stateMachine)
     {}

@@ -14,6 +14,8 @@ public class JumpingState : IPlayerState
         {
             _playerController.MoveSpeed = _playerController.SprintSpeed;
         }
+        stateMachine.Animator.SetBool("IsJumping", true);        
+
     }
 
     public void UpdateState(PlayerStateMachine stateMachine)
@@ -45,7 +47,8 @@ public class JumpingState : IPlayerState
 
     public void ExitState(PlayerStateMachine stateMachine)
     {
-        
+        stateMachine.Animator.SetBool("IsJumping", false);        
+
         _playerController.IsJumping = false;
         _playerController.jumpTimeCounter = 0;
         stateMachine.SwingingState.DisableSwingText(_playerController.GetUIController());

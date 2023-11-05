@@ -6,7 +6,8 @@ public class PlayerStateMachine : MonoBehaviour
 {
     private PlayerController _playerController;
     private IPlayerState currentState;
-    
+    private Animator _animator;
+
     public WalkingState WalkingState = new WalkingState();
     public IdleState IdleState = new IdleState();
     public DashingState DashingState = new DashingState();
@@ -22,6 +23,7 @@ public class PlayerStateMachine : MonoBehaviour
     private void Awake()
     {
         _playerController = GetComponent<PlayerController>();
+        _animator = GetComponentInChildren<Animator>();
     }
     
     
@@ -81,5 +83,11 @@ public class PlayerStateMachine : MonoBehaviour
     public IPlayerState GetCurrentState()
     {
         return currentState;
+    }
+    
+    public Animator Animator
+    {
+        get => _animator;
+        set => _animator = value;
     }
 }

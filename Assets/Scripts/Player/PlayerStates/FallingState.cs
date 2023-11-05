@@ -9,6 +9,8 @@ namespace Player.PlayerStates
         public void EnterState(PlayerStateMachine stateMachine)
         {
             _playerController = stateMachine.GetPlayerController();
+            stateMachine.Animator.SetBool("IsFalling", true);        
+
         }
         public void FixedUpdateState(PlayerStateMachine stateMachine)
         {
@@ -44,7 +46,10 @@ namespace Player.PlayerStates
         
         public void ExitState(PlayerStateMachine stateMachine)
         {
+            stateMachine.Animator.SetBool("IsFalling", false);        
+
             stateMachine.SwingingState.DisableSwingText(_playerController.GetUIController());
+
         }
         public void LateUpdateState(PlayerStateMachine stateMachine)
         {}

@@ -16,6 +16,8 @@ public class SwingingState : IPlayerState
         _swingPoint = _playerController.SwingableObjectGAME.transform.position;
         _lr.positionCount = 2;
         MakeJoint(_swingPoint);
+        stateMachine.Animator.SetBool("IsSwinging", true);        
+
     }
     public void FixedUpdateState(PlayerStateMachine stateMachine)
     {
@@ -30,6 +32,8 @@ public class SwingingState : IPlayerState
     public void ExitState(PlayerStateMachine stateMachine)
     {
         EndSwing();
+        stateMachine.Animator.SetBool("IsSwinging", false);        
+
     }
 
     public bool CheckSwing(PlayerStateMachine stateMachine)

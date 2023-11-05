@@ -19,7 +19,8 @@ public class WalkingState : IPlayerState
         _rb = _playerController.GetRigidbody();
         _camera = Camera.main;
         _playerController.MoveSpeed = _playerController.WalkSpeed;
-        
+        stateMachine.Animator.SetBool("IsWalking", true);        
+
     }
     public void FixedUpdateState(PlayerStateMachine stateMachine)
     {
@@ -51,8 +52,11 @@ public class WalkingState : IPlayerState
 
     public void ExitState(PlayerStateMachine stateMachine)
     {
+        stateMachine.Animator.SetBool("IsWalking", false);        
+
         // Cleanup or transition logic, if necessary
         stateMachine.TalkingState.DisableInteractDialogueActive(_playerController.GetUIController());
+
     }
     
     public void PlayerMove(PlayerStateMachine stateMachine)

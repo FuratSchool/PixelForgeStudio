@@ -17,6 +17,7 @@ public class DashingState : IPlayerState
         _playerController.canDash = false;
         _rigidbody.velocity = stateMachine.WalkingState.GetDirection(stateMachine.WalkingState._lastDirection, stateMachine).normalized * _playerController.dashSpeed;
         _playerController.StartCoroutine(Dash());
+        stateMachine.Animator.SetBool("IsDashing", true);        
     }
     public void FixedUpdateState(PlayerStateMachine stateMachine)
     {
@@ -39,6 +40,8 @@ public class DashingState : IPlayerState
 
     public void ExitState(PlayerStateMachine stateMachine)
     {
+        stateMachine.Animator.SetBool("IsDashing", false);        
+
     }
     
     private IEnumerator Dash()

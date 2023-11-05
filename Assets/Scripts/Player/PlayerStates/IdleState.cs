@@ -8,6 +8,8 @@ public class IdleState : IPlayerState
     public void EnterState(PlayerStateMachine stateMachine)
     {
         _playerController = stateMachine.GetPlayerController();
+        stateMachine.Animator.SetBool("IsIdle", true);        
+
     }
     public void FixedUpdateState(PlayerStateMachine stateMachine)
     {
@@ -38,6 +40,8 @@ public class IdleState : IPlayerState
     public void ExitState(PlayerStateMachine stateMachine)
     {
         stateMachine.TalkingState.DisableInteractDialogueActive(_playerController.GetUIController());
+        stateMachine.Animator.SetBool("IsIdle", false);        
+
     }
     public void LateUpdateState(PlayerStateMachine stateMachine)
     {}
