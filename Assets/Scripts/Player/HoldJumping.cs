@@ -17,6 +17,7 @@ public class HoldJumping : MonoBehaviour
     [SerializeField] private float forceHoldJump = 1f;
     [SerializeField] private bool grounded = false;
     private bool isJumping;
+    private bool SpaceReleased = true;
     private bool canJump = true; //for dialogue
 
     [SerializeField] private float raycastDistance = .05f;
@@ -35,11 +36,12 @@ public class HoldJumping : MonoBehaviour
 
     private void FixedUpdate()
     {
-        grounded = IsGrounded();
-         if (!canJump) return; //for dialogue
-        if (IsGrounded() && SpacePressed && isJumping == false)
+        if (!canJump) return; //for dialogue
+        if (IsGrounded() && SpacePressed && isJumping == false && SpaceReleased == true)
         {
+            Debug.Log("Jump");
             isJumping = true;
+            SpaceReleased = false;
             jumpTimeCounter = jumpTime;
             _rigidbody.AddForce(Vector3.up * force, ForceMode.Impulse);
             //Debug.Log(_rigidbody.velocity.y);
@@ -61,6 +63,11 @@ public class HoldJumping : MonoBehaviour
         {
             //Debug.Log(_rigidbody.velocity.y);
             jumpTimeCounter = 0;
+        }
+
+        if (SpacePressed == false)
+        {
+            SpaceReleased = true;
         }
     }
     void OnJump(InputValue inputValue)
