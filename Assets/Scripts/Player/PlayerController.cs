@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _footprintOffset = 0.1f;
     [HideInInspector] public float footstepInterval;
     public GameObject FootprintPrefab;
+    public bool FootprintEnabled = true;
     public float FootprintOffset => _footprintOffset;
     
     private Rigidbody _rigidbody;

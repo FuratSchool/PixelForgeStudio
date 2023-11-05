@@ -63,7 +63,7 @@ public class WalkingState : IPlayerState
     
     public void PlayerMove(PlayerStateMachine stateMachine)
     {
-        FootPrint(stateMachine);
+        if(stateMachine.GetPlayerController().FootprintEnabled)FootPrint(stateMachine);
         var playerControl = stateMachine.GetPlayerController();
         //moves the player. taking into account the delta time, world space, and the speed.
         if (stateMachine.CurrentState is SwingingState)
