@@ -5551,7 +5551,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 762808135}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.23135705, y: 0.000000018715387, z: -0.0000000044506887, w: 0.9728689}
+  m_LocalRotation: {x: 0.23135705, y: -0.000000018715387, z: 0.0000000044506887, w: 0.9728689}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6769,6 +6769,12 @@ MonoBehaviour:
   swingDistance: 6
   exitForce: 4
   swingTime: 3
+  footstepInterval: 0.5
+  footstepIntervalWalking: 0.5
+  footstepIntervalRunning: 0.2
+  _footprintOffset: 0.1
+  FootprintPrefab: {fileID: 5961734515174029338, guid: 06d3623a661d9c942bb0c4392d846fcf,
+    type: 3}
   isTransitioning: 0
 --- !u!114 &974011430
 MonoBehaviour:

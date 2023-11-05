@@ -8,6 +8,7 @@ public class SprintingState : IPlayerState
     {
         _playerController = stateMachine.GetPlayerController();
         _playerController.MoveSpeed = _playerController.SprintSpeed;
+        _playerController.footstepInterval = _playerController.footstepIntervalRunning;
         stateMachine.Animator.SetBool("IsSprinting", true);        
 
     }
@@ -17,7 +18,7 @@ public class SprintingState : IPlayerState
     public void UpdateState(PlayerStateMachine stateMachine)
     {
         stateMachine.WalkingState.PlayerMove(stateMachine);
-        if (stateMachine.JumpingState.IsGrounded(stateMachine) && _playerController.SpacePressed)
+        if (stateMachine.JumpingState.IsGrounded(stateMachine) && stateMachine.GetPlayerController().SpacePressed)
             stateMachine.ChangeState(stateMachine.JumpingState);
         
         else if (_playerController.IsPlayerMoving && !_playerController.ShiftPressed)
