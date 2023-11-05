@@ -6,6 +6,7 @@ public class TransitionState : IPlayerState
 {
     public void EnterState(PlayerStateMachine stateMachine)
     {
+        stateMachine.Animator.SetBool("IsTransition", true);        
     }
 
     public void UpdateState(PlayerStateMachine stateMachine)
@@ -24,5 +25,6 @@ public class TransitionState : IPlayerState
 
     public void ExitState(PlayerStateMachine stateMachine)
     {
+        stateMachine.Animator.SetBool("IsTransition", false);        
     }
 }

@@ -9,7 +9,7 @@ public class TalkingState : IPlayerState
         _playerController.NPC.hasBeenTalkedTo = true;
         _playerController.GetDialogueManager().StartDialogue(_playerController.NPC.dialogue);
         _playerController.DialogueActive = true;
-        
+        stateMachine.Animator.SetBool(("IsTalking"), true);
     }
 
     public void UpdateState(PlayerStateMachine stateMachine)
@@ -33,6 +33,8 @@ public class TalkingState : IPlayerState
         _playerController.SpacePressed = false;
         if(_playerController.NPC.canTalkAgain)
             _playerController.NPC.hasBeenTalkedTo = false;
+        stateMachine.Animator.SetBool(("IsTalking"), false);
+
     }
     
     public void EnableInteractDialogueActive(UIController uiController)
