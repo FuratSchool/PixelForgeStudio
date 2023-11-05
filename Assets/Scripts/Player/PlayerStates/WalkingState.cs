@@ -127,7 +127,7 @@ public class WalkingState : IPlayerState
         {
             var rotAmount = Quaternion.Euler(90, 0, 0);
             
-            if(Physics.Raycast(PlayerControl.transform.position, -Vector3.up, out var hit, 0.5f)){
+            if(Physics.Raycast(PlayerControl.transform.position, -Vector3.up, out var hit, 0.5f, ~LayerMask.GetMask("Player"))){
                 var posOffset = new Vector3(0f, PlayerControl.FootprintOffset, 0f);
                 PlayerControl.InstantiateObject(PlayerControl.FootprintPrefab, hit.point + posOffset, (PlayerControl.transform.rotation * rotAmount));
             }
