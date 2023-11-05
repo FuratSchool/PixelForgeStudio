@@ -9,6 +9,7 @@ public class JumpingState : IPlayerState
     {
         _playerController = stateMachine.GetPlayerController();
         _playerController.IsJumping = true;
+        _playerController.GetAudio().PlayOneShot(_playerController.JumpingSound);
         StartJump();
         if (_playerController.ShiftPressed)
         {

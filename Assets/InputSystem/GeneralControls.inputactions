@@ -195,6 +195,17 @@
                 },
                 {
                     "name": "",
+                    "id": "51cbee5d-d458-42b5-8946-4d70dda16cce",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Swing",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "6f5674c1-7494-407e-b157-cdcdecbe95d7",
                     "path": "<Keyboard>/q",
                     "interactions": "",
@@ -228,11 +239,33 @@
                 },
                 {
                     "name": "",
+                    "id": "91af8e4c-9868-4039-937a-8f92f49d431d",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "0f15aa9e-17a1-417c-ae84-e0ed499782b2",
                     "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c0227684-1d52-4d9e-9449-aa76ba3f1cf5",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false

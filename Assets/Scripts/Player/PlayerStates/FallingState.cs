@@ -20,6 +20,7 @@ namespace Player.PlayerStates
             stateMachine.WalkingState.PlayerMove(stateMachine);
             if (stateMachine.JumpingState.IsGrounded(stateMachine))
             {
+                _playerController.GetAudio().PlayOneShot(_playerController.LandingSound);
                 if (_playerController.ShiftPressed && _playerController.IsPlayerMoving)
                     stateMachine.ChangeState(stateMachine.SprintingState);
                 else if (_playerController.IsPlayerMoving)

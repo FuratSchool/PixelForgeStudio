@@ -6,14 +6,17 @@ using UnityEngine;
 
 public class CoinController : MonoBehaviour
 {
+    private bool interacted = false;
     private Animation anim;
+    private AudioSource audioSource;
     [SerializeField] AnimationClip coinAction;
     
     private void Start()
     {
          anim = gameObject.GetComponent<Animation>();
          anim.clip = coinAction;
-         
+         audioSource = GetComponent<AudioSource>();
+
     }
 
     private void Update()
@@ -22,6 +25,10 @@ public class CoinController : MonoBehaviour
         { 
             return;
         }
+        if(interacted && audioSource.isPlaying == false)
+        {
+            Destroy(gameObject);
+        }
         anim.Play();
     }
 
@@ -29,8 +36,11 @@ public class CoinController : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Destroy(gameObject);
             other.GetComponent<PlayerStatus>().AddCoin();
+            audioSource.Play();
+            GetComponent<MeshCollider>().enabled = false;
+            GetComponent<MeshRenderer>().enabled = false;
+            interacted = true;
         }
     }
 }

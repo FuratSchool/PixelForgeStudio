@@ -39,7 +39,7 @@ public class TalkingState : IPlayerState
     
     public void EnableInteractDialogueActive(UIController uiController)
     {
-        uiController.SetInteractText("Press F to talk");
+        uiController.SetInteractText("Press [F][X] to talk");
         uiController.SetInteractableTextActive(true);
     }
     public void DisableInteractDialogueActive(UIController uiController)

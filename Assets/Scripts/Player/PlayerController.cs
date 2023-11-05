@@ -64,7 +64,10 @@ public class PlayerController : MonoBehaviour
     private PlayerStateMachine _stateMachine;
     private UIController _uiController;
     private DialogueManager _dialogueManager;
-    
+    public AudioClip WalkingSound;
+    public AudioClip RunningSound;
+    public AudioClip JumpingSound;
+    public AudioClip LandingSound;
     public bool isTransitioning = false;
     public float MoveSpeed
     {
@@ -142,9 +145,14 @@ public class PlayerController : MonoBehaviour
     {
         return _dialogueManager;
     }
+    
+    public AudioSource GetAudio()
+    {
+        return GetComponent<AudioSource>();
+    }
     public bool IsOnTerrain()
     {
-        if (transform.position.y < -10f)
+        if (transform.position.y < -36f)
             _stateMachine.ChangeState(_stateMachine.DeathState);
         return false;
     }

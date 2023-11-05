@@ -8,6 +8,7 @@ public class UIController : MonoBehaviour
 {
     [SerializeField] private TMP_Text _interactableTextElement;
     [SerializeField] private TMP_Text _coinTextElement;
+    [SerializeField] private TMP_Text _FinishTextElement;
     public void SetInteractText(string text)
     {
         _interactableTextElement.text = text;
@@ -26,5 +27,10 @@ public class UIController : MonoBehaviour
     public void SetCoinText(int coins)
     {
         _coinTextElement.text = Convert.ToString(coins);
+    }
+    
+    public void SetFinishActive(bool active)
+    {
+        _FinishTextElement.gameObject.SetActive(active);
     }
 }
