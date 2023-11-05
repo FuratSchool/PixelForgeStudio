@@ -18,7 +18,7 @@ public class WhiteScreen : MonoBehaviour
     public GameObject TeleportPosition;
     private GameObject player;
     private Vector3 _Pos;
-
+    private PlayerController _playerController;
     private bool _fadeInStarted;
     private bool _fadeInFinished;
     private bool _fadeOutStarted;
@@ -34,7 +34,7 @@ public class WhiteScreen : MonoBehaviour
             player = other.gameObject;
             if (other.transform.parent != null) return;
             Debug.Log(player);
-            InRange = true;    
+            InRange = true;
         }
         
     }
@@ -49,6 +49,8 @@ public class WhiteScreen : MonoBehaviour
 
     private void Start()
     {
+        _playerController = FindObjectOfType<PlayerController>();
+        player = GameObject.FindObjectOfType<PlayerController>().gameObject;
         _Pos = TeleportPosition.transform.position;
     }
 
@@ -57,7 +59,6 @@ public class WhiteScreen : MonoBehaviour
         if (InRange && _fadeInStarted == false)
         {
             StartCoroutine(FadeIn());
-            //lock movement
         }
         else if (_fadeInStarted && _fadeInFinished && _fadeOutStarted == false)
         {
@@ -67,6 +68,7 @@ public class WhiteScreen : MonoBehaviour
 
     IEnumerator FadeIn()
     {
+        _playerController.isTransitioning = true;
         _isTransitioning = true;
         Debug.Log("Fade In!");
         _fadeInStarted = true;
@@ -95,5 +97,6 @@ public class WhiteScreen : MonoBehaviour
 
         _fadeOutStarted = false;
         _isTransitioning = false;
+        _playerController.isTransitioning = false;
     }
 }

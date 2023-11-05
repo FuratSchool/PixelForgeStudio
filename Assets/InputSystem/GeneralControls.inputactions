@@ -24,6 +24,24 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "Interact",
+                    "type": "Value",
+                    "id": "b1d1f89e-98f9-4257-923e-444533d56860",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Sprint",
+                    "type": "Value",
+                    "id": "5b5547da-0cfd-4563-83f2-f15f4edf049b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Swing",
                     "type": "Value",
                     "id": "8aafc139-8806-4cf3-9221-dd0a4ffb9ecf",
@@ -33,31 +51,13 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "SprintFinish",
-                    "type": "Button",
-                    "id": "a5ec0853-b771-4391-a189-cc1c41d7bffd",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "SprintStart",
-                    "type": "Button",
-                    "id": "22c29644-62b7-4509-a875-7e27b2e74b63",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "Dash",
-                    "type": "Button",
+                    "type": "Value",
                     "id": "b88aa811-361d-4d1e-9809-b32e129bd4db",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -195,17 +195,6 @@
                 },
                 {
                     "name": "",
-                    "id": "f38720d9-bd0b-475e-8c00-3d14daa39a19",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "SprintStart",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "6f5674c1-7494-407e-b157-cdcdecbe95d7",
                     "path": "<Keyboard>/q",
                     "interactions": "",
@@ -228,34 +217,23 @@
                 },
                 {
                     "name": "",
-                    "id": "c26db2bb-269a-43fd-9e52-a5aff38333db",
-                    "path": "<Keyboard>/shift",
-                    "interactions": "Press(behavior=1)",
+                    "id": "7a40eaca-4729-4fa7-9b7c-6d0ecf33bf1e",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "SprintFinish",
+                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "267c7e3a-143f-4516-a08b-4bd8d9e867aa",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "Press(behavior=1)",
-                    "processors": "",
-                    "groups": "Controller",
-                    "action": "SprintFinish",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "9743281a-df00-44a4-bbff-7a159d850ddd",
-                    "path": "<Keyboard>/shift",
-                    "interactions": "Press",
+                    "id": "0f15aa9e-17a1-417c-ae84-e0ed499782b2",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "SprintStart",
+                    "action": "Interact",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

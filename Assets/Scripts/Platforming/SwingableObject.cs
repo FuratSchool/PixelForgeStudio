@@ -7,12 +7,12 @@ public class SwingableObject : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        FindObjectOfType<Swinging>().InRange = true;
-        FindObjectOfType<Swinging>().SwingableObjectGAME = transform.gameObject;
+        FindObjectOfType<PlayerController>().inSwingingRange = true;
+        FindObjectOfType<PlayerController>().SwingableObjectGAME = transform.gameObject;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        FindObjectOfType<Swinging>().InRange = false;
+        FindObjectOfType<PlayerController>().inSwingingRange = false;
     }
 }
