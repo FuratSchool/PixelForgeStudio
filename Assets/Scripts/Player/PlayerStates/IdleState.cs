@@ -22,8 +22,6 @@ public class IdleState : IPlayerState
             stateMachine.ChangeState(stateMachine.FallingState);
         else if (_playerController.IsPlayerMoving)
             stateMachine.ChangeState(stateMachine.WalkingState);
-        else if (_playerController.ShiftPressed)
-            stateMachine.ChangeState(stateMachine.SprintingState);
         if (_playerController.InDialogeTriggerZone && _playerController.NPC.hasBeenTalkedTo == false)
         {
             stateMachine.TalkingState.EnableInteractDialogueActive(_playerController.GetUIController());

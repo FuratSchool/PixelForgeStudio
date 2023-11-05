@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.00029117582, g: 0.00041669465, b: 0.0009823793, a: 1}
+  m_IndirectSpecularColor: {r: 0.0002911765, g: 0.00041669578, b: 0.000982383, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -6759,9 +6759,9 @@ MonoBehaviour:
   jumpTimeCounter: 0
   force: 15
   forceHoldJump: 1
-  raycastDistance: 0.2
+  raycastDistance: 0.22
   IsJumping: 0
-  dashingTime: 0.35
+  dashingTime: 0.6
   dashingCooldown: 0.35
   dashSpeed: 15
   canDash: 1
@@ -9249,7 +9249,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1128849859}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.24876297, y: -0.000000008332746, z: 0.000000002140156, w: 0.9685644}
+  m_LocalRotation: {x: 0.24876297, y: 0.000000008332743, z: -0.0000000021401554, w: 0.9685644}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
