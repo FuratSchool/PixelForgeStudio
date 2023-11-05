@@ -9,20 +9,7 @@ public class PlayerStatus : MonoBehaviour
     
     private Vector3 playerSpawnPoint = new(-3.84f, -0.3f, -54.38f);
     private int Health { get; }
-
-    private void Awake()
-    {
-        if (playerStatus == null)
-        {
-            playerStatus = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
+    
     public int getPlayerHealth()
     {
         return Health;

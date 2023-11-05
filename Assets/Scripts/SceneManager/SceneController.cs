@@ -29,6 +29,14 @@ public class SceneController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.F12))
+        {
+            this.LoadScene("MainMenu");
+        }
+    }
+
     private void Start()
     {
         loadSettings();
