@@ -2326,10 +2326,10 @@ RectTransform:
   m_Father: {fileID: 1767370479}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -200}
-  m_SizeDelta: {x: -200, y: -600}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 100, y: 100}
+  m_SizeDelta: {x: 1720, y: 480}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &237543399
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3217,11 +3217,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 237543398}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -49.00003}
-  m_SizeDelta: {x: 1500, y: 450}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 100, y: -65}
+  m_SizeDelta: {x: 1500, y: 80}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &364732392
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9249,7 +9249,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1128849859}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.24876297, y: 0.000000008332743, z: -0.0000000021401554, w: 0.9685644}
+  m_LocalRotation: {x: 0.24876297, y: -0.000000008332746, z: 0.000000002140156, w: 0.9685644}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -9416,11 +9416,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 237543398}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -42}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 100, y: -150}
   m_SizeDelta: {x: 1500, y: 275}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 1}
 --- !u!114 &1149944540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12594,6 +12594,7 @@ GameObject:
   - component: {fileID: 1679358822}
   - component: {fileID: 1679358821}
   - component: {fileID: 1679358823}
+  - component: {fileID: 1679358824}
   m_Layer: 0
   m_Name: FreeLook Camera
   m_TagString: Untagged
@@ -12643,7 +12644,7 @@ MonoBehaviour:
   m_YAxis:
     Value: 1
     m_SpeedMode: 1
-    m_MaxSpeed: 0.01
+    m_MaxSpeed: 0.002
     m_AccelTime: 0.2
     m_DecelTime: 0.1
     m_InputAxisName: Mouse Y
@@ -12667,7 +12668,7 @@ MonoBehaviour:
   m_XAxis:
     Value: 0
     m_SpeedMode: 1
-    m_MaxSpeed: 0.5
+    m_MaxSpeed: 0.1
     m_AccelTime: 0.1
     m_DecelTime: 0.1
     m_InputAxisName: Mouse X
@@ -12740,6 +12741,20 @@ MonoBehaviour:
   AutoEnableInputs: 1
   XYAxis: {fileID: -5630151704836100654, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   ZAxis: {fileID: 0}
+--- !u!114 &1679358824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1679358820}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5765b512510cd7e459220b37c82964e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _defaultSensitivityX: 0
+  _defaultSensitivityY: 0
 --- !u!1 &1722112730
 GameObject:
   m_ObjectHideFlags: 0
