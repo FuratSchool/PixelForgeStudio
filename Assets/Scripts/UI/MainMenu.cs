@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
 {
     // Start is called before the first frame update
     public void playGame(){
-        FindObjectOfType<SceneController>().LoadScene("SampleScene"); //goes to the next scene.
+        FindObjectOfType<SceneController>().LoadScene("TutorialSceneV1"); //goes to the next scene.
     }
 
     public void quitGame(){
