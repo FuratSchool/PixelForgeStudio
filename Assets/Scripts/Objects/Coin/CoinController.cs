@@ -39,6 +39,7 @@ public class CoinController : MonoBehaviour
             other.GetComponent<PlayerStatus>().AddCoin();
             audioSource.Play();
             GetComponent<MeshCollider>().enabled = false;
+            GetComponent<SphereCollider>().enabled = false;
             GetComponent<MeshRenderer>().enabled = false;
             interacted = true;
         }
