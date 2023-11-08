@@ -159,4 +159,14 @@ public class SettingsMenu : MonoBehaviour
             KeyboardMap.SetActive(true);
         }
     }
+    
+    public void OptionsButtonHighLightEnable(GameObject Object)
+    {
+        Object.GetComponent<TMP_Text>().fontStyle |= FontStyles.Underline;
+    }
+    public void OptionsButtonHighLightDisable(GameObject Object)
+    {
+        
+        Object.GetComponent<TMP_Text>().fontStyle &= ~FontStyles.Underline;
+    }
 }

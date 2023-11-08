@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
 
-    public GameObject pauseMenu;
+    [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject optionsMenu;
+    
     public static bool isPaused;
 
     // Start is called before the first frame update
@@ -44,7 +46,17 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1f; //resumes the ingame time
         isPaused = false; 
     }
-
+    public void OpenOptionsMenu()
+    {
+        optionsMenu.SetActive(true);
+        pauseMenu.transform.GetChild(0).gameObject.SetActive(false);
+    }
+    
+    public void CloseOptionsMenu()
+    {
+        optionsMenu.SetActive(false);
+        pauseMenu.transform.GetChild(0).gameObject.SetActive(true);
+    }
     public void GoToMainMenu()
     {
         Time.timeScale = 1f; //resumes the ingame time
