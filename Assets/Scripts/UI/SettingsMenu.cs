@@ -16,7 +16,9 @@ public class SettingsMenu : MonoBehaviour
     private SettingsData settings;
     public InputActionAsset actions;
     [SerializeField] private Color TextColor;
-    private String activeString;
+
+    [SerializeField] private GameObject ControllerMap;
+    [SerializeField] private GameObject KeyboardMap;
     private void Awake()
     {
         InitResolutions();
@@ -146,5 +148,19 @@ public class SettingsMenu : MonoBehaviour
     public void SetColorOptionsMenu(TMP_Text text)
     {
         text.color = TextColor;
+    }
+    
+    public void SetMap(int MapIndex)
+    {
+        if (MapIndex == 1)
+        {
+            ControllerMap.SetActive(true);
+            KeyboardMap.SetActive(false);
+        }
+        else
+        {
+            ControllerMap.SetActive(false);
+            KeyboardMap.SetActive(true);
+        }
     }
 }
