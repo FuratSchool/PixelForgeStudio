@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour
         _camera = GetComponent<CinemachineFreeLook>();
         _defaultSensitivityY = _camera.m_YAxis.m_MaxSpeed;
         _defaultSensitivityX = _camera.m_XAxis.m_MaxSpeed;
-        UpdateCameraSettings(FindObjectOfType<SceneController>().Settings);
+         UpdateCameraSettings(FindObjectOfType<SceneController>().Settings);
     }
 
     private void UpdateCameraSettings(SettingsData settings)
