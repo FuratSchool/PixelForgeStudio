@@ -25,7 +25,7 @@ public class MainMenu : MonoBehaviour
     public void OptionsButtonHighLightDisable(GameObject Object)
     {
         
-        Object.GetComponent<TMP_Text>().fontStyle ^= FontStyles.Underline;
+        Object.GetComponent<TMP_Text>().fontStyle &= ~FontStyles.Underline;
     }
     
 }

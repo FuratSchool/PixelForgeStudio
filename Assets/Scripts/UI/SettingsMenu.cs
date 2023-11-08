@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Samples.RebindUI;
 using UnityEngine.UI;
@@ -15,6 +16,7 @@ public class SettingsMenu : MonoBehaviour
     private SettingsData settings;
     public InputActionAsset actions;
     [SerializeField] private Color TextColor;
+    private String activeString;
     private void Awake()
     {
         InitResolutions();
