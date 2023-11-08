@@ -14,7 +14,7 @@ public class SceneController : MonoBehaviour
     public InputActionAsset act;
     public AudioMixer audioMixer;
     private string ActiveSceneName;
-    public SettingsData Settings { get; set; }
+    public SettingsData Settings;
     public RebindActionUI rebindActionUI;
     private void Awake()
     {

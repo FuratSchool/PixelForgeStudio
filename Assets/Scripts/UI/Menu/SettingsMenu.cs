@@ -24,6 +24,14 @@ public class SettingsMenu : MonoBehaviour
         InitResolutions();
     }
 
+    private void OnDisable()
+    {
+        var rebinds = actions.SaveBindingOverridesAsJson();
+        settings.rebinds = rebinds;
+        FindObjectOfType<SceneController>().Settings.rebinds = rebinds;
+        LoadSaveSettings.SaveData(settings);
+    }
+
     private void Start()
     {
         settings = FindObjectOfType<SceneController>().Settings;
