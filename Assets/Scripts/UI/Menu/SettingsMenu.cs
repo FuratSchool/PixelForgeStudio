@@ -15,8 +15,8 @@ public class SettingsMenu : MonoBehaviour
     Resolution[] _resolutions;
     private SettingsData settings;
     public InputActionAsset actions;
+    public bool InGameScene {get; set;} =false;
     [SerializeField] private Color TextColor;
-
     [SerializeField] private GameObject ControllerMap;
     [SerializeField] private GameObject KeyboardMap;
     private void Awake()
@@ -65,21 +65,38 @@ public class SettingsMenu : MonoBehaviour
     public void SetInvertedY(bool isInverted)
     {
         settings.invertedY = isInverted;
+        if (InGameScene)
+        {
+            FindObjectOfType<CameraController>().UpdateCameraSettings(settings);
+        }
+        
     }
     
     public void SetInvertedX(bool isInverted)
     {
         settings.invertedX = isInverted;
+        if (InGameScene)
+        {
+            FindObjectOfType<CameraController>().UpdateCameraSettings(settings);
+        }
     }
     
     public void SetSensitivityY(float sensitivity)
     {
         settings.sensitivityY = sensitivity;
+        if (InGameScene)
+        {
+            FindObjectOfType<CameraController>().UpdateCameraSettings(settings);
+        }
     }
     
     public void SetSensitivityX(float sensitivity)
     {
         settings.sensitivityX = sensitivity;
+        if (InGameScene)
+        {
+            FindObjectOfType<CameraController>().UpdateCameraSettings(settings);
+        }
     }
 
     private void InitResolutions()

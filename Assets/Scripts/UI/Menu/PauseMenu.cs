@@ -10,11 +10,12 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject optionsMenu;
     
     public static bool isPaused;
-
+    
     // Start is called before the first frame update
     void Start()
     {
         pauseMenu.SetActive(false);
+        optionsMenu.GetComponent<SettingsMenu>().InGameScene = true;
     }
 
     // Update is called once per frame
