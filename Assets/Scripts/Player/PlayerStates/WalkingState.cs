@@ -43,7 +43,7 @@ public class WalkingState : IPlayerState
             stateMachine.ChangeState(stateMachine.DashingState);
         if (_playerController.InDialogeTriggerZone)
         {
-            stateMachine.TalkingState.EnableInteractDialogueActive(_playerController.GetUIController());
+            stateMachine.TalkingState.EnableInteractDialogueActive(stateMachine);
             if (_playerController.InteractPressed)
             {
                 stateMachine.ChangeState(stateMachine.TalkingState);

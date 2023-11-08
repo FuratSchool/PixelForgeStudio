@@ -11,18 +11,6 @@ public class TutorialKeybindings : MonoBehaviour
     [SerializeField] private string ControllerBindingId;
     [SerializeField] private string tutorialText;
     private string keybind;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     void ControlChanged(PlayerInput input)
     {
         var deviceLayoutName = default(string);

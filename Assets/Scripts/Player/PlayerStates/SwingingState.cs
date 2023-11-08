@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class SwingingState : IPlayerState
 {
@@ -44,9 +45,24 @@ public class SwingingState : IPlayerState
         return false;
     }
     
-    public void EnableSwingText(UIController uiController)
+    public void EnableSwingText(PlayerStateMachine stateMachine)
     {
-        uiController.SetInteractText("Hold [E][Y] to swing");
+        var playercontroller = stateMachine.GetPlayerController();
+        var uiController = playercontroller.GetUIController();
+        var playerInput = playercontroller.GetComponent<PlayerInput>();
+        string keybind;
+        if (playerInput.currentControlScheme.Equals("Controller"))
+        {
+            int index = playerInput.actions["Swing"].bindings.IndexOf(x => x.groups.Contains("Controller"));
+            keybind = playerInput.actions["Swing"].GetBindingDisplayString(index, out var deviceLayoutName, out var controlPath);
+        }
+        else
+        {
+            int index = playerInput.actions["Swing"].bindings.IndexOf(x => x.groups.Contains("KeyboardMouse"));
+            keybind = playerInput.actions["Swing"].GetBindingDisplayString(index, out var deviceLayoutName, out var controlPath);
+        }
+        
+        uiController.SetInteractText("Hold " + keybind +" to swing");
         uiController.SetInteractableTextActive(true);
     }
     

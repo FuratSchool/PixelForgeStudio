@@ -30,7 +30,7 @@ public class JumpingState : IPlayerState
             stateMachine.ChangeState(stateMachine.DashingState);
         else if (stateMachine.SwingingState.CheckSwing(stateMachine) && !IsGrounded(stateMachine))
         {
-            stateMachine.SwingingState.EnableSwingText(_playerController.GetUIController());
+            stateMachine.SwingingState.EnableSwingText(stateMachine);
             if (_playerController.SwingPressed)
             {
                 stateMachine.ChangeState(stateMachine.SwingingState);
