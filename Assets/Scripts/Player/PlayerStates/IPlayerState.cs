@@ -23,7 +23,12 @@ public class IPlayerState
 
     public virtual void LateUpdateState()
     {
-        if (_pc.IsGrounded()){ _pc.canDoubleJump = true; _pc.jumpReleased = false;}
+        _pc.grounded = _pc.IsGrounded();
+        if (_pc.IsGrounded())
+        {
+            _pc.canJump = true; _pc.canDoubleJump = true; _pc.jumpReleased = false;
+            
+        }
     }
     public virtual void ExitState() { }
     

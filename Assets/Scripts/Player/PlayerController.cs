@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,9 +25,10 @@ public class PlayerController : PlayerStateMachine
     [SerializeField] public float forceHoldJump = 1f;
     [SerializeField] public float raycastDistance = .8f;
     public bool SpacePressed { get; set; }
-    public bool canJump = true;
+    public bool canJump;
     public bool canDoubleJump;
     public bool jumpReleased = false;
+    public bool grounded;
     
     [Header("Dashing")]
     [SerializeField] public float dashingTime = 0.5f;
@@ -215,7 +217,13 @@ public class PlayerController : PlayerStateMachine
     public bool IsGrounded()
     {
         var layermask = 1 << 6;
-        return Physics.Raycast(transform.position, Vector3.down, raycastDistance, ~layermask);
+        bool ground = Physics.Raycast(transform.position, Vector3.down,out var hit, raycastDistance, ~layermask);
+        if (hit.collider != null)
+        {
+            if (hit.collider.name != "DashPlatformEnd") Debug.Log("hit");
+        }
+        
+        return ground;
     }
     
     public Vector3 GetDirection(Vector3 direction)

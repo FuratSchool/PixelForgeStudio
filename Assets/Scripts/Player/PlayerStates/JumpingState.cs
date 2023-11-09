@@ -51,9 +51,7 @@ public class JumpingState : IPlayerState
 
     public override void ExitState()
     {
-        //_playerStateMachine.Animator.SetBool("IsJumping", false);        
-        
-        //_playerStateMachine.SwingingState.DisableSwingText(_pc.GetUIController());
+        _pc.canJump = false;
     }
 
 
@@ -118,6 +116,7 @@ public class JumpingState : IPlayerState
         else
         {
             _pc.isJumping = false;
+            _pc.canJump = false;
         }
     }
 }

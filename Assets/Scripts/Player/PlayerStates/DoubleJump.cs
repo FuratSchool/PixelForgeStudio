@@ -15,7 +15,7 @@ public class DoubleJump : IPlayerState
     {
         base.EnterState();
         Debug.Log("DoubleJump");
-        _pc.GetRigidbody().AddForce(Vector3.up * (_pc.force * 1f), ForceMode.Impulse);
+        _pc.GetRigidbody().AddForce(Vector3.up * (_pc.force * 2f), ForceMode.Impulse);
         _pc.canDoubleJump = false;
         _pc.jumpReleased = false;
         _playerStateMachine.Animator.Play("Start Jump");
