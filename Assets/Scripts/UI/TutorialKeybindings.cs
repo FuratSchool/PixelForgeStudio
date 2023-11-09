@@ -11,7 +11,17 @@ public class TutorialKeybindings : MonoBehaviour
     [SerializeField] private string ControllerBindingId;
     [SerializeField] private string tutorialText;
     private string keybind;
+
+    void OnEnable()
+    {
+        ChangeText(FindObjectOfType<PlayerInput>());
+    }
     void ControlChanged(PlayerInput input)
+    {
+        ChangeText(input);
+    }
+
+    void ChangeText(PlayerInput input)
     {
         var deviceLayoutName = default(string);
         var controlPath = default(string);

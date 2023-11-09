@@ -96,7 +96,7 @@ public class DialogueManager : MonoBehaviour
 
     private void start(string sentence)
     {
-        StartCoroutine( Wait(0.5f));
+        StartCoroutine( Wait(0.3f));
         StartCoroutine( TypeSentence(sentence));
     }
 
