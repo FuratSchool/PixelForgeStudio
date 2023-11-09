@@ -25,9 +25,9 @@ using UnityEngine;
             if (_pc.SpacePressed && _pc.canDoubleJump && _pc.jumpReleased)
                 _playerStateMachine.ChangeState(_pc.DoubleJumpState);
             
-            if (_pc.CheckSwing())
+            if (CheckSwing())
             {
-                _pc.EnableSwingText(_pc.GetUIController());
+                EnableSwingText(_pc.GetUIController());
                 if (_pc.SwingPressed)
                 {
                     _playerStateMachine.ChangeState(_pc.SwingingState);
@@ -35,7 +35,7 @@ using UnityEngine;
             }
             else
             {
-                _pc.DisableSwingText(_pc.GetUIController());
+                DisableSwingText(_pc.GetUIController());
             }
             
         }

@@ -29,7 +29,7 @@ public class SprintingState : IPlayerState
             _playerStateMachine.ChangeState(_pc.FallingState);
         if (_pc.InDialogeTriggerZone && _pc.NPC.hasBeenTalkedTo == false)
         {
-            _pc.EnableInteractDialogueActive(_pc.GetUIController());
+            EnableInteractDialogueActive(_pc.GetUIController());
             if (_pc.InteractPressed)
             {
                 _playerStateMachine.ChangeState(_pc.TalkingState);
@@ -37,7 +37,7 @@ public class SprintingState : IPlayerState
         }
         else
         {
-            _pc.DisableInteractDialogueActive(_pc.GetUIController());
+            DisableInteractDialogueActive(_pc.GetUIController());
         }
     }
 
@@ -46,7 +46,7 @@ public class SprintingState : IPlayerState
         _pc.MoveSpeed = _pc.WalkSpeed;
         //_playerStateMachine.Animator.SetBool("IsSprinting", false);        
         _pc.GetAudio().Stop();
-        _pc.DisableInteractDialogueActive(_pc.GetUIController());
+        DisableInteractDialogueActive(_pc.GetUIController());
     }
 
     public override void LateUpdateState()

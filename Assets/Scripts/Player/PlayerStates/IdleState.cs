@@ -30,7 +30,7 @@ public class IdleState : IPlayerState
         
         if (_pc.InDialogeTriggerZone && _pc.NPC.hasBeenTalkedTo == false)
         {
-            _pc.EnableInteractDialogueActive(_pc.GetUIController());
+            EnableInteractDialogueActive(_pc.GetUIController());
             if (_pc.InteractPressed)
             {
                 _playerStateMachine.ChangeState(_pc.TalkingState);
@@ -38,12 +38,12 @@ public class IdleState : IPlayerState
         }
         else
         {
-            _pc.DisableInteractDialogueActive(_pc.GetUIController());
+            DisableInteractDialogueActive(_pc.GetUIController());
         }
     }
     public override void ExitState()
     {
-        _pc.DisableInteractDialogueActive(_pc.GetUIController());
+        DisableInteractDialogueActive(_pc.GetUIController());
         //_playerStateMachine.Animator.enabled = false;
 
     }

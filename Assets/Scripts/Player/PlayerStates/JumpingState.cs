@@ -34,9 +34,9 @@ public class JumpingState : IPlayerState
             _playerStateMachine.ChangeState(_pc.DoubleJumpState);
 
 
-        if (_pc.CheckSwing())
+        if (CheckSwing())
         {
-            _pc.EnableSwingText(_pc.GetUIController());
+            EnableSwingText(_pc.GetUIController());
             if (_pc.SwingPressed)
             {
                 _playerStateMachine.ChangeState(_pc.SwingingState);
@@ -44,7 +44,7 @@ public class JumpingState : IPlayerState
         }
         else
         {
-            _pc.DisableSwingText(_pc.GetUIController());
+            DisableSwingText(_pc.GetUIController());
         }
     }
     

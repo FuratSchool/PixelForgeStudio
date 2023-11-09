@@ -34,7 +34,7 @@ public class WalkingState : IPlayerState
         
         if (_pc.InDialogeTriggerZone && _pc.NPC.hasBeenTalkedTo == false)
         {
-            _pc.EnableInteractDialogueActive(_pc.GetUIController());
+            EnableInteractDialogueActive(_pc.GetUIController());
             if (_pc.InteractPressed)
             {
                 _playerStateMachine.ChangeState(_pc.TalkingState);
@@ -42,7 +42,7 @@ public class WalkingState : IPlayerState
         }
         else
         {
-            _pc.DisableInteractDialogueActive(_pc.GetUIController());
+            DisableInteractDialogueActive(_pc.GetUIController());
         }
     }
 
@@ -50,7 +50,7 @@ public class WalkingState : IPlayerState
     {
         //_playerStateMachine.Animator.SetBool("IsWalking", false);        
         _pc.GetAudio().Stop();
-        _pc.DisableInteractDialogueActive(_pc.GetUIController());
+        DisableInteractDialogueActive(_pc.GetUIController());
 
     }
 

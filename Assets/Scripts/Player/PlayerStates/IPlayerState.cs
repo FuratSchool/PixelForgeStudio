@@ -26,4 +26,35 @@ public class IPlayerState
         if (_pc.IsGrounded()){ _pc.canDoubleJump = true; _pc.jumpReleased = false;}
     }
     public virtual void ExitState() { }
+    
+    public void EnableInteractDialogueActive(UIController uiController)
+    {
+        uiController.SetInteractText("Press [F][X] to talk");
+        uiController.SetInteractableTextActive(true);
+    }
+    
+    public void DisableInteractDialogueActive(UIController uiController)
+    {
+        uiController.SetInteractableTextActive(false);
+    }
+    
+    public void EnableSwingText(UIController uiController)
+    {
+        uiController.SetInteractText("Hold [E][Y] to swing");
+        uiController.SetInteractableTextActive(true);
+    }
+    
+    public void DisableSwingText(UIController uiController)
+    {
+        uiController.SetInteractableTextActive(false);
+    }
+    
+    public bool CheckSwing()
+    {
+        if(!_pc.IsSwinging && _pc.canSwing && _pc.inSwingingRange)
+            return true;
+        return false;
+    }
+    
+    
 }

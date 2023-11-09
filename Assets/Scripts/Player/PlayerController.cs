@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Serialization;
 
 public class PlayerController : PlayerStateMachine
 {
@@ -18,8 +17,6 @@ public class PlayerController : PlayerStateMachine
     public float totalTime = 0;
     public bool _isRunning;
     
-    
-
     [Header("Jumping")]
     [SerializeField] public float jumpTime = 0.35f;
     [SerializeField] public float jumpTimeCounter;
@@ -134,15 +131,6 @@ public class PlayerController : PlayerStateMachine
         set => tr = value;
     }
     
-    public bool IsPlayerMoving
-    {
-        get
-        {
-            var movementThreshold = 0.1f;
-            return Mathf.Abs(Movement.x) >= movementThreshold || Mathf.Abs(Movement.y) >= movementThreshold;
-        }
-    }
-
     public bool isJumping { get; set; }
 
     private void Awake()
@@ -190,19 +178,7 @@ public class PlayerController : PlayerStateMachine
     {
         return GetComponent<AudioSource>();
     }
-    /*public bool IsOnTerrain()
-    {
-        if (transform.position.y < -36f)
-            _stateMachine.ChangeState(_stateMachine.DeathState);
-        return false;
-    }
-    public bool IsTransitioning()
-    {
-        if (isTransitioning && _stateMachine.CurrentState != _stateMachine.TransitionState)
-            _stateMachine.ChangeState(_stateMachine.TransitionState);
-        return false;
-    }*/
-    
+
     private void OnMove(InputValue inputValue)
     {
         Movement = inputValue.Get<Vector2>();
@@ -235,16 +211,7 @@ public class PlayerController : PlayerStateMachine
     {
         InteractPressed = Convert.ToBoolean(inputValue.Get<float>());
     }
-    public void DestroyJoint(ConfigurableJoint joint)
-    {
-        Destroy(joint);
-    }
-    
-    public void InstantiateObject(GameObject prefab, Vector3 position, Quaternion rotation)
-    {
-        Instantiate(prefab, position, rotation);
-    }
-    
+   
     public bool IsGrounded()
     {
         var layermask = 1 << 6;
@@ -283,12 +250,9 @@ public class PlayerController : PlayerStateMachine
     
     public IEnumerator Dash()
     {
-        //var direction = lastDirection;
         _canDash = false;
         isDashing = true;
         _rigidbody.useGravity = false;
-        //float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg+ Camera.main.transform.eulerAngles.y;
-        //Vector3 moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
         _rigidbody.velocity = GetDirection(_lastDirection).normalized * dashingPower;
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
@@ -307,7 +271,7 @@ public class PlayerController : PlayerStateMachine
         {
             var rotAmount = Quaternion.Euler(90, 0, 0);
             var posOffset = new Vector3(0f, 0f, 0f);
-            ;           Instantiate(footPrints, (transform.position + posOffset), (transform.rotation * rotAmount));
+            Instantiate(footPrints, (transform.position + posOffset), (transform.rotation * rotAmount));
             totalTime = 0;
         }
     }
@@ -326,32 +290,9 @@ public class PlayerController : PlayerStateMachine
         _canSwing = true;
     }
     
-    public void EnableInteractDialogueActive(UIController uiController)
-    {
-        uiController.SetInteractText("Press [F][X] to talk");
-        uiController.SetInteractableTextActive(true);
-    }
     
-    public void DisableInteractDialogueActive(UIController uiController)
-    {
-        uiController.SetInteractableTextActive(false);
-    }
 
-    public bool CheckSwing()
-    {
-        if(!IsSwinging && canSwing && inSwingingRange)
-            return true;
-        return false;
-    }
-    public void EnableSwingText(UIController uiController)
-    {
-        uiController.SetInteractText("Hold [E][Y] to swing");
-        uiController.SetInteractableTextActive(true);
-    }
     
-    public void DisableSwingText(UIController uiController)
-    {
-        uiController.SetInteractableTextActive(false);
-    }
+    
     
 }

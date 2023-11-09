@@ -8,12 +8,7 @@ public class PlayerStateMachine : MonoBehaviour
     IPlayerState currentState;
     IPlayerState previousState; // Add this variable to track the previous state
     private Animator _animator;
-
     
-    
-    
-   
-
     private void Start()
     {
         _animator = GetComponentInChildren<Animator>();
@@ -24,8 +19,6 @@ public class PlayerStateMachine : MonoBehaviour
     
     public void Update()
     {
-        //_playerController.IsOnTerrain();
-        //_playerController.IsTransitioning();
         if (currentState != null) currentState.UpdateState();
     }
 

@@ -27,7 +27,7 @@ public class TalkingState : IPlayerState
 
     public override void ExitState()
     {
-        _pc.DisableInteractDialogueActive(_pc.GetUIController());
+        DisableInteractDialogueActive(_pc.GetUIController());
         _pc.NPC.hasBeenTalkedTo = true;
         _pc.SpacePressed = false;
         if(_pc.NPC.canTalkAgain)
