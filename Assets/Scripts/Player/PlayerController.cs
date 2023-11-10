@@ -23,7 +23,8 @@ public class PlayerController : PlayerStateMachine
     [SerializeField] public float jumpTimeCounter;
     [SerializeField] public float force = 10f;
     [SerializeField] public float forceHoldJump = 1f;
-    [SerializeField] public float raycastDistance = .8f;
+    [SerializeField] public float raycastDistance = .4f;
+    [SerializeField] public float gravityMultiplier = 1.0f;
     public bool SpacePressed { get; set; }
     public bool canJump;
     public bool canDoubleJump;
