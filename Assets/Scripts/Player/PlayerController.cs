@@ -35,6 +35,7 @@ public class PlayerController : PlayerStateMachine
     [SerializeField] public float dashingTime = 0.5f;
     [SerializeField] public float dashingCooldown = 2f;
     [SerializeField] private float dashingPower = 30f;
+    [SerializeField] private float dashEndTime = .35f;
     public bool isDashing;
     private Vector3 _lastDirection;
 
@@ -266,6 +267,7 @@ public class PlayerController : PlayerStateMachine
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         Animator.Play("Stop Dash");
+        yield return new WaitForSeconds(dashEndTime);
         tr.emitting = false;
         _rigidbody.useGravity = true;
         _rigidbody.velocity = new Vector3(0f, 0f, 0f);isDashing = false;
