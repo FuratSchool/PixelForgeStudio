@@ -61,6 +61,8 @@ public class JumpingState : IPlayerState
     public override void LateUpdateState()
     {
         base.LateUpdateState();
+        _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * (_pc.MoveSpeed * Time.deltaTime), 
+            Space.World);
         if (!_pc.canJump) return; //for dialogue
         /*if (_pc.IsGrounded() && _pc.SpacePressed && _pc.isJumping == false)
         {
@@ -90,8 +92,7 @@ public class JumpingState : IPlayerState
             
         }*/
         ContinueJump();
-        _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * (_pc.MoveSpeed * Time.deltaTime), 
-            Space.World);
+        
         
 
         if (!_pc.SpacePressed)

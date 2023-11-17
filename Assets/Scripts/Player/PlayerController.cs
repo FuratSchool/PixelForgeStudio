@@ -222,7 +222,7 @@ public class PlayerController : PlayerStateMachine
         bool ground = Physics.Raycast(transform.position, Vector3.down,out var hit, raycastDistance, ~layermask);
         if (hit.collider != null)
         {
-            if (hit.collider.name != "DashPlatformEnd") Debug.Log("hit");
+            if (hit.collider.name != "FirstCliff") Debug.Log("hit");
         }
         
         return ground;
