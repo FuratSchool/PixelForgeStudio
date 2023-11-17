@@ -17,7 +17,7 @@ public class CameraController : MonoBehaviour
         UpdateCameraSettings(FindObjectOfType<SceneController>().Settings);
     }
 
-    private void UpdateCameraSettings(SettingsData settings)
+    public void UpdateCameraSettings(SettingsData settings)
     {
         _camera.m_YAxis.m_MaxSpeed = _defaultSensitivityY * (settings.sensitivityY);
         _camera.m_XAxis.m_MaxSpeed = _defaultSensitivityX * (settings.sensitivityX);

@@ -68,6 +68,7 @@ public class PlayerController : MonoBehaviour
     public AudioClip RunningSound;
     public AudioClip JumpingSound;
     public AudioClip LandingSound;
+    
     public bool isTransitioning = false;
     public float MoveSpeed
     {

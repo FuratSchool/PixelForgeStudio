@@ -37,7 +37,6 @@ public class PlayerStateMachine : MonoBehaviour
 
     public void ChangeState(IPlayerState newState)
     {
-        Debug.Log($"Player's state changed to {newState.GetType().Name}");
         if (currentState != null)
         {
             previousState = currentState; // Store the current state as the previous state
