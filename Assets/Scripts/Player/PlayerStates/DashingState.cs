@@ -3,58 +3,33 @@ using UnityEngine;
 
 public class DashingState : IPlayerState
 {
-    private PlayerController _playerController;
-    private Rigidbody _rigidbody;
-    private bool _isDashing;
+    public DashingState (PlayerController pc) : base("DashingState", pc) {_pc = (PlayerController)this._playerStateMachine;}
+    public override void EnterState()
+    {
+        _playerStateMachine.Animator.Play("Start Dash");
+        _pc.StartCoroutine(_pc.Dash());
+    }
+    public override void UpdateState()
+    {
+        base.UpdateState();
 
-    public void EnterState(PlayerStateMachine stateMachine)
-    {
-        _playerController = stateMachine.GetPlayerController();
-        _playerController.DashPressed = false;
-        _rigidbody = _playerController.GetRigidbody();
-        _rigidbody.useGravity = false;
-        _isDashing = true;
-        _playerController.canDash = false;
-        _rigidbody.velocity = stateMachine.WalkingState.GetDirection(stateMachine.WalkingState._lastDirection, stateMachine).normalized * _playerController.dashSpeed;
-        _playerController.StartCoroutine(Dash());
-        stateMachine.Animator.SetBool("IsDashing", true);        
-    }
-    public void FixedUpdateState(PlayerStateMachine stateMachine)
-    {
-    }
-    public void UpdateState(PlayerStateMachine stateMachine)
-    {
-        if (_isDashing == false)
+        if (!_pc.IsGrounded() && !_pc.isDashing)
         {
-            if(!stateMachine.JumpingState.IsGrounded(stateMachine))
-                stateMachine.ChangeState(stateMachine.FallingState);
-            else if (_playerController.ShiftPressed && _playerController.IsPlayerMoving)
-                stateMachine.ChangeState(stateMachine.SprintingState);
-            else if (_playerController.IsPlayerMoving)
-                stateMachine.ChangeState(stateMachine.WalkingState);
-            else
-                stateMachine.ChangeState(stateMachine.IdleState);
-            
+            _pc.dashPressed = false;
+            _playerStateMachine.ChangeState((_pc.FallingState));
         }
+
+        if (_pc.IsGrounded() && !_pc.isDashing)
+        {
+            _pc.dashPressed = false;
+            _playerStateMachine.ChangeState((_pc.IdleState));
+        }
+
     }
 
-    public void ExitState(PlayerStateMachine stateMachine)
+    public override void ExitState()
     {
-        stateMachine.Animator.SetBool("IsDashing", false);        
+        //_playerStateMachine.Animator.Play("Idle");  
 
     }
-    
-    private IEnumerator Dash()
-    {
-        _playerController.TR.emitting = true;
-        yield return new WaitForSeconds(_playerController.dashingTime);
-        _playerController.TR.emitting = false;
-        _rigidbody.useGravity = true;
-        _isDashing = false;
-        _rigidbody.velocity = new Vector3(0f, 0f, 0f);
-        yield return new WaitForSeconds(_playerController.dashingCooldown);
-        _playerController.canDash = true;
-    }
-    public void LateUpdateState(PlayerStateMachine stateMachine)
-    {}
 }

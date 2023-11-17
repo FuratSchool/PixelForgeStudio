@@ -1,58 +1,58 @@
+using Unity.VisualScripting;
 using UnityEngine;
-
-namespace Player.PlayerStates
-{
     public class FallingState : IPlayerState
     {
-        private PlayerController _playerController;
-
-        public void EnterState(PlayerStateMachine stateMachine)
+        public FallingState(PlayerController pc) : base("FallingState", pc)
         {
-            _playerController = stateMachine.GetPlayerController();
-            stateMachine.Animator.SetBool("IsFalling", true);        
+            _pc = (PlayerController)this._playerStateMachine;
+        }
+        public override void EnterState()
+        {
+            _playerStateMachine.Animator.Play("Falling");
+            
 
         }
-        public void FixedUpdateState(PlayerStateMachine stateMachine)
+        public override void UpdateState()
         {
-        }
-        public void UpdateState(PlayerStateMachine stateMachine)
-        {
-            stateMachine.WalkingState.PlayerMove(stateMachine);
-            if (stateMachine.JumpingState.IsGrounded(stateMachine))
+            base.UpdateState();
+       
+            if (_pc.IsGrounded())
+                _playerStateMachine.ChangeState((_pc.IdleState));
+            if (_pc._canDash && _pc.dashPressed) 
+                _playerStateMachine.ChangeState(_pc.DashingState);
+            if (_pc.SwingPressed && _pc._canSwing && _pc.InRange)
+                _playerStateMachine.ChangeState(_pc.SwingingState);
+            if (_pc.SpacePressed && _pc.canDoubleJump && _pc.jumpReleased)
+                _playerStateMachine.ChangeState(_pc.DoubleJumpState);
+            
+            if (CheckSwing())
             {
-                _playerController.GetAudio().PlayOneShot(_playerController.LandingSound);
-                if (_playerController.ShiftPressed && _playerController.IsPlayerMoving)
-                    stateMachine.ChangeState(stateMachine.SprintingState);
-                else if (_playerController.IsPlayerMoving)
-                    stateMachine.ChangeState(stateMachine.WalkingState);
-                else
-                    stateMachine.ChangeState(stateMachine.IdleState);
-            }
-            else if (stateMachine.SwingingState.CheckSwing(stateMachine) && !stateMachine.JumpingState.IsGrounded(stateMachine))
-            {
-                stateMachine.SwingingState.EnableSwingText(stateMachine);
-                if (_playerController.SwingPressed)
+                EnableSwingText(_pc.GetUIController());
+                if (_pc.SwingPressed)
                 {
-                    stateMachine.ChangeState(stateMachine.SwingingState);
+                    _playerStateMachine.ChangeState(_pc.SwingingState);
                 }
             }
-            else if (_playerController.canDash && _playerController.DashPressed)
-                stateMachine.ChangeState(stateMachine.DashingState);
             else
             {
-                stateMachine.SwingingState.DisableSwingText(_playerController.GetUIController());
+                DisableSwingText(_pc.GetUIController());
             }
             
         }
         
-        public void ExitState(PlayerStateMachine stateMachine)
+        public override void ExitState()
         {
-            stateMachine.Animator.SetBool("IsFalling", false);        
+            //_playerStateMachine.Animator.SetBool("IsFalling", false);        
 
-            stateMachine.SwingingState.DisableSwingText(_playerController.GetUIController());
+            //stateMachine.SwingingState.DisableSwingText(_playerController.GetUIController());
 
         }
-        public void LateUpdateState(PlayerStateMachine stateMachine)
-        {}
+        public override void LateUpdateState()
+        {
+            base.LateUpdateState();
+            _pc.GetRigidbody().AddForce(Physics.gravity*_pc.gravityMultiplier);
+            _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * (_pc.MoveSpeed * Time.deltaTime), 
+                Space.World);
+            
+        }
     }
-}

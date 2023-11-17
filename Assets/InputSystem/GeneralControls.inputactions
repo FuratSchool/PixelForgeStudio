@@ -24,6 +24,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "JumpReleased",
+                    "type": "Value",
+                    "id": "e9a1bc93-4be7-4397-bcd3-9854d17a31d6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "Interact",
                     "type": "Value",
                     "id": "b1d1f89e-98f9-4257-923e-444533d56860",
@@ -33,9 +42,18 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "Sprint",
+                    "name": "SprintStart",
                     "type": "Value",
                     "id": "5b5547da-0cfd-4563-83f2-f15f4edf049b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "SprintFinish",
+                    "type": "Value",
+                    "id": "b9f1d918-7c29-473c-8985-49aac0776819",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -199,7 +217,7 @@
                     "path": "<Gamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
+                    "groups": "",
                     "action": "Swing",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -210,7 +228,7 @@
                     "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KeyboardMouse",
+                    "groups": "",
                     "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -221,7 +239,7 @@
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
+                    "groups": "",
                     "action": "Dash",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -230,10 +248,10 @@
                     "name": "",
                     "id": "7a40eaca-4729-4fa7-9b7c-6d0ecf33bf1e",
                     "path": "<Keyboard>/leftShift",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
                     "groups": "KeyboardMouse",
-                    "action": "Sprint",
+                    "action": "SprintStart",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -241,10 +259,21 @@
                     "name": "",
                     "id": "91af8e4c-9868-4039-937a-8f92f49d431d",
                     "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
+                    "interactions": "Press",
                     "processors": "",
-                    "groups": "Controller",
-                    "action": "Sprint",
+                    "groups": "",
+                    "action": "SprintStart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f1c3cbba-7322-4cd4-91e6-6e097bba9a4e",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SprintStart",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -265,8 +294,63 @@
                     "path": "<Gamepad>/buttonWest",
                     "interactions": "",
                     "processors": "",
-                    "groups": "Controller",
+                    "groups": "",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e0bd45ec-50f6-4044-b072-8aa31ce0213a",
+                    "path": "<Keyboard>/space",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "JumpReleased",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8a2d53fd-b37b-4d4e-a456-be8fe1883e14",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "JumpReleased",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "57999a13-2b0e-41da-ab72-22f2a791f54a",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "SprintFinish",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5c5b9ba8-6cf4-49de-bb49-207be389f857",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SprintFinish",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "769314e0-fb4c-4246-8e04-b971f9ae4ddc",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "Press(behavior=1)",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SprintFinish",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

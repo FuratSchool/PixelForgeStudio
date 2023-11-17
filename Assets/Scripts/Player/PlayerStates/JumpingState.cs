@@ -1,84 +1,123 @@
-using Player.PlayerStates;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class JumpingState : IPlayerState
 {
-    private PlayerController _playerController;
-    public void EnterState(PlayerStateMachine stateMachine)
+    public JumpingState(PlayerController pc) : base("JumpingState", pc)
     {
-        _playerController = stateMachine.GetPlayerController();
-        _playerController.IsJumping = true;
-        _playerController.GetAudio().PlayOneShot(_playerController.JumpingSound);
-        StartJump();
-        if (_playerController.ShiftPressed)
+        _pc = (PlayerController)this._playerStateMachine;
+    }
+    
+    public override void EnterState()
+    {
+        base.EnterState();
+        _pc.GetAudio().PlayOneShot(_pc.JumpingSound);
+        
+        /*if (_pc.ShiftPressed)
         {
-            _playerController.MoveSpeed = _playerController.SprintSpeed;
-        }
-        stateMachine.Animator.SetBool("IsJumping", true);        
+            _pc.MoveSpeed = _pc.SprintSpeed;
+        }*/
+        _playerStateMachine.Animator.Play("Start Jump");
+        StartJump();
 
     }
 
-    public void UpdateState(PlayerStateMachine stateMachine)
+    public override void UpdateState()
     {
-        stateMachine.WalkingState.PlayerMove(stateMachine);
-        if (!IsGrounded(stateMachine) && _playerController.GetRigidbody().velocity.y < -0.1f && !_playerController.IsJumping)
+        
+        base.UpdateState();
+        if (_pc._canDash && _pc.dashPressed) 
+            _playerStateMachine.ChangeState(_pc.DashingState);
+        if (_pc.GetRigidbody().velocity.y < 0)
+            _playerStateMachine.ChangeState(_pc.FallingState);
+        if (_pc.SpacePressed && _pc.canDoubleJump && _pc.jumpReleased)
+            _playerStateMachine.ChangeState(_pc.DoubleJumpState);
+
+
+        if (CheckSwing())
         {
-            stateMachine.ChangeState(stateMachine.FallingState);
-        }
-        else if (_playerController.canDash && _playerController.DashPressed)
-            stateMachine.ChangeState(stateMachine.DashingState);
-        else if (stateMachine.SwingingState.CheckSwing(stateMachine) && !IsGrounded(stateMachine))
-        {
-            stateMachine.SwingingState.EnableSwingText(stateMachine);
-            if (_playerController.SwingPressed)
+            EnableSwingText(_pc.GetUIController());
+            if (_pc.SwingPressed)
             {
-                stateMachine.ChangeState(stateMachine.SwingingState);
+                _playerStateMachine.ChangeState(_pc.SwingingState);
             }
         }
         else
         {
-            stateMachine.SwingingState.DisableSwingText(_playerController.GetUIController());
+            DisableSwingText(_pc.GetUIController());
         }
     }
-    public void FixedUpdateState(PlayerStateMachine stateMachine)
-    {
-        ContinueJump();
-    }
-
-    public void ExitState(PlayerStateMachine stateMachine)
-    {
-        stateMachine.Animator.SetBool("IsJumping", false);        
-
-        _playerController.IsJumping = false;
-        _playerController.jumpTimeCounter = 0;
-        stateMachine.SwingingState.DisableSwingText(_playerController.GetUIController());
-    }
     
+
+    public override void ExitState()
+    {
+        _pc.canJump = false;
+    }
+
+
+
+
+
+    public override void LateUpdateState()
+    {
+        base.LateUpdateState();
+        _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * (_pc.MoveSpeed * Time.deltaTime), 
+            Space.World);
+        if (!_pc.canJump) return; //for dialogue
+        /*if (_pc.IsGrounded() && _pc.SpacePressed && _pc.isJumping == false)
+        {
+            _pc.isJumping = true;
+            //_pc.SpaceReleased = false;
+            _pc.jumpTimeCounter = _pc.jumpTime;
+            _pc.GetRigidbody().AddForce(Vector3.up * _pc.force, ForceMode.Impulse);
+        }*/
+        /*if(_pc.isJumping && _pc.SpacePressed)
+        {
+            if (_pc.jumpTimeCounter > 0)
+            {
+                _pc.GetRigidbody().AddForce(Vector3.up * _pc.forceHoldJump, ForceMode.Impulse);
+                _pc.jumpTimeCounter -= Time.deltaTime;
+                
+            }
+            else
+            {
+                _pc.isJumping = false;
+                //_playerStateMachine.ChangeState(_pc.FallingState);
+            }
+        }
+        else
+        {
+            _pc.jumpTimeCounter = 0;
+            _pc.isJumping = false;
+            
+        }*/
+        ContinueJump();
+        
+        
+
+        if (!_pc.SpacePressed)
+        {
+            //_playerStateMachine.ChangeState(_pc.FallingState);
+        }
+    }
     private void StartJump()
     {
-        _playerController.jumpTimeCounter = _playerController.jumpTime;
-        _playerController.GetRigidbody().AddForce(Vector3.up * _playerController.force, ForceMode.Impulse);
+        _pc.jumpTimeCounter = _pc.jumpTime;
+        _pc.GetRigidbody().AddForce(Vector3.up * _pc.force, ForceMode.Impulse);
+        _pc.isJumping = true;
     }
     
     private void ContinueJump()
     {
-        if (_playerController.jumpTimeCounter > 0 && _playerController.SpacePressed)
+        if (_pc.jumpTimeCounter > 0 && _pc.SpacePressed)
         {
-            _playerController.GetRigidbody().AddForce(Vector3.up * _playerController.forceHoldJump, ForceMode.Impulse);
-            _playerController.jumpTimeCounter -= Time.deltaTime;
+            _pc.GetRigidbody().AddForce(Vector3.up * _pc.forceHoldJump, ForceMode.Impulse);
+            _pc.jumpTimeCounter -= Time.deltaTime;
         }
         else
         {
-            _playerController.IsJumping = false;
+            _pc.isJumping = false;
+            _pc.canJump = false;
         }
     }
-    public bool IsGrounded(PlayerStateMachine stateMachine)
-    {
-        int layermask = 1 << 6;
-        var controller = stateMachine.GetPlayerController();
-        return Physics.Raycast(controller.transform.position, Vector3.down, controller.raycastDistance, ~layermask); 
-    }
-    public void LateUpdateState(PlayerStateMachine stateMachine)
-    {}
 }

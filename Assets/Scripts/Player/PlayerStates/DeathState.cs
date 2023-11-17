@@ -1,26 +1,14 @@
 public class DeathState : IPlayerState
 {
-    private PlayerController _playerController;
+    public DeathState (PlayerController pc) : base("DeathState", pc) {_pc = (PlayerController)this._playerStateMachine;}
 
-    public void EnterState(PlayerStateMachine stateMachine)
-    {
-        _playerController = stateMachine.GetPlayerController();
-    }
-
-    public void UpdateState(PlayerStateMachine stateMachine)
+    public override void UpdateState()
     {
         
-        var spawnPoint = _playerController.GetComponent<PlayerStatus>().GetSpawnPoint();
-        _playerController.transform.position = spawnPoint;
+        var spawnPoint = _pc.GetComponent<PlayerStatus>().GetSpawnPoint();
+        _pc.transform.position = spawnPoint;
 
-        stateMachine.ChangeState(stateMachine.IdleState);
+        _playerStateMachine.ChangeState(_pc.IdleState);
     }
-    public void FixedUpdateState(PlayerStateMachine stateMachine)
-    {
-    }
-    public void ExitState(PlayerStateMachine stateMachine)
-    {
-    }
-    public void LateUpdateState(PlayerStateMachine stateMachine)
-    {}
+    
 }
