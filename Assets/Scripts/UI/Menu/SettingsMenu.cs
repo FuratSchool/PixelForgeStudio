@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Samples.RebindUI;
 using UnityEngine.UI;
@@ -14,7 +15,10 @@ public class SettingsMenu : MonoBehaviour
     Resolution[] _resolutions;
     private SettingsData settings;
     public InputActionAsset actions;
+    public bool InGameScene {get; set;} =false;
     [SerializeField] private Color TextColor;
+    [SerializeField] private GameObject ControllerMap;
+    [SerializeField] private GameObject KeyboardMap;
     private void Awake()
     {
         InitResolutions();
@@ -22,10 +26,9 @@ public class SettingsMenu : MonoBehaviour
 
     private void OnDisable()
     {
-        
         var rebinds = actions.SaveBindingOverridesAsJson();
         settings.rebinds = rebinds;
-        FindObjectOfType<SceneController>().Settings = settings;
+        FindObjectOfType<SceneController>().Settings.rebinds = rebinds;
         LoadSaveSettings.SaveData(settings);
     }
 
@@ -62,21 +65,38 @@ public class SettingsMenu : MonoBehaviour
     public void SetInvertedY(bool isInverted)
     {
         settings.invertedY = isInverted;
+        if (InGameScene)
+        {
+            FindObjectOfType<CameraController>().UpdateCameraSettings(settings);
+        }
+        
     }
     
     public void SetInvertedX(bool isInverted)
     {
         settings.invertedX = isInverted;
+        if (InGameScene)
+        {
+            FindObjectOfType<CameraController>().UpdateCameraSettings(settings);
+        }
     }
     
     public void SetSensitivityY(float sensitivity)
     {
         settings.sensitivityY = sensitivity;
+        if (InGameScene)
+        {
+            FindObjectOfType<CameraController>().UpdateCameraSettings(settings);
+        }
     }
     
     public void SetSensitivityX(float sensitivity)
     {
         settings.sensitivityX = sensitivity;
+        if (InGameScene)
+        {
+            FindObjectOfType<CameraController>().UpdateCameraSettings(settings);
+        }
     }
 
     private void InitResolutions()
@@ -131,11 +151,7 @@ public class SettingsMenu : MonoBehaviour
         GameObject.Find("CameraSpeedY").transform.GetChild(0).GetComponent<Slider>().value = settings.sensitivityY;
         GameObject.Find("CameraSpeedX").transform.GetChild(0).GetComponent<Slider>().value = settings.sensitivityX;
     }
-    public void UpdateKeybinds()
-    {
-        if (!string.IsNullOrEmpty(FindObjectOfType<SceneController>().Settings.rebinds))
-            actions.LoadBindingOverridesFromJson(FindObjectOfType<SceneController>().Settings.rebinds);
-    }
+    
 
     public void SetColorBlack(TMP_Text text)
     {
@@ -144,5 +160,30 @@ public class SettingsMenu : MonoBehaviour
     public void SetColorOptionsMenu(TMP_Text text)
     {
         text.color = TextColor;
+    }
+    
+    public void SetMap(int MapIndex)
+    {
+        
+        if (MapIndex == 1)
+        {
+            ControllerMap.SetActive(true);
+            KeyboardMap.SetActive(false);
+        }
+        else
+        {
+            ControllerMap.SetActive(false);
+            KeyboardMap.SetActive(true);
+        }
+    }
+    
+    public void OptionsButtonHighLightEnable(GameObject Object)
+    {
+        Object.GetComponent<TMP_Text>().fontStyle |= FontStyles.Underline;
+    }
+    public void OptionsButtonHighLightDisable(GameObject Object)
+    {
+        
+        Object.GetComponent<TMP_Text>().fontStyle &= ~FontStyles.Underline;
     }
 }

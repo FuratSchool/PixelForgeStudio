@@ -78,6 +78,7 @@ public class PlayerController : PlayerStateMachine
     public AudioClip RunningSound;
     public AudioClip JumpingSound;
     public AudioClip LandingSound;
+    
     public bool isTransitioning = false;
     
     public bool _canDash = true;

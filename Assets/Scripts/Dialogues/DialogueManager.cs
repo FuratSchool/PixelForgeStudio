@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -9,11 +10,13 @@ public class DialogueManager : MonoBehaviour
     public TMP_Text dialogueText;
     public GameObject dialogueCanvas;
     private readonly List<DialogueTrigger> dialogueTriggers = new(); // declare a list of DialogueTrigger scripts
+    private bool dialogueActive = false;
     private string currentSentence = "";
     private DialogueTrigger dialogueTrigger;
     private bool isTyping;
     private Queue<string> sentences; // FIFO data structure
-
+    private PlayerController PC;
+    private bool isdelayTrigger;
 
     private void Start()
     {
@@ -29,17 +32,21 @@ public class DialogueManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (dialogueActive && !isdelayTrigger)
         {
-            if (isTyping)
+            if (FindObjectOfType<PlayerController>().InteractPressed)
             {
-                StopAllCoroutines();
-                dialogueText.text = currentSentence;
-                isTyping = false;
-            }
-            else
-            {
-                DisplayNextSentence();
+                
+                if (isTyping)
+                {
+                    StopAllCoroutines();
+                    dialogueText.text = currentSentence;
+                    isTyping = false;
+                }
+                else
+                {
+                    DisplayNextSentence();
+                }
             }
         }
     }
@@ -47,7 +54,7 @@ public class DialogueManager : MonoBehaviour
     public void StartDialogue(Dialogue dialogue)
     {
         dialogueCanvas.SetActive(true); // show the canvas when dialogue starts
-
+        dialogueActive = true;
         nameText.text = dialogue.name;
         sentences.Clear();
         foreach (var sentence in dialogue.sentences) sentences.Enqueue(sentence);
@@ -59,14 +66,15 @@ public class DialogueManager : MonoBehaviour
         if (sentences.Count == 0)
         {
             EndDialogue();
+            dialogueActive = false;
             return;
         }
 
         currentSentence = sentences.Dequeue();
         dialogueText.text = "";
-        StartCoroutine(TypeSentence(currentSentence));
+        start(currentSentence);
     }
-
+    
     private IEnumerator TypeSentence(string sentence)
     {
         isTyping = true;
@@ -77,6 +85,19 @@ public class DialogueManager : MonoBehaviour
         }
 
         isTyping = false;
+    }
+    
+    private IEnumerator Wait(float waitTime)
+    {
+        isdelayTrigger = true;
+        yield return new WaitForSeconds(waitTime);
+        isdelayTrigger = false;
+    }
+
+    private void start(string sentence)
+    {
+        StartCoroutine( Wait(0.3f));
+        StartCoroutine( TypeSentence(sentence));
     }
 
     public void EndDialogue()
