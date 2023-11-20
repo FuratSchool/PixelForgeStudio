@@ -14,6 +14,8 @@ public class IPlayerState
 
     public virtual void UpdateState()
     {
+        IsTransitioning();
+        
         if (_pc.GetRigidbody().transform.position.y < -40)
         {
             _playerStateMachine.ChangeState(_pc.DeathState);
@@ -61,5 +63,11 @@ public class IPlayerState
         return false;
     }
     
+    public bool IsTransitioning()
+    {
+        if (_pc.isTransitioning && _playerStateMachine.GetCurrentState() != _pc.TransitionState)
+            _pc.ChangeState(_pc.TransitionState);
+        return false;
+    }
     
 }

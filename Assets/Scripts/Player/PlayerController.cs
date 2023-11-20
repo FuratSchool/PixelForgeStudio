@@ -37,7 +37,8 @@ public class PlayerController : PlayerStateMachine
     [SerializeField] private float dashingPower = 30f;
     [SerializeField] private float dashEndTime = .35f;
     public bool isDashing;
-    private Vector3 _lastDirection;
+    //private Vector3 _lastDirection;
+    private Vector3 _dashDirection;
 
     [Header("Turning")] 
     [SerializeField] private float turnSmoothTime = 0.15f;
@@ -220,10 +221,10 @@ public class PlayerController : PlayerStateMachine
     {
         var layermask = 1 << 6;
         bool ground = Physics.Raycast(transform.position, Vector3.down,out var hit, raycastDistance, ~layermask);
-        if (hit.collider != null)
+        /*if (hit.collider != null)
         {
             if (hit.collider.name != "FirstCliff") Debug.Log("hit");
-        }
+        }*/
         
         return ground;
     }
@@ -233,7 +234,7 @@ public class PlayerController : PlayerStateMachine
         //checks if the player is moving.
         if (direction.magnitude >= 0.1f)
         {
-            _lastDirection = direction;
+            //_lastDirection = direction;
             //calculates the angle of the direction the player is moving.
             if (_camera != null)
             {
@@ -244,6 +245,9 @@ public class PlayerController : PlayerStateMachine
                     turnSmoothTime);
                 //sets the rotation of the player to the angle.
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                
+                _dashDirection =Quaternion.Euler(0f, angle, 0f) * Vector3.forward;
+                
                 //rotates the player to the direction they are moving.
                 var moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
                 return moveDir;
@@ -263,7 +267,7 @@ public class PlayerController : PlayerStateMachine
         _canDash = false;
         isDashing = true;
         _rigidbody.useGravity = false;
-        _rigidbody.velocity = GetDirection(_lastDirection).normalized * dashingPower;
+        _rigidbody.velocity = _dashDirection * dashingPower;
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
         Animator.Play("Stop Dash");
