@@ -8,25 +8,14 @@ public class TransitionState : IPlayerState
     public TransitionState (PlayerController pc) : base("TransitionState", pc) {_pc = (PlayerController)this._playerStateMachine;}
     public override void EnterState()
     {
-        _playerStateMachine.Animator.SetBool("IsTransition", true);        
+        base.EnterState();  
+        _playerStateMachine.Animator.Play("Idle");
     }
 
     public override void UpdateState()
     {
+        base.UpdateState();
         if (_pc.isTransitioning == false)  
             _playerStateMachine.ChangeState(_pc.IdleState);
-    }
-
-    public override void FixedUpdateState()
-    {
-    }
-
-    public override void LateUpdateState()
-    {
-    }
-
-    public override void ExitState()
-    {
-        _playerStateMachine.Animator.SetBool("IsTransition", false);        
     }
 }
