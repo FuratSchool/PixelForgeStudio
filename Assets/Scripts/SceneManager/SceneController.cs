@@ -14,7 +14,7 @@ public class SceneController : MonoBehaviour
     public InputActionAsset act;
     public AudioMixer audioMixer;
     private string ActiveSceneName;
-    public SettingsData Settings { get; set; }
+    public SettingsData Settings;
     public RebindActionUI rebindActionUI;
     private void Awake()
     {
@@ -26,6 +26,14 @@ public class SceneController : MonoBehaviour
         else
         {
             DestroyImmediate(gameObject); 
+        }
+    }
+
+    private void Update()
+    {
+        if (Input.GetKey(KeyCode.F12))
+        {
+            this.LoadScene("MainMenu");
         }
     }
 

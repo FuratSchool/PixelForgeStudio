@@ -7,22 +7,9 @@ public class PlayerStatus : MonoBehaviour
     public static PlayerStatus playerStatus;
     private int coins = 0;
     
-    private Vector3 playerSpawnPoint = new(0, 0, 0);
+    private Vector3 playerSpawnPoint = new(-3.84f, -0.3f, -54.38f);
     private int Health { get; }
-
-    private void Awake()
-    {
-        if (playerStatus == null)
-        {
-            playerStatus = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
-
+    
     public int getPlayerHealth()
     {
         return Health;
@@ -35,11 +22,27 @@ public class PlayerStatus : MonoBehaviour
 
     public Vector3 GetSpawnPoint()
     {
+        loseCoin();
         return playerSpawnPoint;
     }
     public void AddCoin()
     {
         coins++;
         FindObjectOfType<UIController>().SetCoinText(coins);
+    }
+    
+    public void loseCoin()
+    {
+        if (coins > 0)
+        {
+            coins -= Random.Range(2, 4);
+            FindObjectOfType<UIController>().SetCoinText(coins);
+        }
+        if(coins <= 0)
+        {
+            coins = 0;
+            FindObjectOfType<UIController>().SetCoinText(coins);
+        }
+        
     }
 }

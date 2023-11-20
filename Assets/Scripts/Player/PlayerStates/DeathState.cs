@@ -9,7 +9,8 @@ public class DeathState : IPlayerState
 
     public void UpdateState(PlayerStateMachine stateMachine)
     {
-        var spawnPoint = PlayerStatus.playerStatus.GetSpawnPoint();
+        
+        var spawnPoint = _playerController.GetComponent<PlayerStatus>().GetSpawnPoint();
         _playerController.transform.position = spawnPoint;
 
         stateMachine.ChangeState(stateMachine.IdleState);

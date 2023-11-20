@@ -20,6 +20,7 @@ namespace Player.PlayerStates
             stateMachine.WalkingState.PlayerMove(stateMachine);
             if (stateMachine.JumpingState.IsGrounded(stateMachine))
             {
+                _playerController.GetAudio().PlayOneShot(_playerController.LandingSound);
                 if (_playerController.ShiftPressed && _playerController.IsPlayerMoving)
                     stateMachine.ChangeState(stateMachine.SprintingState);
                 else if (_playerController.IsPlayerMoving)
@@ -29,7 +30,7 @@ namespace Player.PlayerStates
             }
             else if (stateMachine.SwingingState.CheckSwing(stateMachine) && !stateMachine.JumpingState.IsGrounded(stateMachine))
             {
-                stateMachine.SwingingState.EnableSwingText(_playerController.GetUIController());
+                stateMachine.SwingingState.EnableSwingText(stateMachine);
                 if (_playerController.SwingPressed)
                 {
                     stateMachine.ChangeState(stateMachine.SwingingState);

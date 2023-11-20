@@ -8,17 +8,19 @@ TagManager:
   - platform
   - LevelTransition
   - NPC
+  - Coin
+  - ControlText
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - Player
   - 
   - Swingable
-  - 
+  - Coin
   - 
   - 
   - 

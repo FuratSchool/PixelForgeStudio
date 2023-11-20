@@ -8,6 +8,8 @@ public class SprintingState : IPlayerState
     {
         _playerController = stateMachine.GetPlayerController();
         _playerController.MoveSpeed = _playerController.SprintSpeed;
+        _playerController.GetAudio().clip = _playerController.RunningSound;
+        _playerController.GetAudio().Play();
         _playerController.footstepInterval = _playerController.footstepIntervalRunning;
         stateMachine.Animator.SetBool("IsSprinting", true);        
 
@@ -37,7 +39,7 @@ public class SprintingState : IPlayerState
     {
         _playerController.MoveSpeed = _playerController.WalkSpeed;
         stateMachine.Animator.SetBool("IsSprinting", false);        
-
+        _playerController.GetAudio().Stop();
     }
     public void LateUpdateState(PlayerStateMachine stateMachine)
     {}

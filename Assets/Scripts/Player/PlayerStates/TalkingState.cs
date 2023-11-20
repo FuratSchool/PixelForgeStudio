@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TalkingState : IPlayerState
 {
@@ -37,9 +38,23 @@ public class TalkingState : IPlayerState
 
     }
     
-    public void EnableInteractDialogueActive(UIController uiController)
+    public void EnableInteractDialogueActive(PlayerStateMachine stateMachine)
     {
-        uiController.SetInteractText("Press F to talk");
+        var playercontroller = stateMachine.GetPlayerController();
+        var uiController = playercontroller.GetUIController();
+        var playerInput = playercontroller.GetComponent<PlayerInput>();
+        string keybind;
+        if (playerInput.currentControlScheme.Equals("Controller"))
+        {
+            int index = playerInput.actions["Interact"].bindings.IndexOf(x => x.groups.Contains("Controller"));
+            keybind = playerInput.actions["Interact"].GetBindingDisplayString(index, out var deviceLayoutName, out var controlPath);
+        }
+        else
+        {
+            int index = playerInput.actions["Interact"].bindings.IndexOf(x => x.groups.Contains("KeyboardMouse"));
+            keybind = playerInput.actions["Interact"].GetBindingDisplayString(index, out var deviceLayoutName, out var controlPath);
+        }
+        uiController.SetInteractText("Press "+ keybind +" to talk");
         uiController.SetInteractableTextActive(true);
     }
     public void DisableInteractDialogueActive(UIController uiController)
