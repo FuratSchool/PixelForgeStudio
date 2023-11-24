@@ -1,46 +1,50 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class IdleState : IPlayerState
 {
-    private PlayerController _playerController;
+    public IdleState (PlayerController pc) : base("IdleState", pc) {_pc = (PlayerController)this._playerStateMachine;}
 
-    public void EnterState(PlayerStateMachine stateMachine)
+    public override void EnterState()
     {
-        _playerController = stateMachine.GetPlayerController();
-        stateMachine.Animator.SetBool("IsIdle", true);        
+        base.EnterState();
+        Debug.Log("Entered Idle");
+        _playerStateMachine.Animator.Play("Idle");
 
     }
-    public void FixedUpdateState(PlayerStateMachine stateMachine)
+
+    public override void UpdateState()
     {
-    }
-    public void UpdateState(PlayerStateMachine stateMachine)
-    {
-        if (stateMachine.JumpingState.IsGrounded(stateMachine) && _playerController.SpacePressed)
-            stateMachine.ChangeState(stateMachine.JumpingState);
-        else if (!stateMachine.JumpingState.IsGrounded(stateMachine))
-            stateMachine.ChangeState(stateMachine.FallingState);
-        else if (_playerController.IsPlayerMoving)
-            stateMachine.ChangeState(stateMachine.WalkingState);
-        if (_playerController.InDialogeTriggerZone && _playerController.NPC.hasBeenTalkedTo == false)
+        base.UpdateState();
+       
+        if ((Mathf.Abs(_pc.Movement.x) > Mathf.Epsilon)||(Mathf.Abs(_pc.Movement.y) > Mathf.Epsilon))
+            _playerStateMachine.ChangeState(_pc.WalkingState);
+        if (_pc.SpacePressed && _pc.canJump)
+            _playerStateMachine.ChangeState((_pc.JumpingState));
+        if (_pc._canDash && _pc.dashPressed) 
+            _playerStateMachine.ChangeState(_pc.DashingState);
+        if (_pc.SwingPressed && _pc._canSwing && _pc.InRange)
+            _playerStateMachine.ChangeState(_pc.SwingingState);
+        if(!_pc.IsGrounded())
+            _playerStateMachine.ChangeState(_pc.FallingState);
+
+        
+        if (_pc.InDialogeTriggerZone && _pc.NPC.hasBeenTalkedTo == false)
         {
-            stateMachine.TalkingState.EnableInteractDialogueActive(stateMachine);
-            if (_playerController.InteractPressed)
+            EnableInteractDialogueActive(_pc.GetUIController(), _pc.GetPlayerInput());
+            if (_pc.InteractPressed)
             {
-                stateMachine.ChangeState(stateMachine.TalkingState);
+                _playerStateMachine.ChangeState(_pc.TalkingState);
             }
         }
         else
         {
-            stateMachine.TalkingState.DisableInteractDialogueActive(_playerController.GetUIController());
+            DisableInteractDialogueActive(_pc.GetUIController());
         }
     }
-    public void ExitState(PlayerStateMachine stateMachine)
+    public override void ExitState()
     {
-        stateMachine.TalkingState.DisableInteractDialogueActive(_playerController.GetUIController());
-        stateMachine.Animator.SetBool("IsIdle", false);        
+        DisableInteractDialogueActive(_pc.GetUIController());
+        //_playerStateMachine.Animator.enabled = false;
 
     }
-    public void LateUpdateState(PlayerStateMachine stateMachine)
-    {}
 }
