@@ -4,27 +4,19 @@ using UnityEngine;
 
 public class TransitionState : IPlayerState
 {
-    public void EnterState(PlayerStateMachine stateMachine)
+    
+    public TransitionState (PlayerController pc) : base("TransitionState", pc) {_pc = (PlayerController)this._playerStateMachine;}
+    public override void EnterState()
     {
-        stateMachine.Animator.SetBool("IsTransition", true);        
+        base.EnterState();  
+        _playerStateMachine.Animator.Play("Idle");
     }
 
-    public void UpdateState(PlayerStateMachine stateMachine)
+    public override void UpdateState()
     {
-        if (stateMachine.GetPlayerController().isTransitioning == false)  
-            stateMachine.ChangeState(stateMachine.IdleState);
+        base.UpdateState();
+        if (_pc.isTransitioning == false)  
+            _playerStateMachine.ChangeState(_pc.IdleState);
     }
 
-    public void FixedUpdateState(PlayerStateMachine stateMachine)
-    {
-    }
-
-    public void LateUpdateState(PlayerStateMachine stateMachine)
-    {
-    }
-
-    public void ExitState(PlayerStateMachine stateMachine)
-    {
-        stateMachine.Animator.SetBool("IsTransition", false);        
-    }
 }

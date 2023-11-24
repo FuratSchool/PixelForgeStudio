@@ -1,82 +1,57 @@
 using System;
-using Player.PlayerStates;
+
 using UnityEngine;
 
 public class PlayerStateMachine : MonoBehaviour
 {
-    private PlayerController _playerController;
-    private IPlayerState currentState;
+
+    IPlayerState currentState;
+    IPlayerState previousState; // Add this variable to track the previous state
     private Animator _animator;
-
-    public WalkingState WalkingState = new WalkingState();
-    public IdleState IdleState = new IdleState();
-    public DashingState DashingState = new DashingState();
-    public JumpingState JumpingState = new JumpingState();
-    public FallingState FallingState = new FallingState();
-    public SwingingState SwingingState = new SwingingState();
-    public SprintingState SprintingState = new SprintingState();
-    public TalkingState TalkingState = new TalkingState();
-    public TransitionState TransitionState = new TransitionState();
-    public DeathState DeathState = new DeathState();
     
-    
-    private void Awake()
+    private void Start()
     {
-        _playerController = GetComponent<PlayerController>();
         _animator = GetComponentInChildren<Animator>();
-    }
-    
-    
-    public IPlayerState CurrentState
-    {
-        get => currentState;
-        set => currentState = value;
-    }
-
-    private IPlayerState previousState; // Add this variable to track the previous state
-
-    public void ChangeState(IPlayerState newState)
-    {
+        currentState = GetInitialState();
         if (currentState != null)
-        {
-            previousState = currentState; // Store the current state as the previous state
-            currentState.ExitState(this);
-        }
-
-        currentState = newState;
-        currentState.EnterState(this);
+            currentState.EnterState();
     }
-
+    
     public void Update()
     {
-        _playerController.IsOnTerrain();
-        _playerController.IsTransitioning();
-        if (currentState != null) currentState.UpdateState(this);
+        if (currentState != null) currentState.UpdateState();
     }
 
     public void FixedUpdate()
     {
-        if (currentState != null) currentState.FixedUpdateState(this);
+        if (currentState != null) currentState.FixedUpdateState();
     }
 
     public void LateUpdate()
     {
-        if (currentState != null) currentState.LateUpdateState(this);
+        if (currentState != null) currentState.LateUpdateState();
     }
+    
+    public void ChangeState(IPlayerState newState)
+    {
+        Debug.Log($"Player's state changed to {newState.name}");
+        if (currentState != null)
+        {
+            previousState = currentState; // Store the current state as the previous state
+            currentState.ExitState();
+        }
+
+        currentState = newState;
+        currentState.EnterState();
+    }
+
+    
+
+    
 
     public IPlayerState GetPreviousState()
     {
         return previousState;
-    }
-
-    public void SetPlayerController(PlayerController playerController)
-    {
-        _playerController = playerController;
-    }
-
-    public PlayerController GetPlayerController()
-    {
-        return _playerController;
     }
 
     public IPlayerState GetCurrentState()
@@ -88,5 +63,9 @@ public class PlayerStateMachine : MonoBehaviour
     {
         get => _animator;
         set => _animator = value;
+    }
+    protected virtual IPlayerState GetInitialState()
+    {
+        return null;
     }
 }

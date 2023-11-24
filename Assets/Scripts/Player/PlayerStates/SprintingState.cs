@@ -2,45 +2,58 @@ using UnityEngine;
 
 public class SprintingState : IPlayerState
 {
-    private PlayerController _playerController;
+    public SprintingState (PlayerController pc) : base("SprintingState", pc) {_pc = (PlayerController)this._playerStateMachine;}
 
-    public void EnterState(PlayerStateMachine stateMachine)
+    public override void EnterState()
     {
-        _playerController = stateMachine.GetPlayerController();
-        _playerController.MoveSpeed = _playerController.SprintSpeed;
-        _playerController.GetAudio().clip = _playerController.RunningSound;
-        _playerController.GetAudio().Play();
-        _playerController.footstepInterval = _playerController.footstepIntervalRunning;
-        stateMachine.Animator.SetBool("IsSprinting", true);        
+        base.EnterState();
+        _pc.MoveSpeed = _pc.SprintSpeed;
+        _playerStateMachine.Animator.Play("Sprinting");
 
     }
-    public void FixedUpdateState(PlayerStateMachine stateMachine)
+    public override void UpdateState()
     {
-    }
-    public void UpdateState(PlayerStateMachine stateMachine)
-    {
-        stateMachine.WalkingState.PlayerMove(stateMachine);
-        if (stateMachine.JumpingState.IsGrounded(stateMachine) && stateMachine.GetPlayerController().SpacePressed)
-            stateMachine.ChangeState(stateMachine.JumpingState);
-        
-        else if (_playerController.IsPlayerMoving && !_playerController.ShiftPressed)
-            stateMachine.ChangeState(stateMachine.WalkingState);
+        base.UpdateState();
 
-        else if (Input.GetKeyDown(KeyCode.Q) && _playerController.canDash)
-            stateMachine.ChangeState(stateMachine.DashingState);
-        
-        else if (_playerController.canDash && _playerController.DashPressed)
-            stateMachine.ChangeState(stateMachine.DashingState);
-        else if (!_playerController.IsPlayerMoving)
-            stateMachine.ChangeState(stateMachine.IdleState);
+        if (Mathf.Abs(_pc.Movement.x) < Mathf.Epsilon && Mathf.Abs(_pc.Movement.y) < Mathf.Epsilon)
+            _playerStateMachine.ChangeState(_pc.IdleState);
+        if (_pc.SpacePressed && _pc.canJump)
+            _playerStateMachine.ChangeState((_pc.JumpingState));
+        if (!_pc._isRunning)
+            _playerStateMachine.ChangeState(_pc.WalkingState);
+        if (_pc._canDash && _pc.dashPressed) 
+            _playerStateMachine.ChangeState(_pc.DashingState);
+        if (_pc.SwingPressed && _pc._canSwing && _pc.InRange)
+            _playerStateMachine.ChangeState(_pc.SwingingState);
+        if(!_pc.IsGrounded())
+            _playerStateMachine.ChangeState(_pc.FallingState);
+        if (_pc.InDialogeTriggerZone && _pc.NPC.hasBeenTalkedTo == false)
+        {
+            EnableInteractDialogueActive(_pc.GetUIController(), _pc.GetPlayerInput());
+            if (_pc.InteractPressed)
+            {
+                _playerStateMachine.ChangeState(_pc.TalkingState);
+            }
+        }
+        else
+        {
+            DisableInteractDialogueActive(_pc.GetUIController());
+        }
     }
 
-    public void ExitState(PlayerStateMachine stateMachine)
+    public override void ExitState()
     {
-        _playerController.MoveSpeed = _playerController.WalkSpeed;
-        stateMachine.Animator.SetBool("IsSprinting", false);        
-        _playerController.GetAudio().Stop();
+        _pc.MoveSpeed = _pc.WalkSpeed;
+        //_playerStateMachine.Animator.SetBool("IsSprinting", false);        
+        _pc.GetAudio().Stop();
+        DisableInteractDialogueActive(_pc.GetUIController());
     }
-    public void LateUpdateState(PlayerStateMachine stateMachine)
-    {}
+
+    public override void LateUpdateState()
+    {
+        base.LateUpdateState();
+        _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * (_pc.MoveSpeed * Time.deltaTime), 
+            Space.World);
+        _pc.FootPrint(_pc.footstepIntervalRunning);
+    }
 }
