@@ -34,7 +34,7 @@ public class WalkingState : IPlayerState
         
         if (_pc.InDialogeTriggerZone && _pc.NPC.hasBeenTalkedTo == false)
         {
-            EnableInteractDialogueActive(_pc.GetUIController());
+            EnableInteractDialogueActive(_pc.GetUIController(), _pc.GetPlayerInput());
             if (_pc.InteractPressed)
             {
                 _playerStateMachine.ChangeState(_pc.TalkingState);

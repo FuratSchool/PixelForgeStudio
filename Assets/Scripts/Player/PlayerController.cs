@@ -74,10 +74,12 @@ public class PlayerController : PlayerStateMachine
     private PlayerStateMachine _stateMachine;
     private UIController _uiController;
     private DialogueManager _dialogueManager;
+    private PlayerInput _playerInput;
     public AudioClip WalkingSound;
     public AudioClip RunningSound;
     public AudioClip JumpingSound;
     public AudioClip LandingSound;
+    
     public bool isTransitioning = false;
     
     public bool _canDash = true;
@@ -155,6 +157,7 @@ public class PlayerController : PlayerStateMachine
         _dialogueManager = FindObjectOfType<DialogueManager>();
         TR = GetComponent<TrailRenderer>();
         _rigidbody = GetComponent<Rigidbody>();
+        _playerInput = GetComponent<PlayerInput>();
         _camera = Camera.main;
         GetDirection(PlayerInput());
     }
@@ -173,7 +176,10 @@ public class PlayerController : PlayerStateMachine
     {
         return _uiController;
     }
-    
+    public PlayerInput GetPlayerInput()
+    {
+        return _playerInput;
+    }
     public DialogueManager GetDialogueManager()
     {
         return _dialogueManager;

@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TalkingState : IPlayerState
 {
@@ -35,7 +36,4 @@ public class TalkingState : IPlayerState
         //_playerStateMachine.Animator.SetBool(("IsTalking"), false);
 
     }
-    
-    
-    
 }
