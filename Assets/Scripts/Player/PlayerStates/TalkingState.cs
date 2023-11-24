@@ -35,7 +35,4 @@ public class TalkingState : IPlayerState
         //_playerStateMachine.Animator.SetBool(("IsTalking"), false);
 
     }
-    
-    
-    
 }

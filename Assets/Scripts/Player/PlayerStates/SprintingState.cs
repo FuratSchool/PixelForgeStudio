@@ -29,7 +29,7 @@ public class SprintingState : IPlayerState
             _playerStateMachine.ChangeState(_pc.FallingState);
         if (_pc.InDialogeTriggerZone && _pc.NPC.hasBeenTalkedTo == false)
         {
-            EnableInteractDialogueActive(_pc.GetUIController());
+            EnableInteractDialogueActive(_pc.GetUIController(), _pc.GetPlayerInput());
             if (_pc.InteractPressed)
             {
                 _playerStateMachine.ChangeState(_pc.TalkingState);

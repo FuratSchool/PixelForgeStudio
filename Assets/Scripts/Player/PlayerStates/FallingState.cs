@@ -27,7 +27,7 @@ using UnityEngine;
             
             if (CheckSwing())
             {
-                EnableSwingText(_pc.GetUIController());
+                EnableSwingText(_pc.GetUIController(), _pc.GetPlayerInput());
                 if (_pc.SwingPressed)
                 {
                     _playerStateMachine.ChangeState(_pc.SwingingState);

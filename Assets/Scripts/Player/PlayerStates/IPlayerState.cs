@@ -1,3 +1,5 @@
+using UnityEngine.InputSystem;
+
 public class IPlayerState
 {
     public string name;
@@ -34,20 +36,41 @@ public class IPlayerState
     }
     public virtual void ExitState() { }
     
-    public void EnableInteractDialogueActive(UIController uiController)
+    public void EnableInteractDialogueActive(UIController uiController, PlayerInput playerInput)
     {
-        uiController.SetInteractText("Press [F][X] to talk");
+        string keybind;
+        if (playerInput.currentControlScheme.Equals("Controller"))
+        {
+            int index = playerInput.actions["Interact"].bindings.IndexOf(x => x.groups.Contains("Controller"));
+            keybind = playerInput.actions["Interact"].GetBindingDisplayString(index, out var deviceLayoutName, out var controlPath);
+        }
+        else
+        {
+            int index = playerInput.actions["Interact"].bindings.IndexOf(x => x.groups.Contains("KeyboardMouse"));
+            keybind = playerInput.actions["Interact"].GetBindingDisplayString(index, out var deviceLayoutName, out var controlPath);
+        }
+        uiController.SetInteractText("Press "+ keybind +" to talk");
         uiController.SetInteractableTextActive(true);
     }
-    
     public void DisableInteractDialogueActive(UIController uiController)
     {
         uiController.SetInteractableTextActive(false);
     }
-    
-    public void EnableSwingText(UIController uiController)
+    public void EnableSwingText(UIController uiController, PlayerInput playerInput)
     {
-        uiController.SetInteractText("Hold [E][Y] to swing");
+        string keybind;
+        if (playerInput.currentControlScheme.Equals("Controller"))
+        {
+            int index = playerInput.actions["Swing"].bindings.IndexOf(x => x.groups.Contains("Controller"));
+            keybind = playerInput.actions["Swing"].GetBindingDisplayString(index, out var deviceLayoutName, out var controlPath);
+        }
+        else
+        {
+            int index = playerInput.actions["Swing"].bindings.IndexOf(x => x.groups.Contains("KeyboardMouse"));
+            keybind = playerInput.actions["Swing"].GetBindingDisplayString(index, out var deviceLayoutName, out var controlPath);
+        }
+        
+        uiController.SetInteractText("Hold " + keybind +" to swing");
         uiController.SetInteractableTextActive(true);
     }
     
