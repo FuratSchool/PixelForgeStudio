@@ -18,7 +18,7 @@ public class PauseMenu : MonoBehaviour
     void Start()
     {
         pauseMenu.SetActive(false);
-        optionsMenu.GetComponent<SettingsMenu>().InGameScene = true;
+         optionsMenu.GetComponent<SettingsMenu>().InGameScene = true;
     }
 
     // Update is called once per frame

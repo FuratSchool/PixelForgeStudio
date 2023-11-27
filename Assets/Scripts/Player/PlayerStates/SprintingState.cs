@@ -4,6 +4,7 @@ public class SprintingState : IPlayerState
 {
     public SprintingState (PlayerController pc) : base("SprintingState", pc) {_pc = (PlayerController)this._playerStateMachine;}
 
+    private bool _dialueActive;
     public override void EnterState()
     {
         base.EnterState();
@@ -29,6 +30,7 @@ public class SprintingState : IPlayerState
             _playerStateMachine.ChangeState(_pc.FallingState);
         if (_pc.InDialogeTriggerZone && _pc.NPC.hasBeenTalkedTo == false)
         {
+            _dialueActive = true;
             EnableInteractDialogueActive(_pc.GetUIController(), _pc.GetPlayerInput());
             if (_pc.InteractPressed)
             {
@@ -37,7 +39,11 @@ public class SprintingState : IPlayerState
         }
         else
         {
-            DisableInteractDialogueActive(_pc.GetUIController());
+            if (_dialueActive)
+            {
+                DisableInteractDialogueActive(_pc.GetUIController());
+                _dialueActive = false;
+            }
         }
     }
 
@@ -46,7 +52,11 @@ public class SprintingState : IPlayerState
         _pc.MoveSpeed = _pc.WalkSpeed;
         //_playerStateMachine.Animator.SetBool("IsSprinting", false);        
         _pc.GetAudio().Stop();
-        DisableInteractDialogueActive(_pc.GetUIController());
+        if (_dialueActive)
+        {
+            DisableInteractDialogueActive(_pc.GetUIController());
+            _dialueActive = false;
+        }
     }
 
     public override void LateUpdateState()

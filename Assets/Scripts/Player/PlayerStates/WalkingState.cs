@@ -3,6 +3,8 @@ using UnityEngine;
 public class WalkingState : IPlayerState
 {
     public WalkingState (PlayerController pc) : base("WalkingState", pc) {_pc = (PlayerController)this._playerStateMachine;}
+    
+    private bool _dialogueActive = false;
     public override void EnterState()
     {
         
@@ -34,6 +36,7 @@ public class WalkingState : IPlayerState
         
         if (_pc.InDialogeTriggerZone && _pc.NPC.hasBeenTalkedTo == false)
         {
+            _dialogueActive = true;
             EnableInteractDialogueActive(_pc.GetUIController(), _pc.GetPlayerInput());
             if (_pc.InteractPressed)
             {
@@ -42,7 +45,11 @@ public class WalkingState : IPlayerState
         }
         else
         {
-            DisableInteractDialogueActive(_pc.GetUIController());
+            if (_dialogueActive)
+            {
+                DisableInteractDialogueActive(_pc.GetUIController());
+                _dialogueActive = false;
+            }
         }
     }
 
@@ -50,7 +57,11 @@ public class WalkingState : IPlayerState
     {
         //_playerStateMachine.Animator.SetBool("IsWalking", false);        
         _pc.GetAudio().Stop();
-        DisableInteractDialogueActive(_pc.GetUIController());
+        if (_dialogueActive)
+        {
+            DisableInteractDialogueActive(_pc.GetUIController());
+            _dialogueActive = false;
+        }
 
     }
 

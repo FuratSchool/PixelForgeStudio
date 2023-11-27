@@ -3,7 +3,8 @@ using UnityEngine;
 public class IdleState : IPlayerState
 {
     public IdleState (PlayerController pc) : base("IdleState", pc) {_pc = (PlayerController)this._playerStateMachine;}
-
+    
+    private bool dialogueActive = false;
     public override void EnterState()
     {
         base.EnterState();
@@ -30,6 +31,7 @@ public class IdleState : IPlayerState
         
         if (_pc.InDialogeTriggerZone && _pc.NPC.hasBeenTalkedTo == false)
         {
+            dialogueActive = true;
             EnableInteractDialogueActive(_pc.GetUIController(), _pc.GetPlayerInput());
             if (_pc.InteractPressed)
             {
@@ -38,13 +40,20 @@ public class IdleState : IPlayerState
         }
         else
         {
-            DisableInteractDialogueActive(_pc.GetUIController());
+            if (dialogueActive)
+            {
+                DisableInteractDialogueActive(_pc.GetUIController());
+                dialogueActive = false;
+            }
+            
         }
     }
     public override void ExitState()
     {
-        DisableInteractDialogueActive(_pc.GetUIController());
-        //_playerStateMachine.Animator.enabled = false;
-
+        if (dialogueActive)
+        {
+            DisableInteractDialogueActive(_pc.GetUIController());
+            dialogueActive = false;
+        }
     }
 }
