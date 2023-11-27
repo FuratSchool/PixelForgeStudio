@@ -9,7 +9,7 @@ public class TalkingState : IPlayerState
         _pc.NPC.hasBeenTalkedTo = true;
         _pc.GetDialogueManager().StartDialogue(_pc.NPC.dialogue);
         _pc.DialogueActive = true;
-        _playerStateMachine.Animator.Play("Idle");
+        _playerStateMachine.Animator.Play("Talking");
     }
 
     public override void UpdateState()

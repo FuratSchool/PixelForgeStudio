@@ -11,6 +11,7 @@ public class JumpingState : IPlayerState
     public override void EnterState()
     {
         base.EnterState();
+        _pc.jumped = true;
         _pc.GetAudio().PlayOneShot(_pc.JumpingSound);
         
         /*if (_pc.ShiftPressed)

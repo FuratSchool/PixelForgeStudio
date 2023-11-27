@@ -8,6 +8,8 @@ public class PlayerController : PlayerStateMachine
 {
     private Camera _camera;
     private TrailRenderer tr;
+    private BoxCollider m_Collider;
+    private RaycastHit _hit;
     
     [Header("Movement")]
     [SerializeField] private float walkSpeed = 10.0f;
@@ -28,6 +30,7 @@ public class PlayerController : PlayerStateMachine
     public bool SpacePressed { get; set; }
     public bool canJump;
     public bool canDoubleJump;
+    public bool jumped;
     public bool jumpReleased = false;
     public bool grounded;
     
@@ -98,6 +101,7 @@ public class PlayerController : PlayerStateMachine
     [HideInInspector] public TransitionState TransitionState;
     [HideInInspector] public DeathState DeathState;
     [HideInInspector] public DoubleJump DoubleJumpState;
+    [HideInInspector] public LandingState LandingState;
     
     public float MoveSpeed
     {
@@ -153,6 +157,7 @@ public class PlayerController : PlayerStateMachine
         DeathState = new DeathState(this);
         FallingState = new FallingState(this);
         DoubleJumpState = new DoubleJump(this);
+        LandingState = new LandingState(this);
         _uiController = FindObjectOfType<UIController>();
         _dialogueManager = FindObjectOfType<DialogueManager>();
         TR = GetComponent<TrailRenderer>();
@@ -160,6 +165,7 @@ public class PlayerController : PlayerStateMachine
         _playerInput = GetComponent<PlayerInput>();
         _camera = Camera.main;
         GetDirection(PlayerInput());
+        m_Collider = GetComponent<BoxCollider>();
     }
     
     protected override IPlayerState GetInitialState()
@@ -226,14 +232,38 @@ public class PlayerController : PlayerStateMachine
     public bool IsGrounded()
     {
         var layermask = 1 << 6;
-        bool ground = Physics.Raycast(transform.position, Vector3.down,out var hit, raycastDistance, ~layermask);
-        /*if (hit.collider != null)
+        //bool ground = Physics.Raycast(transform.position, Vector3.down,out var hit, raycastDistance, ~layermask);
+        bool ground = Physics.BoxCast(m_Collider.bounds.center, transform.localScale, -transform.up,out _hit,transform.rotation, raycastDistance , ~layermask );
+        
+        /*if (_hit.collider != null)
         {
-            if (hit.collider.name != "FirstCliff") Debug.Log("hit");
+            if (_hit.collider.name != "FirstCliff") Debug.Log("hit");
         }*/
         
         return ground;
     }
+    
+    /*void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+
+        //Check if there has been a hit yet
+        if (IsGrounded())
+        {
+            //Draw a Ray forward from GameObject toward the hit
+            Gizmos.DrawRay(m_Collider.bounds.center, -transform.up * _hit.distance);
+            //Draw a cube that extends to where the hit exists
+            Gizmos.DrawWireCube(m_Collider.bounds.center + -transform.up * _hit.distance, transform.localScale);
+        }
+        //If there hasn't been a hit yet, draw the ray at the maximum distance
+        else
+        {
+            //Draw a Ray forward from GameObject toward the maximum distance
+            Gizmos.DrawRay(m_Collider.bounds.center, -transform.up * raycastDistance);
+            //Draw a cube at the maximum distance
+            Gizmos.DrawWireCube(m_Collider.bounds.center + -transform.up * raycastDistance, transform.localScale);
+        }
+    }*/
     
     public Vector3 GetDirection(Vector3 direction)
     {
