@@ -21,11 +21,6 @@ public class SwingingState : IPlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-        
-        /*if (_pc._dialueActive && !_pc.InRange)
-        {
-            _pc._dialueActive = false;
-        }*/
         if (!_pc.SwingPressed && _pc._isSwinging)
         {
             _pc.EndSwing();
@@ -42,7 +37,7 @@ public class SwingingState : IPlayerState
         if (!_pc.joint) return;
         if (_pc.lr.positionCount != 0)
         {
-            _pc.lr.SetPosition(0, _pc.player.transform.GetChild(1).transform.position);
+            _pc.lr.SetPosition(0, _pc.Hand.transform.position);
             _pc.lr.SetPosition(1, _pc.SwingableObjectPos); 
         }
     }
@@ -56,9 +51,6 @@ public class SwingingState : IPlayerState
     {
         if (_pc._canSwing)
         {
-            //_pc._UIController.SetInteractText("Hold E to Swing");
-            //_pc._dialueActive = true;
-            //_pc._UIController.SetInteractableTextActive(true);
             _pc._swingpoint = _pc.SwingableObjectGAME.transform.position;
             if(_pc.SwingPressed)
             {
