@@ -7862,12 +7862,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34fdf83fc4e2a7b4787fd5e4a04fe136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugBoard: 0
   isPlayerInRange: 0
   inGameObject: {fileID: 1291750930}
   BoardUIobject: {fileID: 1307768961}
   testItem: {fileID: 2351091414123166406, guid: 8538e5ac9701f494dbadb4e7b5db2934,
     type: 3}
+  debugBoard: 1
 --- !u!4 &1089559785
 Transform:
   m_ObjectHideFlags: 0
@@ -10738,7 +10738,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1307768962
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10771,15 +10771,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 371bbf6a697a23b45b248ea9943b1731, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
