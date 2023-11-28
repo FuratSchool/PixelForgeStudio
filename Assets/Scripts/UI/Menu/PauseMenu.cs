@@ -75,4 +75,9 @@ public class PauseMenu : MonoBehaviour
     {
         Application.Quit(); //quits the game - only works in build
     }
+
+    public void test()
+    {
+        Debug.Log("test");
+    }
 }
