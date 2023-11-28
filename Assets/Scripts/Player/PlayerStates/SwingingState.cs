@@ -4,111 +4,101 @@ using UnityEngine.InputSystem;
 
 public class SwingingState : IPlayerState
 {
-    private PlayerController _playerController;
-    private LineRenderer _lr;
-    private Vector3 _swingPoint;
-    private ConfigurableJoint _joint;
-    private bool _endSwinging = false;
-    public void EnterState(PlayerStateMachine stateMachine)
+    public SwingingState (PlayerController pc) : base("SwingingState", pc) {_pc = (PlayerController)this._playerStateMachine;}
+    public override void EnterState()
     {
-        _playerController = stateMachine.GetPlayerController();
-        _lr = _playerController.GetComponent<LineRenderer>();
-        _playerController.IsSwinging = true;
-        _swingPoint = _playerController.SwingableObjectGAME.transform.position;
-        _lr.positionCount = 2;
-        MakeJoint(_swingPoint);
-        stateMachine.Animator.SetBool("IsSwinging", true);        
-
-    }
-    public void FixedUpdateState(PlayerStateMachine stateMachine)
-    {
-    }
-    public void UpdateState(PlayerStateMachine stateMachine)
-    {
-        stateMachine.WalkingState.PlayerMove(stateMachine);
-        if(!_playerController.SwingPressed || _endSwinging)
-            stateMachine.ChangeState(stateMachine.FallingState);
-    }
-
-    public void ExitState(PlayerStateMachine stateMachine)
-    {
-        EndSwing();
-        stateMachine.Animator.SetBool("IsSwinging", false);        
-
-    }
-
-    public bool CheckSwing(PlayerStateMachine stateMachine)
-    {
-        var controller = stateMachine.GetPlayerController();
-        if(!controller.IsSwinging && controller.canSwing && controller.inSwingingRange)
-            return true;
-        return false;
-    }
-    
-    public void EnableSwingText(PlayerStateMachine stateMachine)
-    {
-        var playercontroller = stateMachine.GetPlayerController();
-        var uiController = playercontroller.GetUIController();
-        var playerInput = playercontroller.GetComponent<PlayerInput>();
-        string keybind;
-        if (playerInput.currentControlScheme.Equals("Controller"))
+        base.EnterState();
+        _playerStateMachine.Animator.Play("Swinging"); 
+        if (!_pc._isSwinging && _pc.inSwingingRange)
         {
-            int index = playerInput.actions["Swing"].bindings.IndexOf(x => x.groups.Contains("Controller"));
-            keybind = playerInput.actions["Swing"].GetBindingDisplayString(index, out var deviceLayoutName, out var controlPath);
+            Swing();
         }
-        else
+
+    }
+    public override void FixedUpdateState()
+    {
+    }
+    public override void UpdateState()
+    {
+        base.UpdateState();
+        
+        /*if (_pc._dialueActive && !_pc.InRange)
         {
-            int index = playerInput.actions["Swing"].bindings.IndexOf(x => x.groups.Contains("KeyboardMouse"));
-            keybind = playerInput.actions["Swing"].GetBindingDisplayString(index, out var deviceLayoutName, out var controlPath);
+            _pc._dialueActive = false;
+        }*/
+        if (!_pc.SwingPressed && _pc._isSwinging)
+        {
+            _pc.EndSwing();
         }
         
-        uiController.SetInteractText("Hold " + keybind +" to swing");
-        uiController.SetInteractableTextActive(true);
-    }
-    
-    public void DisableSwingText(UIController uiController)
-    {
-        uiController.SetInteractableTextActive(false);
-    }
-    
-    private void MakeJoint(Vector3 swingPoint)
-    {
-        _joint = _playerController.gameObject.AddComponent<ConfigurableJoint>();
-        _joint.autoConfigureConnectedAnchor = false;
-        _joint.connectedAnchor = swingPoint;
-        _joint.anchor = new Vector3(0,0,0);
         
-        _joint.xMotion = ConfigurableJointMotion.Limited;
-        _joint.yMotion = ConfigurableJointMotion.Limited;
-        _joint.zMotion = ConfigurableJointMotion.Limited;
+        if (!_pc._isSwinging)
+            _playerStateMachine.ChangeState(_pc.FallingState);
+    }
+
+    public override void LateUpdateState()
+    {
+        base.LateUpdateState();
+        if (!_pc.joint) return;
+        if (_pc.lr.positionCount != 0)
+        {
+            _pc.lr.SetPosition(0, _pc.player.transform.GetChild(1).transform.position);
+            _pc.lr.SetPosition(1, _pc.SwingableObjectPos); 
+        }
+    }
+
+    public override void ExitState()
+    {
+
+    }
+
+    private void Swing()
+    {
+        if (_pc._canSwing)
+        {
+            //_pc._UIController.SetInteractText("Hold E to Swing");
+            //_pc._dialueActive = true;
+            //_pc._UIController.SetInteractableTextActive(true);
+            _pc._swingpoint = _pc.SwingableObjectGAME.transform.position;
+            if(_pc.SwingPressed)
+            {
+                _pc.StartCoroutine(TimedSwing());
+
+                _pc.SwingableObjectPos = _pc.SwingableObjectGAME.transform.gameObject.transform.position;
+                MakeJoint(_pc._swingpoint);
+                _pc.lr.positionCount = 2;
+                _pc._isSwinging = true;
+                _pc._canSwing = false;
+            }
+        }
+    }
+    
+    private void MakeJoint(Vector3 hit)
+    {
+        _pc.joint = _pc.player.gameObject.AddComponent<ConfigurableJoint>();
+        _pc.joint.autoConfigureConnectedAnchor = false;
+        //joint.connectedBody = hit.rigidbody;
+        _pc.joint.connectedAnchor = hit;
+        _pc.joint.anchor = new Vector3(0,0,0);
+        
+        _pc.joint.xMotion = ConfigurableJointMotion.Limited;
+        _pc.joint.yMotion = ConfigurableJointMotion.Limited;
+        _pc.joint.zMotion = ConfigurableJointMotion.Limited;
         var limit = new SoftJointLimit();
-        limit.limit = _playerController.SwingDistance;
+        limit.limit = _pc.SwingDistance;
         limit.bounciness = 0f;
         limit.contactDistance = 0f;
-        _joint.linearLimit = limit;
-    }
-    private void EndSwing()
-    {
-        _lr.positionCount = 0;
-        _playerController.DestroyJoint(_joint);
-        _playerController.IsSwinging = false;
-        _playerController.GetRigidbody().AddForce(_playerController.ExitForce * Vector3.up, ForceMode.Impulse);
+        _pc.joint.linearLimit = limit;
     }
     
     private IEnumerator TimedSwing()
     {
-        yield return new WaitForSeconds(_playerController.SwingTime);
-        if (_joint != null)
-            _endSwinging = true;
-            
-    }
-    public void LateUpdateState(PlayerStateMachine stateMachine)
-    {
-        if (!_joint) return;
-        if (_lr.positionCount != 0)
+        yield return new WaitForSeconds(_pc.SwingTime);
+        if (_pc.joint != null)
         {
-            _lr.SetPosition(0, _playerController.transform.GetChild(1).transform.position);
-            _lr.SetPosition(1, _swingPoint); 
+            _pc.EndSwing();
         }
+        
+        
     }
 }
