@@ -178,7 +178,7 @@ Terrain:
   m_DetailObjectDistance: 1000
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
-  m_SplatMapDistance: 1000
+  m_SplatMapDistance: 80
   m_HeightmapMaximumLOD: 0
   m_ShadowCastingMode: 2
   m_DrawHeightmap: 1
@@ -1212,7 +1212,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 260703102}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.266135, y: -1e-45, z: -0, w: 0.9639358}
+  m_LocalRotation: {x: 0.26613525, y: -1e-45, z: -0, w: 0.96393573}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2275,7 +2275,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 713491173}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.23135735, y: -0.000000016739556, z: 0.000000003980824, w: 0.97286886}
+  m_LocalRotation: {x: 0.23135759, y: -0.00000001673955, z: 0.000000003980827, w: 0.9728688}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2338,7 +2338,7 @@ Terrain:
   m_DetailObjectDistance: 80
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
-  m_SplatMapDistance: 1000
+  m_SplatMapDistance: 80
   m_HeightmapMaximumLOD: 0
   m_ShadowCastingMode: 2
   m_DrawHeightmap: 1
@@ -3459,7 +3459,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331969962}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.24876326, y: 1e-45, z: -0, w: 0.96856433}
+  m_LocalRotation: {x: 0.2487635, y: 1e-45, z: -0, w: 0.9685643}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -4342,7 +4342,7 @@ Transform:
   m_GameObject: {fileID: 1544406082}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 299, y: 400.4, z: -1811}
+  m_LocalPosition: {x: -114.4, y: 173.69, z: -2478.18}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4406,7 +4406,7 @@ Terrain:
   m_DetailObjectDistance: 400
   m_DetailObjectDensity: 1
   m_HeightmapPixelError: 5
-  m_SplatMapDistance: 1000
+  m_SplatMapDistance: 80
   m_HeightmapMaximumLOD: 0
   m_ShadowCastingMode: 2
   m_DrawHeightmap: 1
@@ -4757,7 +4757,7 @@ Transform:
   m_GameObject: {fileID: 1940057768}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 299, y: 416.66998, z: -1833.2}
+  m_LocalPosition: {x: -114.4, y: 189.96, z: -2500.38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4931,8 +4931,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1954461158}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.266135, y: -4e-45, z: 1e-45, w: 0.9639358}
-  m_LocalPosition: {x: 299, y: 416.66998, z: -1833.2}
+  m_LocalRotation: {x: 0.26613525, y: -0.000000028727527, z: 0.000000007931449, w: 0.96393573}
+  m_LocalPosition: {x: -114.4, y: 189.96, z: -2500.38}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
