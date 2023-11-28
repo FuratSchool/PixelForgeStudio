@@ -21,14 +21,12 @@ public class PauseButtons : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
     }
     public void OnSelect (BaseEventData eventData) 
     {
-        Debug.Log (this.gameObject.name + " was selected");
         _animator.enabled = true;
         _animator.Play(_animation.name);
     }
     
     public void OnDeselect (BaseEventData eventData) 
     {
-        Debug.Log (this.gameObject.name + " was deselected");
         _animator.enabled = false;
         transform.localScale = new Vector3(1,1,1);
     }
