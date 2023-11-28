@@ -15,7 +15,9 @@ public class BoardController : MonoBehaviour
     public bool BoardUIActive { get; private set; }
     [SerializeField] private GameObject inGameObject;
     [SerializeField] private GameObject BoardUIobject;
+    [SerializeField] private int MaxItemsOnBoard = 10;
     
+    private int _currentItemsOnBoard;
     [Header("Debug Purposes")]
     public GameObject testItem;
     public bool debugBoard;
@@ -78,8 +80,17 @@ public class BoardController : MonoBehaviour
     
     public GameObject AddItemToBoard(GameObject item)
     {
+        if (_currentItemsOnBoard >= MaxItemsOnBoard)
+        {
+            Debug.Log("Board is full");
+            return null;
+        }
+        else
+        {
+            _currentItemsOnBoard++;
+        }
         var SpawnedItem = Instantiate(item, inGameObject.transform);
-        SpawnedItem.transform.parent = BoardUIobject.transform;
+        SpawnedItem.transform.parent = BoardUIobject.transform.GetChild(0).transform;
         return SpawnedItem;
     }
 }
