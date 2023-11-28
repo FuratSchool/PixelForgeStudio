@@ -233,9 +233,9 @@ RectTransform:
   - {fileID: 1756022109}
   m_Father: {fileID: 341202823}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 161.5, y: -40}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 323, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &167403216
@@ -2373,7 +2373,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1694918734
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2404,6 +2404,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1708619290}
   - component: {fileID: 1708619291}
+  - component: {fileID: 1708619292}
   m_Layer: 5
   m_Name: CreditRoll
   m_TagString: Untagged
@@ -2456,6 +2457,22 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1708619292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708619289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10659f817e5340445a40b304e6278ed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _credits: {fileID: 1694918733}
+  _mainMenu: {fileID: 2131161465}
+  _eventSystem: {fileID: 2040938952}
+  _CreditsButton: {fileID: 2138036425}
 --- !u!1 &1756022108
 GameObject:
   m_ObjectHideFlags: 0
@@ -2982,9 +2999,9 @@ RectTransform:
   - {fileID: 1055474514}
   m_Father: {fileID: 341202823}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 161.5, y: -238.13335}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 323, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2076197954
@@ -3174,7 +3191,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2131161466
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3244,9 +3261,9 @@ RectTransform:
   - {fileID: 735118816}
   m_Father: {fileID: 341202823}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 161.5, y: -139.06668}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 323, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2138036427
@@ -3271,10 +3288,10 @@ MonoBehaviour:
   m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 0}
-    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 0.5372549}
+    m_HighlightedColor: {r: 0.990566, g: 0.1812922, b: 0.1812922, a: 0.7607843}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.7372549}
-    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 0}
-    m_DisabledColor: {r: 0, g: 0, b: 0, a: 0}
+    m_SelectedColor: {r: 0.8490566, g: 0.35564256, b: 0.35564256, a: 0.3254902}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -3288,11 +3305,35 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
-  m_TargetGraphic: {fileID: 2138036428}
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 167403217}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1694918733}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 2131161465}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 2131161467}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
         m_MethodName: OptionsButtonHighLightDisable
@@ -3362,7 +3403,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 2131161467}
           m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-          m_MethodName: OptionsButtonHighLightDisable
+          m_MethodName: OptionsButtonHighLightEnable
           m_Mode: 2
           m_Arguments:
             m_ObjectArgument: {fileID: 735118815}
@@ -3373,6 +3414,38 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2131161467}
+          m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+          m_MethodName: OptionsButtonHighLightDisable
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 735118815}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 9
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 2131161467}
+          m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
+          m_MethodName: OptionsButtonHighLightEnable
+          m_Mode: 2
+          m_Arguments:
+            m_ObjectArgument: {fileID: 735118815}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+  - eventID: 10
     callback:
       m_PersistentCalls:
         m_Calls:
