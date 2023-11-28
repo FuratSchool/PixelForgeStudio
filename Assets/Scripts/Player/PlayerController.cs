@@ -50,6 +50,7 @@ public class PlayerController : PlayerStateMachine
     [SerializeField] private float swingTime = 3f;
     [SerializeField] private float SwingDelay = 1f;
     [SerializeField] public LineRenderer lr;
+    [SerializeField] public GameObject Hand;
     public ConfigurableJoint joint;
     public GameObject player;
     public Vector3 SwingableObjectPos;
