@@ -12,7 +12,8 @@ public class WalkingState : IPlayerState
         _pc.GetAudio().Play();
         
         _pc.MoveSpeed = _pc.WalkSpeed;
-        _playerStateMachine.Animator.Play("Walking");
+        //_playerStateMachine.Animator.Play("Walking");
+        _playerStateMachine.Animator.SetInteger("State", 1);
 
     }
     public override void UpdateState()

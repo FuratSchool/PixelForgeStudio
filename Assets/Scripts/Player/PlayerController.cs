@@ -306,7 +306,8 @@ public class PlayerController : PlayerStateMachine
         _rigidbody.velocity = _dashDirection * dashingPower;
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
-        Animator.Play("Stop Dash");
+        //Animator.Play("Stop Dash");
+        Animator.SetInteger("State", 8);
         yield return new WaitForSeconds(dashEndTime);
         tr.emitting = false;
         _rigidbody.useGravity = true;

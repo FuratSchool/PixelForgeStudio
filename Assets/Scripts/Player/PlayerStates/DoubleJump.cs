@@ -17,7 +17,8 @@ public class DoubleJump : IPlayerState
         _pc.GetRigidbody().velocity = new Vector3(_pc.GetRigidbody().velocity.x, 0f , _pc.GetRigidbody().velocity.z);
         _pc.GetRigidbody().AddForce(Vector3.up * (_pc.force * 1.5f), ForceMode.Impulse); _pc.canDoubleJump = false;
         _pc.jumpReleased = false;
-        _playerStateMachine.Animator.Play("DoubleJump");
+        //_playerStateMachine.Animator.Play("DoubleJump");
+        _playerStateMachine.Animator.SetInteger("State", 10);
     }
 
     public override void UpdateState()

@@ -7,7 +7,8 @@ public class IdleState : IPlayerState
     public override void EnterState()
     {
         base.EnterState();
-        _playerStateMachine.Animator.Play("Idle");
+        //_playerStateMachine.Animator.Play("Idle");
+        _playerStateMachine.Animator.SetInteger("State", 0);
 
     }
 

@@ -18,7 +18,8 @@ public class JumpingState : IPlayerState
         {
             _pc.MoveSpeed = _pc.SprintSpeed;
         }*/
-        _playerStateMachine.Animator.Play("Start Jump");
+        //_playerStateMachine.Animator.Play("Start Jump");
+        _playerStateMachine.Animator.SetInteger("State", 3);
         StartJump();
 
     }

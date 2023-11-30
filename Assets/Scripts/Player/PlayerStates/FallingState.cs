@@ -8,7 +8,8 @@ using UnityEngine;
         }
         public override void EnterState()
         {
-            _playerStateMachine.Animator.Play("Falling");
+            //_playerStateMachine.Animator.Play("Falling");
+            _playerStateMachine.Animator.SetInteger("State", 6);
             if (!_pc.jumped) _pc.jumpReleased = true;
 
 

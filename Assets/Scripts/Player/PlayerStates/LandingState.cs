@@ -9,7 +9,8 @@ public class LandingState : IPlayerState
     public override void EnterState()
     {
         base.EnterState();
-        _playerStateMachine.Animator.Play("Landing");
+        //_playerStateMachine.Animator.Play("Landing");
+        _playerStateMachine.Animator.SetInteger("State", 9);
         busyLanding = true;
         _pc.StartCoroutine(Landing());
         
@@ -21,8 +22,27 @@ public class LandingState : IPlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-        if (!busyLanding) _playerStateMachine.ChangeState((_pc.IdleState));
+        if ((Mathf.Abs(_pc.Movement.x) > Mathf.Epsilon) || (Mathf.Abs(_pc.Movement.y) > Mathf.Epsilon))
+        {
+            if (_pc._isRunning)
+            {
+                _playerStateMachine.ChangeState(_pc.SprintingState);
+                return;
+            }
+
+            _playerStateMachine.ChangeState(_pc.WalkingState);
+        }
+        else if ((Mathf.Abs(_pc.Movement.x) < Mathf.Epsilon)&&(Mathf.Abs(_pc.Movement.y) < Mathf.Epsilon))
+            _playerStateMachine.ChangeState(_pc.IdleState);
        
+    }
+    
+    public override void LateUpdateState()
+    {
+        base.LateUpdateState();
+        _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * (_pc.MoveSpeed * Time.deltaTime), 
+            Space.World);
+
     }
     public override void ExitState()
     {
