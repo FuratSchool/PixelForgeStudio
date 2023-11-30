@@ -16,7 +16,9 @@ public class PlayerController : PlayerStateMachine
     [SerializeField] private float sprintSpeed = 15.0f;
     private float moveSpeed;
     public Vector2 Movement = Vector2.zero;
-    public Transform footPrints;
+    public Transform footPrintsRight;
+    public Transform footPrintsLeft;
+    private bool leftFootActive;
     public float totalTime = 0;
     public bool _isRunning;
     
@@ -319,13 +321,27 @@ public class PlayerController : PlayerStateMachine
     public void FootPrint(float interfall)
     {
         totalTime += Time.deltaTime;
-        if (totalTime > interfall)
+        if (!(totalTime > interfall)) return;
+        var rotAmount = Quaternion.Euler(90, 0, 0);
+        if (leftFootActive)
         {
-            var rotAmount = Quaternion.Euler(90, 0, 0);
-            var posOffset = new Vector3(0f, 0f, 0f);
-            Instantiate(footPrints, (transform.position + posOffset), (transform.rotation * rotAmount));
-            totalTime = 0;
+            var footPrint = Instantiate(footPrintsLeft, (transform.position), (transform.rotation * rotAmount));
+            footPrint.transform.SetParent(transform);
+            footPrint.transform.localPosition = new Vector3(-.5f,0,0);
+            footPrint.transform.SetParent(null);
+            leftFootActive = false;
+
         }
+        else
+        {
+            var footPrint = Instantiate(footPrintsRight, (transform.position), (transform.rotation * rotAmount));
+            footPrint.transform.SetParent(transform);
+            footPrint.transform.localPosition = new Vector3(.5f,0,0);
+            footPrint.transform.SetParent(null);
+            leftFootActive = true;
+        }
+            
+        totalTime = 0;
     }
     
     public void EndSwing()
