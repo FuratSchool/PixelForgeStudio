@@ -31,8 +31,9 @@ public class LandingState : IPlayerState
             }
 
             _playerStateMachine.ChangeState(_pc.WalkingState);
+            return;
         }
-        else if ((Mathf.Abs(_pc.Movement.x) < Mathf.Epsilon)&&(Mathf.Abs(_pc.Movement.y) < Mathf.Epsilon))
+        if ((Mathf.Abs(_pc.Movement.x) < Mathf.Epsilon)&&(Mathf.Abs(_pc.Movement.y) < Mathf.Epsilon))
             _playerStateMachine.ChangeState(_pc.IdleState);
        
     }
@@ -52,7 +53,7 @@ public class LandingState : IPlayerState
     
     public IEnumerator Landing()
     {
-        yield return new WaitForSeconds(.15f);
+        yield return new WaitForSeconds(.3f);
         busyLanding = false;
     }
     

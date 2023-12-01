@@ -106,7 +106,7 @@ public class JumpingState : IPlayerState
     {
         _pc.jumpTimeCounter = _pc.jumpTime;
         _pc.GetRigidbody().AddForce(Vector3.up * _pc.force, ForceMode.Impulse);
-        _pc.isJumping = true;
+        //_pc.isJumping = true;
     }
     
     private void ContinueJump()
@@ -118,8 +118,9 @@ public class JumpingState : IPlayerState
         }
         else
         {
-            _pc.isJumping = false;
+            //_pc.isJumping = false;
             _pc.canJump = false;
+            _playerStateMachine.ChangeState(_pc.FallingState);
         }
     }
 }
