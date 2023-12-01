@@ -11,7 +11,7 @@ public class WalkingState : IPlayerState
         _pc.GetAudio().clip = _pc.WalkingSound;
         _pc.GetAudio().Play();
         
-        _pc.MoveSpeed = _pc.WalkSpeed;
+        //_pc.MoveSpeed = _pc.WalkSpeed;
         //_playerStateMachine.Animator.Play("Walking");
         _playerStateMachine.Animator.SetInteger("State", 1);
 

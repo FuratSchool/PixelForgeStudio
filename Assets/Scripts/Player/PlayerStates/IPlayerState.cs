@@ -22,6 +22,8 @@ public class IPlayerState
         {
             _playerStateMachine.ChangeState(_pc.DeathState);
         }
+
+        _pc.MoveSpeed = _pc._isRunning ? _pc.SprintSpeed : _pc.WalkSpeed;
     }
     public virtual void FixedUpdateState() { }
 
