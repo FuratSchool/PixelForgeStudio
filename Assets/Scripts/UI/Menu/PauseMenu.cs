@@ -11,7 +11,10 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject firstSelectedButton;
-    
+
+    [SerializeField] private GameObject UIObject;
+    [SerializeField] private GameObject CoinsUI;
+
     public static bool isPaused;
     
     // Start is called before the first frame update
@@ -45,6 +48,7 @@ public class PauseMenu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(firstSelectedButton);
         Time.timeScale = 0f; //stops the ingame time
         isPaused = true;
+        CoinsUI.transform.parent = pauseMenu.transform;
     }
 
     public void ResumeGame()
@@ -53,6 +57,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1f; //resumes the ingame time
         isPaused = false; 
+        CoinsUI.transform.parent = UIObject.transform;
     }
     public void OpenOptionsMenu()
     {
