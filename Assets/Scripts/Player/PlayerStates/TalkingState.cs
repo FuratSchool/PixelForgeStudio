@@ -1,49 +1,39 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class TalkingState : IPlayerState
 {
-    private PlayerController _playerController;
-    public void EnterState(PlayerStateMachine stateMachine)
+    public TalkingState (PlayerController pc) : base("TalkingState", pc) {_pc = (PlayerController)this._playerStateMachine;}
+    public override void EnterState()
     {
-        _playerController = stateMachine.GetPlayerController();
-        _playerController.NPC.hasBeenTalkedTo = true;
-        _playerController.GetDialogueManager().StartDialogue(_playerController.NPC.dialogue);
-        _playerController.DialogueActive = true;
-        stateMachine.Animator.SetBool(("IsTalking"), true);
+        _pc.NPC.hasBeenTalkedTo = true;
+        _pc.GetDialogueManager().StartDialogue(_pc.NPC.dialogue);
+        _pc.DialogueActive = true;
+        _playerStateMachine.Animator.Play("Idle");
     }
 
-    public void UpdateState(PlayerStateMachine stateMachine)
+    public override void UpdateState()
     {
-        if (!_playerController.DialogueActive)
-            stateMachine.ChangeState(stateMachine.IdleState);
+        if (!_pc.DialogueActive)
+            _playerStateMachine.ChangeState(_pc.IdleState);
     }
 
-    public void FixedUpdateState(PlayerStateMachine stateMachine)
-    {
-    }
-
-    public void LateUpdateState(PlayerStateMachine stateMachine)
+    public override void FixedUpdateState()
     {
     }
 
-    public void ExitState(PlayerStateMachine stateMachine)
+    public override void LateUpdateState()
     {
-        DisableInteractDialogueActive(_playerController.GetUIController());
-        _playerController.NPC.hasBeenTalkedTo = true;
-        _playerController.SpacePressed = false;
-        if(_playerController.NPC.canTalkAgain)
-            _playerController.NPC.hasBeenTalkedTo = false;
-        stateMachine.Animator.SetBool(("IsTalking"), false);
+    }
 
-    }
-    
-    public void EnableInteractDialogueActive(UIController uiController)
+    public override void ExitState()
     {
-        uiController.SetInteractText("Press [F][X] to talk");
-        uiController.SetInteractableTextActive(true);
-    }
-    public void DisableInteractDialogueActive(UIController uiController)
-    {
-        uiController.SetInteractableTextActive(false);
+        DisableInteractDialogueActive(_pc.GetUIController());
+        _pc.NPC.hasBeenTalkedTo = true;
+        _pc.SpacePressed = false;
+        if(_pc.NPC.canTalkAgain)
+            _pc.NPC.hasBeenTalkedTo = false;
+        //_playerStateMachine.Animator.SetBool(("IsTalking"), false);
+
     }
 }
