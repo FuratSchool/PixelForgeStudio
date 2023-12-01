@@ -40,6 +40,7 @@ public class PauseMenu : MonoBehaviour
     public void PauseGame()
     {
         pauseMenu.SetActive(true);
+        FindObjectOfType<UIController>().SetCoinAlpha(1);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstSelectedButton);
         Time.timeScale = 0f; //stops the ingame time
@@ -48,6 +49,7 @@ public class PauseMenu : MonoBehaviour
 
     public void ResumeGame()
     {
+        FindObjectOfType<UIController>().SetCoinAlpha(0);
         pauseMenu.SetActive(false);
         Time.timeScale = 1f; //resumes the ingame time
         isPaused = false; 
