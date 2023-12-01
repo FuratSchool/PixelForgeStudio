@@ -63,12 +63,14 @@ public class PauseMenu : MonoBehaviour
     {
         optionsMenu.SetActive(true);
         pauseMenu.transform.GetChild(0).gameObject.SetActive(false);
+        CoinsUI.SetActive(false);
     }
     
     public void CloseOptionsMenu()
     {
         optionsMenu.SetActive(false);
         pauseMenu.transform.GetChild(0).gameObject.SetActive(true);
+        CoinsUI.SetActive(true);
     }
     public void GoToMainMenu()
     {
