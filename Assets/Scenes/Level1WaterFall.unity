@@ -382,7 +382,7 @@ Terrain:
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: 60f39cc9ed009f44d96d87dbad6febc5, type: 2}
   m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
+  m_TreeBillboardDistance: 400
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
   m_DetailObjectDistance: 150
@@ -1062,7 +1062,7 @@ Terrain:
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: c3dc31e7a376c0c42a1b368be8a6e2d4, type: 2}
   m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
+  m_TreeBillboardDistance: 400
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
   m_DetailObjectDistance: 90
@@ -3933,9 +3933,11 @@ GameObject:
   - component: {fileID: 895659962}
   - component: {fileID: 895659961}
   - component: {fileID: 895659960}
+  - component: {fileID: 895659964}
+  - component: {fileID: 895659965}
   m_Layer: 0
   m_Name: WaterPlaceHolder
-  m_TagString: Untagged
+  m_TagString: Water
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3955,11 +3957,11 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &895659961
@@ -4027,6 +4029,45 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90.21399, y: 0, z: 0}
+--- !u!114 &895659964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895659959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae39ffaa372564f07845da541766feae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!54 &895659965
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895659959}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &907063714
 GameObject:
   m_ObjectHideFlags: 0
@@ -5112,7 +5153,7 @@ Terrain:
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: b22c9d560ea5fb84a952376d763b7426, type: 2}
   m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
+  m_TreeBillboardDistance: 400
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
   m_DetailObjectDistance: 163
@@ -5855,7 +5896,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1339270666}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.5893773, y: 0.00000009853817, z: -0.000000071889076, w: 0.80785793}
+  m_LocalRotation: {x: 0.58937734, y: -7.3263595e-10, z: 5.345083e-10, w: 0.80785793}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6587,7 +6628,7 @@ Terrain:
   serializedVersion: 6
   m_TerrainData: {fileID: 15600000, guid: 8a266a78bdd3f844e814f3afa8d0e8a7, type: 2}
   m_TreeDistance: 5000
-  m_TreeBillboardDistance: 50
+  m_TreeBillboardDistance: 400
   m_TreeCrossFadeLength: 5
   m_TreeMaximumFullLODCount: 50
   m_DetailObjectDistance: 150
@@ -7014,7 +7055,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interactableTextElement: {fileID: 2059703376}
   _coinTextElement: {fileID: 523110857}
-  _coinGameObject: {fileID: 0}
+  _coinGameObject: {fileID: 322020091}
   _FinishTextElement: {fileID: 368801984}
   InputAction: {fileID: 0}
   FadeTime: 1
@@ -7616,7 +7657,7 @@ PrefabInstance:
     - target: {fileID: 4471759340396403338, guid: 2ffe8aba70a04a9418ad061bbc05fa5c,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -96.33
+      value: -104.96
       objectReference: {fileID: 0}
     - target: {fileID: 4471759340396403338, guid: 2ffe8aba70a04a9418ad061bbc05fa5c,
         type: 3}
@@ -7626,7 +7667,7 @@ PrefabInstance:
     - target: {fileID: 4471759340396403338, guid: 2ffe8aba70a04a9418ad061bbc05fa5c,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -113.19995
+      value: -118.19
       objectReference: {fileID: 0}
     - target: {fileID: 4471759340396403338, guid: 2ffe8aba70a04a9418ad061bbc05fa5c,
         type: 3}
