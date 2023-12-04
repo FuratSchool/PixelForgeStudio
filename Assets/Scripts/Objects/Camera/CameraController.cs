@@ -34,9 +34,11 @@ public class CameraController : MonoBehaviour
     
     void ControlChanged(PlayerInput input)
     {
+        if(_camera == null) return;
         var device = input.currentControlScheme;
         if(device.Equals("Controller"))
         {
+            
             correctionX = ControllerCorrectionX;
             correctionY = ControllerCorrectionY;
             _camera.m_YAxis.m_MaxSpeed = _defaultSensitivityY * (_settingsData.sensitivityY * correctionY);
