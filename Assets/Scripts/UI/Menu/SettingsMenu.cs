@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Samples.RebindUI;
 using UnityEngine.UI;
+using Button = UnityEngine.UIElements.Button;
 
 public class SettingsMenu : MonoBehaviour
 {
@@ -179,7 +180,8 @@ public class SettingsMenu : MonoBehaviour
     
     public void OptionsButtonHighLightEnable(GameObject Object)
     {
-        Object.GetComponent<TMP_Text>().fontStyle |= FontStyles.Underline;
+        if (Object.transform.parent.GetComponent<UnityEngine.UI.Button>().interactable)
+            Object.GetComponent<TMP_Text>().fontStyle |= FontStyles.Underline;
     }
     public void OptionsButtonHighLightDisable(GameObject Object)
     {

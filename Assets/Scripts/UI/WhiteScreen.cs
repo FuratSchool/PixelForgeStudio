@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
@@ -14,6 +15,9 @@ public class WhiteScreen : MonoBehaviour
     [SerializeField] private float FadeIteration = .01f;
     [SerializeField] private bool InRange = false;
     [SerializeField] public bool lockMovement = false;
+    
+    [SerializeField] private bool _ChangeScene = false;
+    [SerializeField] private string _Scene;
     public Image canvas;
     public GameObject TeleportPosition;
     private GameObject player;
@@ -51,7 +55,9 @@ public class WhiteScreen : MonoBehaviour
     {
         _playerController = FindObjectOfType<PlayerController>();
         player = GameObject.FindObjectOfType<PlayerController>().gameObject;
-        _Pos = TeleportPosition.transform.position;
+        
+            _Pos = TeleportPosition.transform.position;
+        
     }
 
     private void Update()
@@ -78,7 +84,14 @@ public class WhiteScreen : MonoBehaviour
             yield return new WaitForSeconds(FadeSpeed);
         }
         //teleport to level to
-        player.transform.localPosition = _Pos;
+        if (!_ChangeScene)
+        {
+            player.transform.localPosition = _Pos;
+        }
+        else
+        {
+            FindObjectOfType<SceneController>().LoadScene(_Scene);   
+        }
         _fadeInFinished = true;
     }
     

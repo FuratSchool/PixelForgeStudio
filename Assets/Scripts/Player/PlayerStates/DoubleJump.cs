@@ -37,6 +37,4 @@ public class DoubleJump : IPlayerState
         _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * (_pc.MoveSpeed * Time.deltaTime), 
             Space.World);
     }
-    
-
 }
