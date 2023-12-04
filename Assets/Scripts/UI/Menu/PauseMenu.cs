@@ -48,7 +48,7 @@ public class PauseMenu : MonoBehaviour
         EventSystem.current.SetSelectedGameObject(firstSelectedButton);
         Time.timeScale = 0f; //stops the ingame time
         isPaused = true;
-        CoinsUI.transform.parent = pauseMenu.transform;
+        CoinsUI.transform.SetParent(pauseMenu.transform);
     }
 
     public void ResumeGame()
@@ -57,18 +57,20 @@ public class PauseMenu : MonoBehaviour
         pauseMenu.SetActive(false);
         Time.timeScale = 1f; //resumes the ingame time
         isPaused = false; 
-        CoinsUI.transform.parent = UIObject.transform;
+        CoinsUI.transform.SetParent(UIObject.transform);
     }
     public void OpenOptionsMenu()
     {
         optionsMenu.SetActive(true);
         pauseMenu.transform.GetChild(0).gameObject.SetActive(false);
+        CoinsUI.SetActive(false);
     }
     
     public void CloseOptionsMenu()
     {
         optionsMenu.SetActive(false);
         pauseMenu.transform.GetChild(0).gameObject.SetActive(true);
+        CoinsUI.SetActive(true);
     }
     public void GoToMainMenu()
     {
