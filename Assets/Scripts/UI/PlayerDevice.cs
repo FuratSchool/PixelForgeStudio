@@ -11,7 +11,6 @@ public class PlayerDevice : MonoBehaviour
     {
         PlayerInput input = GetComponent<PlayerInput>();
         var TutorialTexts = GameObject.FindGameObjectsWithTag("ControlText");
-        Debug.Log(input.currentControlScheme);
         foreach (var text in TutorialTexts)
         {
             text.SendMessage("ControlChanged", input, SendMessageOptions.DontRequireReceiver);

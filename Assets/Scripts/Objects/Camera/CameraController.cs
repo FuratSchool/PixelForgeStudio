@@ -14,6 +14,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float ControllerCorrectionY =5;
     private float correctionX = 1;
     private float correctionY = 1;
+    private SettingsData _settingsData;
     private void Awake()
     {
         _camera = GetComponent<CinemachineFreeLook>();
@@ -24,10 +25,11 @@ public class CameraController : MonoBehaviour
 
     public void UpdateCameraSettings(SettingsData settings)
     {
-        _camera.m_YAxis.m_MaxSpeed = _defaultSensitivityY * (settings.sensitivityY * correctionY);
-        _camera.m_XAxis.m_MaxSpeed = _defaultSensitivityX * (settings.sensitivityX * correctionX);
-        _camera.m_XAxis.m_InvertInput = settings.invertedX;
-        _camera.m_YAxis.m_InvertInput = settings.invertedY;
+        _settingsData = settings;
+        _camera.m_YAxis.m_MaxSpeed = _defaultSensitivityY * (_settingsData.sensitivityY * correctionY);
+        _camera.m_XAxis.m_MaxSpeed = _defaultSensitivityX * (_settingsData.sensitivityX * correctionX);
+        _camera.m_XAxis.m_InvertInput = _settingsData.invertedX;
+        _camera.m_YAxis.m_InvertInput = _settingsData.invertedY;
     }
     
     void ControlChanged(PlayerInput input)
@@ -37,11 +39,19 @@ public class CameraController : MonoBehaviour
         {
             correctionX = ControllerCorrectionX;
             correctionY = ControllerCorrectionY;
+            _camera.m_YAxis.m_MaxSpeed = _defaultSensitivityY * (_settingsData.sensitivityY * correctionY);
+            _camera.m_XAxis.m_MaxSpeed = _defaultSensitivityX * (_settingsData.sensitivityX * correctionX);
+            _camera.m_XAxis.m_InvertInput = _settingsData.invertedX;
+            _camera.m_YAxis.m_InvertInput = _settingsData.invertedY;
         }
         else if (device.Equals("KeyboardMouse"))
         {
             correctionX = 1;
             correctionY = 1;
+            _camera.m_YAxis.m_MaxSpeed = _defaultSensitivityY * (_settingsData.sensitivityY * correctionY);
+            _camera.m_XAxis.m_MaxSpeed = _defaultSensitivityX * (_settingsData.sensitivityX * correctionX);
+            _camera.m_XAxis.m_InvertInput = _settingsData.invertedX;
+            _camera.m_YAxis.m_InvertInput = _settingsData.invertedY;
         }
     }
 }
