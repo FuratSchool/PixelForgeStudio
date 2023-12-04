@@ -278,7 +278,9 @@ MonoBehaviour:
   walkSpeed: 10
   sprintSpeed: 20
   Movement: {x: 0, y: 0}
-  footPrints: {fileID: 4681874753066359916, guid: 06d3623a661d9c942bb0c4392d846fcf,
+  footPrintsRight: {fileID: 4681874753066359916, guid: bf41e9ae0a579ee4f9fe3c851020185d,
+    type: 3}
+  footPrintsLeft: {fileID: 4681874753066359916, guid: 06d3623a661d9c942bb0c4392d846fcf,
     type: 3}
   totalTime: 0
   _isRunning: 0
@@ -286,10 +288,11 @@ MonoBehaviour:
   jumpTimeCounter: 0
   force: 15
   forceHoldJump: 0.2
-  raycastDistance: 0.4
+  raycastDistance: 2
   gravityMultiplier: 1
   canJump: 1
   canDoubleJump: 0
+  jumped: 0
   jumpReleased: 1
   grounded: 0
   dashingTime: 0.5
@@ -303,7 +306,7 @@ MonoBehaviour:
   swingTime: 3
   SwingDelay: 1
   lr: {fileID: 6113694536196822892}
-  Hand: {fileID: 4701207589610694960}
+  Hand: {fileID: 8280275655525851216}
   joint: {fileID: 0}
   player: {fileID: 4521968622420406398}
   SwingableObjectPos: {x: 0, y: 0, z: 0}
@@ -1088,6 +1091,12 @@ MeshCollider:
 --- !u!4 &5650466962317601794 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -82591911506677924, guid: ef441cbc545aa442aa52309d4041a26c,
+    type: 3}
+  m_PrefabInstance: {fileID: 3508566737800364894}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8280275655525851216 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4781024060634653454, guid: ef441cbc545aa442aa52309d4041a26c,
     type: 3}
   m_PrefabInstance: {fileID: 3508566737800364894}
   m_PrefabAsset: {fileID: 0}

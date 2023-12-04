@@ -28,6 +28,8 @@ public class DoubleJump : IPlayerState
         {
             _playerStateMachine.ChangeState(_pc.FallingState);
         }
+        if (_pc._canDash && _pc.dashPressed) 
+            _playerStateMachine.ChangeState(_pc.DashingState);
         
     }
 
