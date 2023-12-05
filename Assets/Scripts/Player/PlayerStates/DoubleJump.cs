@@ -28,6 +28,8 @@ public class DoubleJump : IPlayerState
         {
             _playerStateMachine.ChangeState(_pc.FallingState);
         }
+        if (_pc._canDash && _pc.dashPressed) 
+            _playerStateMachine.ChangeState(_pc.DashingState);
         
     }
 
@@ -37,6 +39,4 @@ public class DoubleJump : IPlayerState
         _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * (_pc.MoveSpeed * Time.deltaTime), 
             Space.World);
     }
-    
-
 }

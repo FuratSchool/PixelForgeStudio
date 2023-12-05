@@ -18,7 +18,7 @@ public class IPlayerState
     {
         IsTransitioning();
         
-        if (_pc.GetRigidbody().transform.position.y < -40)
+        if (_pc.GetRigidbody().transform.position.y < -40 || _pc.touchedWater)
         {
             _playerStateMachine.ChangeState(_pc.DeathState);
         }
