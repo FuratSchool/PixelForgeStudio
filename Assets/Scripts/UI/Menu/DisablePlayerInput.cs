@@ -7,13 +7,27 @@ using UnityEngine.InputSystem;
 public class DisablePlayerInput : MonoBehaviour
 {
     // Start is called before the first frame update
+    private GameObject _player;
+    private bool _PlayerFound;
     private void OnEnable()
     {
-        FindObjectOfType<PlayerInput>().enabled = false;
+        if (GameObject.Find("PlayerObject") != null)
+        {
+            _PlayerFound = true;
+            _player = GameObject.Find("PlayerObject");
+            _player.SetActive(false);
+        }
+        else
+        {
+            _PlayerFound = false;
+        }
     }
 
     private void OnDisable()
     {
-        FindObjectOfType<PlayerInput>().enabled = true;
+        if (_PlayerFound)
+        {
+            _player.SetActive(true);
+        }
     }
 }

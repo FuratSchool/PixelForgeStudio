@@ -20,6 +20,8 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] private Color TextColor;
     [SerializeField] private GameObject ControllerMap;
     [SerializeField] private GameObject KeyboardMap;
+    [SerializeField] private GameObject BackButton;
+    
     private void Awake()
     {
         InitResolutions();
@@ -32,13 +34,25 @@ public class SettingsMenu : MonoBehaviour
         FindObjectOfType<SceneController>().Settings.rebinds = rebinds;
         LoadSaveSettings.SaveData(settings);
     }
-
     private void Start()
     {
         settings = FindObjectOfType<SceneController>().Settings;
         actions = FindObjectOfType<SceneController>().act;
     }
-    
+
+    private void Update()
+    {
+        var input = FindObjectOfType<PlayerInput>();
+        
+        if (EventSystem.current.currentSelectedGameObject == null)
+        {
+            if (input.currentControlScheme.Equals("Controller"))
+            {
+                EventSystem.current.SetSelectedGameObject(null);
+                EventSystem.current.SetSelectedGameObject(BackButton);
+            }
+        }
+    }
     public AudioMixer audioMixer;
     // Start is called before the first frame update
     public void SetMasterVolume(float volume)

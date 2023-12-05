@@ -18,11 +18,15 @@ public class PauseMenu : MonoBehaviour
     public static bool isPaused;
     
     private bool isOptionsOpen;
+    private GameObject _player;
+
+    private string ActiveControlScheme;
     // Start is called before the first frame update
     void Start()
     {
         pauseMenu.SetActive(false);
         optionsMenu.GetComponent<SettingsMenu>().InGameScene = true;
+        _player = GameObject.Find("PlayerObject");
     }
 
     // Update is called once per frame
@@ -46,6 +50,15 @@ public class PauseMenu : MonoBehaviour
                 PauseGame(); //pauses the game
             }
         }
+        
+        if (isPaused && !isOptionsOpen)
+        {
+            if (EventSystem.current.currentSelectedGameObject == null &&
+                _player.GetComponent<PlayerInput>().currentControlScheme.Equals("Controller"))
+            {
+                EventSystem.current.SetSelectedGameObject(firstSelectedButton);
+            }
+        } 
     }
 
     public void PauseGame()
@@ -93,10 +106,5 @@ public class PauseMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit(); //quits the game - only works in build
-    }
-
-    public void test()
-    {
-        Debug.Log("test");
     }
 }
