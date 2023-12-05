@@ -69,7 +69,7 @@ Transform:
   m_GameObject: {fileID: 4521968622420406398}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.27, y: 22.62, z: -19.65}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -320,9 +320,9 @@ MonoBehaviour:
   _isRunning: 0
   jumpTime: 0.4
   jumpTimeCounter: 0
-  force: 15
+  force: 25
   forceHoldJump: 0.2
-  raycastDistance: 2
+  raycastDistance: 1.7
   gravityMultiplier: 1
   canJump: 1
   canDoubleJump: 0
