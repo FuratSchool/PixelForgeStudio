@@ -22,6 +22,9 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] private GameObject KeyboardMap;
     [SerializeField] private GameObject BackButton;
     
+    [SerializeField] private bool inGameScene;
+    
+    private PlayerInput _input;
     private void Awake()
     {
         InitResolutions();
@@ -33,6 +36,8 @@ public class SettingsMenu : MonoBehaviour
         settings.rebinds = rebinds;
         FindObjectOfType<SceneController>().Settings.rebinds = rebinds;
         LoadSaveSettings.SaveData(settings);
+        if(inGameScene)
+           GetComponent<PlayerInput>().enabled = false;
     }
     private void Start()
     {
@@ -42,17 +47,26 @@ public class SettingsMenu : MonoBehaviour
 
     private void Update()
     {
-        var input = FindObjectOfType<PlayerInput>();
-        
-        if (EventSystem.current.currentSelectedGameObject == null)
+        PlayerInput input;
+        if (!InGameScene)
         {
-            if (input.currentControlScheme.Equals("Controller"))
+            if (EventSystem.current.currentSelectedGameObject == null)
             {
-                EventSystem.current.SetSelectedGameObject(null);
-                EventSystem.current.SetSelectedGameObject(BackButton);
+                input = FindObjectOfType<PlayerInput>();
+                if (input.currentControlScheme.Equals("Controller"))
+                {
+                    EventSystem.current.SetSelectedGameObject(null);
+                    EventSystem.current.SetSelectedGameObject(BackButton);
+                    Cursor.visible = false;
+                }
+                else
+                {
+                    Cursor.visible = true;
+                }
             }
         }
     }
+    
     public AudioMixer audioMixer;
     // Start is called before the first frame update
     public void SetMasterVolume(float volume)
