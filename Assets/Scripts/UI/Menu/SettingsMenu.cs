@@ -44,28 +44,6 @@ public class SettingsMenu : MonoBehaviour
         settings = FindObjectOfType<SceneController>().Settings;
         actions = FindObjectOfType<SceneController>().act;
     }
-
-    private void Update()
-    {
-        PlayerInput input;
-        if (!InGameScene)
-        {
-            if (EventSystem.current.currentSelectedGameObject == null)
-            {
-                input = FindObjectOfType<PlayerInput>();
-                if (input.currentControlScheme.Equals("Controller"))
-                {
-                    EventSystem.current.SetSelectedGameObject(null);
-                    EventSystem.current.SetSelectedGameObject(BackButton);
-                    Cursor.visible = false;
-                }
-                else
-                {
-                    Cursor.visible = true;
-                }
-            }
-        }
-    }
     
     public AudioMixer audioMixer;
     // Start is called before the first frame update

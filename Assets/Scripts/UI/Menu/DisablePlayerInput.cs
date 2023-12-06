@@ -21,6 +21,7 @@ public class DisablePlayerInput : MonoBehaviour
         {
             _PlayerFound = false;
         }
+        FindObjectOfType<PlayerInput>().enabled = false;
     }
 
     private void OnDisable()
@@ -29,5 +30,6 @@ public class DisablePlayerInput : MonoBehaviour
         {
             _player.SetActive(true);
         }
+        FindObjectOfType<PlayerInput>().enabled = true;
     }
 }
