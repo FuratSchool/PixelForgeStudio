@@ -9,7 +9,7 @@ public class TransitionState : IPlayerState
     public override void EnterState()
     {
         base.EnterState();  
-        _playerStateMachine.Animator.Play("Idle");
+        _playerStateMachine.Animator.Play("Transition");
     }
 
     public override void UpdateState()

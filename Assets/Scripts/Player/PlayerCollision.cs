@@ -11,11 +11,13 @@ public class PlayerCollision : MonoBehaviour
         {
             Debug.Log("Triggered");
             transform.SetParent(collision.transform);
+            transform.GetComponent<PlayerController>().raycastDistance = 2.8f;
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
         transform.parent = null;
+        transform.GetComponent<PlayerController>().raycastDistance = 1.7f;
     }
 }
