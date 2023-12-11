@@ -8,8 +8,10 @@ using UnityEngine;
         }
         public override void EnterState()
         {
-            _playerStateMachine.Animator.Play("Falling");
-            
+            //_playerStateMachine.Animator.Play("Falling");
+            _playerStateMachine.Animator.SetInteger("State", 6);
+            if (!_pc.jumped) _pc.jumpReleased = true;
+
 
         }
         public override void UpdateState()
@@ -19,7 +21,7 @@ using UnityEngine;
             if (_pc.IsGrounded())
             {
                 _pc.MoveSpeed = _pc.WalkSpeed;
-                _playerStateMachine.ChangeState((_pc.IdleState));
+                _playerStateMachine.ChangeState((_pc.LandingState));
             }
             if (_pc._canDash && _pc.dashPressed) 
                 _playerStateMachine.ChangeState(_pc.DashingState);
@@ -45,10 +47,7 @@ using UnityEngine;
         
         public override void ExitState()
         {
-            //_playerStateMachine.Animator.SetBool("IsFalling", false);        
-
-            //stateMachine.SwingingState.DisableSwingText(_playerController.GetUIController());
-
+            //_playerStateMachine.Animator.Play("Landing");
         }
         public override void LateUpdateState()
         {
