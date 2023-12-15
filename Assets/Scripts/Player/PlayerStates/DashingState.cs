@@ -6,7 +6,8 @@ public class DashingState : IPlayerState
     public DashingState (PlayerController pc) : base("DashingState", pc) {_pc = (PlayerController)this._playerStateMachine;}
     public override void EnterState()
     {
-        _playerStateMachine.Animator.Play("Start Dash");
+        //_playerStateMachine.Animator.Play("Start Dash");
+        _playerStateMachine.Animator.SetInteger("State", 4);
         _pc.StartCoroutine(_pc.Dash());
     }
     public override void UpdateState()

@@ -18,10 +18,12 @@ public class IPlayerState
     {
         IsTransitioning();
         
-        if (_pc.GetRigidbody().transform.position.y < -40)
+        if (_pc.GetRigidbody().transform.position.y < -40 || _pc.touchedWater)
         {
             _playerStateMachine.ChangeState(_pc.DeathState);
         }
+
+        _pc.MoveSpeed = _pc._isRunning ? _pc.SprintSpeed : _pc.WalkSpeed;
     }
     public virtual void FixedUpdateState() { }
 
@@ -30,8 +32,8 @@ public class IPlayerState
         _pc.grounded = _pc.IsGrounded();
         if (_pc.IsGrounded())
         {
-            _pc.canJump = true; _pc.canDoubleJump = true; _pc.jumpReleased = false;
             
+
         }
     }
     public virtual void ExitState() { }

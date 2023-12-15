@@ -8,8 +8,9 @@ public class SprintingState : IPlayerState
     public override void EnterState()
     {
         base.EnterState();
-        _pc.MoveSpeed = _pc.SprintSpeed;
-        _playerStateMachine.Animator.Play("Sprinting");
+        //_pc.MoveSpeed = _pc.SprintSpeed;
+        //_playerStateMachine.Animator.Play("Sprinting");
+        _playerStateMachine.Animator.SetInteger("State", 2);
 
     }
     public override void UpdateState()
@@ -49,7 +50,7 @@ public class SprintingState : IPlayerState
 
     public override void ExitState()
     {
-        _pc.MoveSpeed = _pc.WalkSpeed;
+        //_pc.MoveSpeed = _pc.WalkSpeed;
         //_playerStateMachine.Animator.SetBool("IsSprinting", false);        
         _pc.GetAudio().Stop();
         if (_dialueActive)

@@ -7,7 +7,7 @@ public class DeathState : IPlayerState
         
         var spawnPoint = _pc.GetComponent<PlayerStatus>().GetSpawnPoint();
         _pc.transform.position = spawnPoint;
-
+            _pc.touchedWater = false;
         _playerStateMachine.ChangeState(_pc.IdleState);
     }
     

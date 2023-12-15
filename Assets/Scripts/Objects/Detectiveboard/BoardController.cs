@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class BoardController : MonoBehaviour
 {
@@ -21,6 +24,10 @@ public class BoardController : MonoBehaviour
     [Header("Debug Purposes")]
     public GameObject testItem;
     public bool debugBoard;
+    private CinemachineFreeLook _freeLook;
+
+    private float temp_x;
+    private float temp_y;
     void Start()
     {
         _uiController = FindObjectOfType<UIController>();
@@ -55,14 +62,26 @@ public class BoardController : MonoBehaviour
     }
     public void ActivateBoardUI()
     {
+        FindObjectOfType<CameraController>().SetCameraActive(false);
         BoardUIActive = true;
         BoardUIobject.SetActive(true);
         inGameObject.GetComponentInChildren<BoardRange>()
             .DisableInteractActive(_uiController);
+        if(_playerController.GetPlayerInput().currentControlScheme.Equals("Controller"))
+        {
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(BoardUIobject.transform.GetChild(0).GetChild(0).gameObject);
+        }
     }
     
     public void DeactivateBoardUI()
     {
+        FindObjectOfType<CameraController>().SetCameraActive(true);
+        var tooltipobject = GameObject.FindGameObjectWithTag("ToolTip");
+        if (tooltipobject != null)
+        {
+            Destroy(tooltipobject);
+        }
         BoardUIActive = false;
         BoardUIobject.SetActive(false);
         if (isPlayerInRange)
