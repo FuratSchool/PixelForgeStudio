@@ -14,11 +14,16 @@ public class PauseButtons : MonoBehaviour, ISelectHandler, IDeselectHandler, IPo
     // Start is called before the first frame update
     void Start()
     {
-        InvertColor(false);
+        
         this.GetComponent<Image>().alphaHitTestMinimumThreshold = 0.1f;
         if (!DoNotPause)
         {
+            InvertColor(false);
             _animator.enabled = false;
+        }
+        else
+        {
+            InvertColor(true);
         }
     }
     public void OnSelect (BaseEventData eventData) 
