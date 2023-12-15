@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &878082368229530475
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2905352783568687566}
+  m_Layer: 6
+  m_Name: respawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2905352783568687566
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878082368229530475}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.0669, y: -0.0024, z: 0.229}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4471759340396403338}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5580383360785656813
 GameObject:
   m_ObjectHideFlags: 0
@@ -283,7 +314,7 @@ Transform:
   m_GameObject: {fileID: 8196016887521204415}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.122, y: -0.018, z: 0.41}
+  m_LocalPosition: {x: 0.129, y: 0.014, z: 0.44}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -303,6 +334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   checkpointFire: {fileID: 5580383360785656813}
   checkpointLight: {fileID: 7273562528670901343}
+  RespawnPoint: {fileID: 878082368229530475}
 --- !u!65 &4491254379333540402
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -322,8 +354,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.6239004, y: 0.50846934, z: 1}
-  m_Center: {x: -0.18804954, y: 0.14047521, z: 1.338529e-14}
+  m_Size: {x: 0.79897577, y: 0.14256045, z: 1}
+  m_Center: {x: -0.09136036, y: -0.002393415, z: -2.44404e-16}
 --- !u!1001 &4144534382895545697
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -340,17 +372,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 75fc8ba9c42ac47c9be094851611257f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -245.5
+      value: -9.841836
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 75fc8ba9c42ac47c9be094851611257f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.300003
+      value: 58.116837
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 75fc8ba9c42ac47c9be094851611257f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -231.90015
+      value: -560.5031
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 75fc8ba9c42ac47c9be094851611257f,
         type: 3}
@@ -397,6 +429,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 75fc8ba9c42ac47c9be094851611257f,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -412,6 +449,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3122509595789580311}
+    - targetCorrespondingSourceObject: {fileID: -8679921383154817045, guid: 75fc8ba9c42ac47c9be094851611257f,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2905352783568687566}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 75fc8ba9c42ac47c9be094851611257f,
         type: 3}

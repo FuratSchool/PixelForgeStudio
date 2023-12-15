@@ -6,6 +6,7 @@ public class CheckPointHandler : MonoBehaviour
     private bool triggered;
     [SerializeField] private GameObject checkpointFire;
     [SerializeField] private GameObject checkpointLight;
+    [SerializeField] private GameObject RespawnPoint;
 
     private void Start()
     {
@@ -28,7 +29,7 @@ public class CheckPointHandler : MonoBehaviour
             if (playerStatus != null)
             {
                 Debug.Log("test");
-                playerStatus.SetSpawnPoint(new Vector3(transform.position.x, transform.position.y, transform.position.z));
+                playerStatus.SetSpawnPoint(RespawnPoint.transform.position);
             }
         }
     }

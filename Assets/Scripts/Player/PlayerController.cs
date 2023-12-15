@@ -7,14 +7,18 @@ using UnityEngine.InputSystem;
 public class PlayerController : PlayerStateMachine
 {
     private Camera _camera;
-    private TrailRenderer tr;
+    
+    private BoxCollider m_Collider;
+    private RaycastHit _hit;
     
     [Header("Movement")]
     [SerializeField] private float walkSpeed = 10.0f;
     [SerializeField] private float sprintSpeed = 15.0f;
     private float moveSpeed;
     public Vector2 Movement = Vector2.zero;
-    public Transform footPrints;
+    public Transform footPrintsRight;
+    public Transform footPrintsLeft;
+    private bool leftFootActive;
     public float totalTime = 0;
     public bool _isRunning;
     
@@ -28,10 +32,12 @@ public class PlayerController : PlayerStateMachine
     public bool SpacePressed { get; set; }
     public bool canJump;
     public bool canDoubleJump;
+    public bool jumped;
     public bool jumpReleased = false;
     public bool grounded;
     
     [Header("Dashing")]
+    [SerializeField] private TrailRenderer tr;
     [SerializeField] public float dashingTime = 0.5f;
     [SerializeField] public float dashingCooldown = 2f;
     [SerializeField] private float dashingPower = 30f;
@@ -101,6 +107,7 @@ public class PlayerController : PlayerStateMachine
     [HideInInspector] public TransitionState TransitionState;
     [HideInInspector] public DeathState DeathState;
     [HideInInspector] public DoubleJump DoubleJumpState;
+    [HideInInspector] public LandingState LandingState;
     
     public float MoveSpeed
     {
@@ -156,13 +163,16 @@ public class PlayerController : PlayerStateMachine
         DeathState = new DeathState(this);
         FallingState = new FallingState(this);
         DoubleJumpState = new DoubleJump(this);
+        LandingState = new LandingState(this);
         _uiController = FindObjectOfType<UIController>();
         _dialogueManager = FindObjectOfType<DialogueManager>();
-        TR = GetComponent<TrailRenderer>();
+        //TR = GetComponent<TrailRenderer>();
         _rigidbody = GetComponent<Rigidbody>();
         _playerInput = GetComponent<PlayerInput>();
         _camera = Camera.main;
         GetDirection(PlayerInput());
+        m_Collider = GetComponent<BoxCollider>();
+        Application.targetFrameRate = 60;
     }
     
     protected override IPlayerState GetInitialState()
@@ -229,14 +239,38 @@ public class PlayerController : PlayerStateMachine
     public bool IsGrounded()
     {
         var layermask = 1 << 6;
-        bool ground = Physics.Raycast(transform.position, Vector3.down,out var hit, raycastDistance, ~layermask);
-        /*if (hit.collider != null)
+        //bool ground = Physics.Raycast(transform.position, Vector3.down,out var hit, raycastDistance, ~layermask);
+        bool ground = Physics.BoxCast(m_Collider.bounds.center, transform.localScale, -transform.up,out _hit,transform.rotation, raycastDistance , ~layermask );
+        
+        /*if (_hit.collider != null)
         {
-            if (hit.collider.name != "FirstCliff") Debug.Log("hit");
+            if (_hit.collider.name != "FirstCliff") Debug.Log("hit");
         }*/
         
         return ground;
     }
+    
+    /*void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+
+        //Check if there has been a hit yet
+        if (IsGrounded())
+        {
+            //Draw a Ray forward from GameObject toward the hit
+            Gizmos.DrawRay(m_Collider.bounds.center, -transform.up * _hit.distance);
+            //Draw a cube that extends to where the hit exists
+            Gizmos.DrawWireCube(m_Collider.bounds.center + -transform.up * _hit.distance, transform.localScale);
+        }
+        //If there hasn't been a hit yet, draw the ray at the maximum distance
+        else
+        {
+            //Draw a Ray forward from GameObject toward the maximum distance
+            Gizmos.DrawRay(m_Collider.bounds.center, -transform.up * raycastDistance);
+            //Draw a cube at the maximum distance
+            Gizmos.DrawWireCube(m_Collider.bounds.center + -transform.up * raycastDistance, transform.localScale);
+        }
+    }*/
     
     public Vector3 GetDirection(Vector3 direction)
     {
@@ -279,7 +313,8 @@ public class PlayerController : PlayerStateMachine
         _rigidbody.velocity = _dashDirection * dashingPower;
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
-        Animator.Play("Stop Dash");
+        //Animator.Play("Stop Dash");
+        Animator.SetInteger("State", 8);
         yield return new WaitForSeconds(dashEndTime);
         tr.emitting = false;
         _rigidbody.useGravity = true;
@@ -291,13 +326,27 @@ public class PlayerController : PlayerStateMachine
     public void FootPrint(float interfall)
     {
         totalTime += Time.deltaTime;
-        if (totalTime > interfall)
+        if (!(totalTime > interfall)) return;
+        var rotAmount = Quaternion.Euler(90, 0, 0);
+        if (leftFootActive)
         {
-            var rotAmount = Quaternion.Euler(90, 0, 0);
-            var posOffset = new Vector3(0f, 0f, 0f);
-            Instantiate(footPrints, (transform.position + posOffset), (transform.rotation * rotAmount));
-            totalTime = 0;
+            var footPrint = Instantiate(footPrintsLeft, (transform.position), (transform.rotation * rotAmount));
+            footPrint.transform.SetParent(transform);
+            footPrint.transform.localPosition = new Vector3(-.5f,0,0);
+            footPrint.transform.SetParent(null);
+            leftFootActive = false;
+
         }
+        else
+        {
+            var footPrint = Instantiate(footPrintsRight, (transform.position), (transform.rotation * rotAmount));
+            footPrint.transform.SetParent(transform);
+            footPrint.transform.localPosition = new Vector3(.5f,0,0);
+            footPrint.transform.SetParent(null);
+            leftFootActive = true;
+        }
+            
+        totalTime = 0;
     }
     
     public void EndSwing()

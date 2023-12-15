@@ -11,13 +11,15 @@ public class JumpingState : IPlayerState
     public override void EnterState()
     {
         base.EnterState();
+        _pc.jumped = true;
         _pc.GetAudio().PlayOneShot(_pc.JumpingSound);
         
         /*if (_pc.ShiftPressed)
         {
             _pc.MoveSpeed = _pc.SprintSpeed;
         }*/
-        _playerStateMachine.Animator.Play("Start Jump");
+        //_playerStateMachine.Animator.Play("Start Jump");
+        _playerStateMachine.Animator.SetInteger("State", 3);
         StartJump();
 
     }
@@ -104,7 +106,7 @@ public class JumpingState : IPlayerState
     {
         _pc.jumpTimeCounter = _pc.jumpTime;
         _pc.GetRigidbody().AddForce(Vector3.up * _pc.force, ForceMode.Impulse);
-        _pc.isJumping = true;
+        //_pc.isJumping = true;
     }
     
     private void ContinueJump()
@@ -116,8 +118,9 @@ public class JumpingState : IPlayerState
         }
         else
         {
-            _pc.isJumping = false;
+            //_pc.isJumping = false;
             _pc.canJump = false;
+            _playerStateMachine.ChangeState(_pc.FallingState);
         }
     }
 }

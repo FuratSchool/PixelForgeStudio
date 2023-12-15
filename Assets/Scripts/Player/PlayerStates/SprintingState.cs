@@ -3,13 +3,13 @@ using UnityEngine;
 public class SprintingState : IPlayerState
 {
     public SprintingState (PlayerController pc) : base("SprintingState", pc) {_pc = (PlayerController)this._playerStateMachine;}
-    
-    private bool isgoingtojump;
+
     public override void EnterState()
     {
         base.EnterState();
-        _pc.MoveSpeed = _pc.SprintSpeed;
-        _playerStateMachine.Animator.Play("Sprinting");
+        //_pc.MoveSpeed = _pc.SprintSpeed;
+        //_playerStateMachine.Animator.Play("Sprinting");
+        _playerStateMachine.Animator.SetInteger("State", 2);
 
     }
     public override void UpdateState()
@@ -26,7 +26,7 @@ public class SprintingState : IPlayerState
             _playerStateMachine.ChangeState(_pc.DashingState);
         if (_pc.SwingPressed && _pc._canSwing && _pc.InRange)
             _playerStateMachine.ChangeState(_pc.SwingingState);
-        if (!_pc.IsGrounded())
+        if(!_pc.IsGrounded())
             _playerStateMachine.ChangeState(_pc.FallingState);
         if (_pc.InDialogeTriggerZone && _pc.NPC.hasBeenTalkedTo == false)
         {
@@ -44,6 +44,7 @@ public class SprintingState : IPlayerState
 
     public override void ExitState()
     {
+        //_pc.MoveSpeed = _pc.WalkSpeed;
         //_playerStateMachine.Animator.SetBool("IsSprinting", false);        
         _pc.GetAudio().Stop();
         DisableInteractDialogueActive(_pc.GetUIController());

@@ -8,7 +8,8 @@ public class SwingingState : IPlayerState
     public override void EnterState()
     {
         base.EnterState();
-        _playerStateMachine.Animator.Play("Swinging"); 
+        //_playerStateMachine.Animator.Play("Swinging");
+        _playerStateMachine.Animator.SetInteger("State", 5);
         if (!_pc._isSwinging && _pc.inSwingingRange)
         {
             Swing();
