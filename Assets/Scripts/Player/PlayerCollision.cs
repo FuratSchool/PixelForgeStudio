@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour
 {
-    private readonly List<string> tagList = new() { "platform", "Checkpoint" };
+    private readonly List<string> tagList = new() { "platform", "Checkpoint", "Water" };
 
     private void OnCollisionEnter(Collision collision)
     {
