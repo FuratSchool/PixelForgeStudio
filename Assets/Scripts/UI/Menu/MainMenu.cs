@@ -9,7 +9,9 @@ using UnityEngine.SceneManagement;
 public class MainMenu : MonoBehaviour
 {
     // Start is called before the first frame update
-    public void playGame(){
+    public void playGame()
+    {
+        FindObjectOfType<SceneController>().TimePlayed = Time.time;
         FindObjectOfType<SceneController>().LoadScene("TutorialSceneV1"); //goes to the next scene.
     }
 

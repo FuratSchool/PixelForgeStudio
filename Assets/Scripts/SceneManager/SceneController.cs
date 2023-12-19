@@ -10,7 +10,12 @@ using UnityEngine.SceneManagement;
 public class SceneController : MonoBehaviour
 {
     private static bool spawned = false;
-    
+    public double TimePlayed
+    {
+        get;
+        set;
+    }
+
     public InputActionAsset act;
     public AudioMixer audioMixer;
     private string ActiveSceneName;

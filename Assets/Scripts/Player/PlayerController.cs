@@ -147,9 +147,9 @@ public class PlayerController : PlayerStateMachine
         get => tr;
         set => tr = value;
     }
-    
+    public int DeathCount { get; set; }
     public bool isJumping { get; set; }
-
+    
     private void Awake()
     {
         WalkingState = new WalkingState(this);
@@ -289,7 +289,7 @@ public class PlayerController : PlayerStateMachine
                 //sets the rotation of the player to the angle.
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
                 
-                _dashDirection =Quaternion.Euler(0f, angle, 0f) * Vector3.forward;
+                _dashDirection = Quaternion.Euler(0f, angle, 0f) * Vector3.forward;
                 
                 //rotates the player to the direction they are moving.
                 var moveDir = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
