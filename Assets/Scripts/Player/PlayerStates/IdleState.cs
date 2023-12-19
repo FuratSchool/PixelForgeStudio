@@ -4,7 +4,7 @@ public class IdleState : IPlayerState
 {
     public IdleState (PlayerController pc) : base("IdleState", pc) {_pc = (PlayerController)this._playerStateMachine;}
     
-    private bool dialogueActive = false;
+    private bool _textActive = false;
     public override void EnterState()
     {
         base.EnterState();
@@ -16,12 +16,18 @@ public class IdleState : IPlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-       
+        
+        if(_pc.InteractableRange){
+            _textActive = true;
+            EnableInteractDialogueActive(_pc.GetUIController(), _pc.GetPlayerInput(),_pc.InteractableText);
+            if (_pc.InteractPressed && _pc.KeyDebounced)
+                _playerStateMachine.ChangeState(_pc.InteractingState);
+        }
         if ((Mathf.Abs(_pc.Movement.x) > Mathf.Epsilon)||(Mathf.Abs(_pc.Movement.y) > Mathf.Epsilon))
             _playerStateMachine.ChangeState(_pc.WalkingState);
         if (_pc.SpacePressed && _pc.canJump)
             _playerStateMachine.ChangeState((_pc.JumpingState));
-        if (_pc._canDash && _pc.dashPressed) 
+        if (_pc._canDash && _pc.dashPressed && _pc.KeyDebounced) 
             _playerStateMachine.ChangeState(_pc.DashingState);
         if (_pc.SwingPressed && _pc._canSwing && _pc.InRange)
             _playerStateMachine.ChangeState(_pc.SwingingState);
@@ -31,29 +37,20 @@ public class IdleState : IPlayerState
         
         if (_pc.InDialogeTriggerZone && _pc.NPC.hasBeenTalkedTo == false)
         {
-            dialogueActive = true;
-            EnableInteractDialogueActive(_pc.GetUIController(), _pc.GetPlayerInput());
+            _textActive = true;
+            EnableInteractDialogueActive(_pc.GetUIController(), _pc.GetPlayerInput(),_pc.DialogueText);
             if (_pc.InteractPressed)
             {
                 _playerStateMachine.ChangeState(_pc.TalkingState);
             }
         }
-        else
-        {
-            if (dialogueActive)
-            {
-                DisableInteractDialogueActive(_pc.GetUIController());
-                dialogueActive = false;
-            }
-            
-        }
     }
     public override void ExitState()
     {
-        if (dialogueActive)
+        if (_textActive)
         {
             DisableInteractDialogueActive(_pc.GetUIController());
-            dialogueActive = false;
+            _textActive = false;
         }
     }
 }

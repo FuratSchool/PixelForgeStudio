@@ -56,6 +56,10 @@ public class PlayerController : PlayerStateMachine
     [SerializeField] private float SwingDelay = 1f;
     [SerializeField] public LineRenderer lr;
     [SerializeField] public GameObject Hand;
+    
+    public string InteractableText { get; } = " To Interact";
+    public string DialogueText { get; } = " To Talk";
+    public string SwingText { get; } = " To Swing";
     public ConfigurableJoint joint;
     public GameObject player;
     public Vector3 SwingableObjectPos;
@@ -67,7 +71,9 @@ public class PlayerController : PlayerStateMachine
     public bool inSwingingRange { get; set; }
     public GameObject SwingableObjectGAME { get; set; }
     
+    public bool InteractableRange { get; set; }
     public bool InteractPressed { get; set; }
+    public bool KeyDebounced { get; set; } = true;
     public bool InDialogeTriggerZone { get; set; }
     public bool DialogueActive { get; set; }
     public DialogueTrigger NPC { get; set; }
@@ -107,7 +113,7 @@ public class PlayerController : PlayerStateMachine
     [HideInInspector] public DeathState DeathState;
     [HideInInspector] public DoubleJump DoubleJumpState;
     [HideInInspector] public LandingState LandingState;
-    
+    [HideInInspector] public InteractingState InteractingState;
     public float MoveSpeed
     {
         get => moveSpeed;
@@ -163,6 +169,7 @@ public class PlayerController : PlayerStateMachine
         FallingState = new FallingState(this);
         DoubleJumpState = new DoubleJump(this);
         LandingState = new LandingState(this);
+        InteractingState = new InteractingState(this);
         _uiController = FindObjectOfType<UIController>();
         _dialogueManager = FindObjectOfType<DialogueManager>();
         TR = GetComponent<TrailRenderer>();
@@ -362,9 +369,10 @@ public class PlayerController : PlayerStateMachine
         _canSwing = true;
     }
     
-    
-
-    
-    
-    
+    public IEnumerator KeyDebounce()
+    {
+        KeyDebounced = false;
+        yield return new WaitForSeconds(0.25f);
+        KeyDebounced = true;
+    }
 }

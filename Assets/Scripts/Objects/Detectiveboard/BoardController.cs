@@ -37,39 +37,17 @@ public class BoardController : MonoBehaviour
     
     void Update()
     {
-        CheckPlayerInrange();
         if(Input.GetKeyDown(KeyCode.K) && debugBoard)
             AddItemToBoard(testItem);
     }
-
-    private void CheckPlayerInrange()
-    {
-        if (isPlayerInRange)
-        {
-            if (_playerController.InteractPressed && KeyDebounced)
-            {
-                StartCoroutine(DebounceKey());
-                if (BoardUIActive)
-                {
-                    DeactivateBoardUI();
-                }
-                else
-                {
-                    ActivateBoardUI();
-                }
-            }
-        }
-    }
+    
     public void ActivateBoardUI()
     {
         FindObjectOfType<CameraController>().SetCameraActive(false);
         BoardUIActive = true;
         BoardUIobject.SetActive(true);
-        inGameObject.GetComponentInChildren<BoardRange>()
-            .DisableInteractActive(_uiController);
         if(_playerController.GetPlayerInput().currentControlScheme.Equals("Controller"))
         {
-            EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(BoardUIobject.transform.GetChild(0).GetChild(0).gameObject);
         }
     }
@@ -84,17 +62,6 @@ public class BoardController : MonoBehaviour
         }
         BoardUIActive = false;
         BoardUIobject.SetActive(false);
-        if (isPlayerInRange)
-        {
-            inGameObject.GetComponentInChildren<BoardRange>()
-                .EnableInteractActive(_uiController, _playerController.GetPlayerInput());
-        }
-    }
-    IEnumerator DebounceKey()
-    {
-        KeyDebounced = false;
-        yield return new WaitForSeconds(0.25f);
-        KeyDebounced = true;
     }
     
     public GameObject AddItemToBoard(GameObject item)
@@ -111,5 +78,20 @@ public class BoardController : MonoBehaviour
         var SpawnedItem = Instantiate(item, inGameObject.transform);
         SpawnedItem.transform.parent = BoardUIobject.transform.GetChild(0).transform;
         return SpawnedItem;
+    }
+
+    public void InInteractState(PlayerController pc)
+    {
+        if (isPlayerInRange)
+        {
+            if (BoardUIActive)
+            {
+                DeactivateBoardUI();
+            }
+            else
+            {
+                ActivateBoardUI();
+            }
+        }
     }
 }

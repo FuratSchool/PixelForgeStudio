@@ -58,12 +58,12 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     {
         if(FindObjectOfType<PlayerInput>().currentControlScheme.Equals("Controller"))
         {
-            if (Input.GetKeyDown(KeyCode.JoystickButton16))
+            if (Input.GetKeyDown(KeyCode.JoystickButton1))
             {
                 PrefabActive = true;
             }
 
-            if (Input.GetKeyDown(KeyCode.JoystickButton17))
+            if (Input.GetKeyDown(KeyCode.JoystickButton2))
             {
                 PrefabActive = false;
             }
