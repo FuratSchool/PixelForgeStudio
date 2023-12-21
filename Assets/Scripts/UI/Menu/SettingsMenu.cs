@@ -7,6 +7,7 @@ using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Samples.RebindUI;
+using UnityEngine.InputSystem.Users;
 using UnityEngine.UI;
 using Button = UnityEngine.UIElements.Button;
 
@@ -20,6 +21,11 @@ public class SettingsMenu : MonoBehaviour
     [SerializeField] private Color TextColor;
     [SerializeField] private GameObject ControllerMap;
     [SerializeField] private GameObject KeyboardMap;
+    [SerializeField] private GameObject BackButton;
+    
+    [SerializeField] private bool inGameScene;
+    
+    private PlayerInput _input;
     private void Awake()
     {
         InitResolutions();
@@ -28,17 +34,30 @@ public class SettingsMenu : MonoBehaviour
     private void OnDisable()
     {
         var rebinds = actions.SaveBindingOverridesAsJson();
+        InputUser.onChange -= UserChangedControls;
         settings.rebinds = rebinds;
         FindObjectOfType<SceneController>().Settings.rebinds = rebinds;
         LoadSaveSettings.SaveData(settings);
+        if(inGameScene)
+           GetComponent<PlayerInput>().enabled = false;
     }
-
     private void Start()
     {
         settings = FindObjectOfType<SceneController>().Settings;
         actions = FindObjectOfType<SceneController>().act;
     }
+
+    private void OnEnable()
+    {
+        InputUser.onChange += UserChangedControls;
+    }
     
+    private void UserChangedControls(InputUser user, InputUserChange change, InputDevice device)
+    {
+        if(EventSystem.current.currentSelectedGameObject == null)
+            if((user.controlScheme.Value.name.Equals("Controller")))
+                EventSystem.current.SetSelectedGameObject(BackButton);
+    }
     public AudioMixer audioMixer;
     // Start is called before the first frame update
     public void SetMasterVolume(float volume)

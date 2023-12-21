@@ -15,5 +15,10 @@ public class PlayerDevice : MonoBehaviour
         {
             text.SendMessage("ControlChanged", input, SendMessageOptions.DontRequireReceiver);
         }
+
+        if (input.currentControlScheme.Equals("Controller"))
+            Cursor.visible = false;
+        else
+            Cursor.visible = true;
     }
 }
