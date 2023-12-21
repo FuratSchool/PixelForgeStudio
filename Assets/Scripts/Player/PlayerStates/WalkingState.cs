@@ -51,9 +51,9 @@ public class WalkingState : IPlayerState
             }
         }
 
-        if (!_pc.InteractableRange && _pc.InDialogeTriggerZone)
+        if (!_pc.InteractableRange && !_pc.InDialogeTriggerZone)
         {
-            
+            DisableInteractDialogueActive(_pc.GetUIController());
         }
     }
 

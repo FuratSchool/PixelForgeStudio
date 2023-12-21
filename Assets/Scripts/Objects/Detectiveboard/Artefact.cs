@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class Artifact : MonoBehaviour
 {
-    [SerializeField] private string _name;
-    [SerializeField] private string _description;
     [SerializeField] private GameObject _ArtefactModel;
     
     private BoardController _boardController;

@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 public class BoardController : MonoBehaviour
 {
@@ -49,7 +50,24 @@ public class BoardController : MonoBehaviour
         if(_playerController.GetPlayerInput().currentControlScheme.Equals("Controller"))
         {
             EventSystem.current.SetSelectedGameObject(BoardUIobject.transform.GetChild(0).GetChild(0).gameObject);
+            BoardUIobject.transform.GetChild(1).gameObject.SetActive(true);
+            foreach (var child in BoardUIobject.transform.GetChild(0).transform)
+            {
+                var childObject = (GameObject) child;
+                childObject.GetComponent<Button>().interactable = true;
+            }
         }
+        else
+        {
+            BoardUIobject.transform.GetChild(1).gameObject.SetActive(false);
+            foreach (var child in BoardUIobject.transform.GetChild(0).transform)
+            {
+                var childObject = (Transform) child;
+                childObject.GetComponent<Button>().interactable = false;
+            }
+        }
+
+        
     }
     
     public void DeactivateBoardUI()
