@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : PlayerStateMachine
 {
     private Camera _camera;
-    private TrailRenderer tr;
+    
     private BoxCollider m_Collider;
     private RaycastHit _hit;
     
@@ -37,6 +37,7 @@ public class PlayerController : PlayerStateMachine
     public bool grounded;
     
     [Header("Dashing")]
+    [SerializeField] private TrailRenderer tr;
     [SerializeField] public float dashingTime = 0.5f;
     [SerializeField] public float dashingCooldown = 2f;
     [SerializeField] private float dashingPower = 30f;
@@ -165,13 +166,13 @@ public class PlayerController : PlayerStateMachine
         LandingState = new LandingState(this);
         _uiController = FindObjectOfType<UIController>();
         _dialogueManager = FindObjectOfType<DialogueManager>();
-        TR = GetComponent<TrailRenderer>();
+        //TR = GetComponent<TrailRenderer>();
         _rigidbody = GetComponent<Rigidbody>();
         _playerInput = GetComponent<PlayerInput>();
         _camera = Camera.main;
         GetDirection(PlayerInput());
         m_Collider = GetComponent<BoxCollider>();
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 120;
     }
     
     protected override IPlayerState GetInitialState()

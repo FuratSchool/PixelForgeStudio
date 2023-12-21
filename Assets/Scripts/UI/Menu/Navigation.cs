@@ -12,21 +12,24 @@ public class Navigation : MonoBehaviour
     [SerializeField] private GameObject fistMainMenu;
     [SerializeField] private GameObject firstOptionsMenu;
     [SerializeField] private GameObject BackOptionsMenu;
-
+    private bool Options;
     private void Update()
     {
-        if (EventSystem.current.currentSelectedGameObject == null && ActiveControlScheme.Equals("Controller"))
-            EventSystem.current.SetSelectedGameObject(fistMainMenu);
+        if(!Options)
+            if (EventSystem.current.currentSelectedGameObject == null && ActiveControlScheme.Equals("Controller"))
+                EventSystem.current.SetSelectedGameObject(fistMainMenu);
     }
 
     public void OnOptionsEnable()
     {
+        Options = true;
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstOptionsMenu);
     }
     
     public void OnOptionsDisable()
     {
+        Options = false;
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(BackOptionsMenu);
     }
@@ -35,5 +38,9 @@ public class Navigation : MonoBehaviour
     {
         PlayerInput input = GetComponent<PlayerInput>();
         ActiveControlScheme = input.currentControlScheme;
+        if (ActiveControlScheme.Equals("Controller"))
+            Cursor.visible = false;
+        else
+            Cursor.visible = true;
     }
 }

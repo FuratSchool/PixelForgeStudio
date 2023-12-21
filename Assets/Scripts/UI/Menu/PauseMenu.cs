@@ -11,17 +11,22 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private GameObject optionsMenu;
     [SerializeField] private GameObject firstSelectedButton;
-
+    [SerializeField] private GameObject OptionsButton;
     [SerializeField] private GameObject UIObject;
     [SerializeField] private GameObject CoinsUI;
 
     public static bool isPaused;
     
+    private bool isOptionsOpen;
+    private GameObject _player;
+
+    private string ActiveControlScheme;
     // Start is called before the first frame update
     void Start()
     {
         pauseMenu.SetActive(false);
         optionsMenu.GetComponent<SettingsMenu>().InGameScene = true;
+        _player = GameObject.Find("PlayerObject");
     }
 
     // Update is called once per frame
@@ -31,13 +36,29 @@ public class PauseMenu : MonoBehaviour
         {
             if(isPaused) //if the game is paused
             {
-                ResumeGame(); //resumes the game
+                if (isOptionsOpen)
+                {
+                    CloseOptionsMenu();
+                }
+                else
+                {
+                    ResumeGame(); //resumes the game
+                }
             }
             else
             {
                 PauseGame(); //pauses the game
             }
         }
+        
+        if (isPaused && !isOptionsOpen)
+        {
+            if (EventSystem.current.currentSelectedGameObject == null &&
+                _player.GetComponent<PlayerInput>().currentControlScheme.Equals("Controller"))
+            {
+                EventSystem.current.SetSelectedGameObject(firstSelectedButton);
+            }
+        } 
     }
 
     public void PauseGame()
@@ -63,6 +84,7 @@ public class PauseMenu : MonoBehaviour
     {
         optionsMenu.SetActive(true);
         pauseMenu.transform.GetChild(0).gameObject.SetActive(false);
+        isOptionsOpen = true;
         CoinsUI.SetActive(false);
     }
     
@@ -71,6 +93,9 @@ public class PauseMenu : MonoBehaviour
         optionsMenu.SetActive(false);
         pauseMenu.transform.GetChild(0).gameObject.SetActive(true);
         CoinsUI.SetActive(true);
+        isOptionsOpen = false;
+        EventSystem.current.SetSelectedGameObject(null);
+        EventSystem.current.SetSelectedGameObject(OptionsButton);
     }
     public void GoToMainMenu()
     {
@@ -81,10 +106,5 @@ public class PauseMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit(); //quits the game - only works in build
-    }
-
-    public void test()
-    {
-        Debug.Log("test");
     }
 }

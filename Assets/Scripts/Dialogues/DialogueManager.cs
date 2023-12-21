@@ -40,6 +40,7 @@ public class DialogueManager : MonoBehaviour
                 if (isTyping)
                 {
                     StopAllCoroutines();
+                    StartCoroutine(Wait(0.3f));
                     dialogueText.text = currentSentence;
                     isTyping = false;
                 }
