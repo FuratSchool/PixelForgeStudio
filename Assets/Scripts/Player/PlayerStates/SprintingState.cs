@@ -43,6 +43,11 @@ public class SprintingState : IPlayerState
                 _playerStateMachine.ChangeState(_pc.TalkingState);
             }
         }
+
+        if (!_pc.InteractableRange && !_pc.InDialogeTriggerZone)
+        {
+            DisableInteractDialogueActive(_pc.GetUIController());
+        }
     }
 
     public override void ExitState()

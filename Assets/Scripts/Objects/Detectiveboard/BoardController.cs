@@ -93,7 +93,7 @@ public class BoardController : MonoBehaviour
         {
             _currentItemsOnBoard++;
         }
-        var SpawnedItem = Instantiate(item, inGameObject.transform);
+        var SpawnedItem = Instantiate(item, inGameObject.transform.position, Quaternion.identity);
         SpawnedItem.transform.parent = BoardUIobject.transform.GetChild(0).transform;
         return SpawnedItem;
     }
