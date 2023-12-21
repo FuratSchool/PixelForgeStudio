@@ -286,6 +286,7 @@ public class PlayerController : PlayerStateMachine
                 //it smooths the transition between the transform.eulerAngles.y and the targetAngle.
                 var angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _turnSmoothVelocity,
                     turnSmoothTime);
+                
                 //sets the rotation of the player to the angle.
                 transform.rotation = Quaternion.Euler(0f, angle, 0f);
                 
