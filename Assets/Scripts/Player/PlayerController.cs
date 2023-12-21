@@ -172,7 +172,7 @@ public class PlayerController : PlayerStateMachine
         _camera = Camera.main;
         GetDirection(PlayerInput());
         m_Collider = GetComponent<BoxCollider>();
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 120;
     }
     
     protected override IPlayerState GetInitialState()
