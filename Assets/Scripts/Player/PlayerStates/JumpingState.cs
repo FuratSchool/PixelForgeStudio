@@ -8,6 +8,7 @@ public class JumpingState : IPlayerState
         _pc = (PlayerController)this._playerStateMachine;
     }
     
+    private bool _uiActive = false;
     public override void EnterState()
     {
         base.EnterState();
@@ -38,6 +39,7 @@ public class JumpingState : IPlayerState
 
         if (CheckSwing())
         {
+            _uiActive = true;
             EnableSwingText(_pc.GetUIController(), _pc.GetPlayerInput());
             if (_pc.SwingPressed)
             {
@@ -46,7 +48,11 @@ public class JumpingState : IPlayerState
         }
         else
         {
-            DisableSwingText(_pc.GetUIController());
+            if(_uiActive)
+            {
+                DisableSwingText(_pc.GetUIController());
+                _uiActive = false;
+            }
         }
     }
     

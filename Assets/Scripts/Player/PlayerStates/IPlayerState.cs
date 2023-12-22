@@ -5,7 +5,7 @@ public class IPlayerState
     public string name;
     protected PlayerStateMachine _playerStateMachine;
     protected PlayerController _pc;
-
+    
     public IPlayerState(string name,PlayerStateMachine playerStateMachine)
     {
         this.name = name;
@@ -38,7 +38,7 @@ public class IPlayerState
     }
     public virtual void ExitState() { }
     
-    public void EnableInteractDialogueActive(UIController uiController, PlayerInput playerInput)
+    public void EnableInteractDialogueActive(UIController uiController, PlayerInput playerInput, string text)
     {
         string keybind;
         if (playerInput.currentControlScheme.Equals("Controller"))
@@ -51,7 +51,7 @@ public class IPlayerState
             int index = playerInput.actions["Interact"].bindings.IndexOf(x => x.groups.Contains("KeyboardMouse"));
             keybind = playerInput.actions["Interact"].GetBindingDisplayString(index, out var deviceLayoutName, out var controlPath);
         }
-        uiController.SetInteractText("Press "+ keybind +" to talk");
+        uiController.SetInteractText("Press "+ keybind +text);
         uiController.SetInteractableTextActive(true);
     }
     public void DisableInteractDialogueActive(UIController uiController)

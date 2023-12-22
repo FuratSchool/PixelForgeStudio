@@ -31,6 +31,5 @@ public class DashingState : IPlayerState
     public override void ExitState()
     {
         //_playerStateMachine.Animator.Play("Idle");  
-
     }
 }
