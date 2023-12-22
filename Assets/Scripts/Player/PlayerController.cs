@@ -71,6 +71,7 @@ public class PlayerController : PlayerStateMachine
     public bool canSwing { get; set; } = true;
     public bool inSwingingRange { get; set; }
     public GameObject SwingableObjectGAME { get; set; }
+    public int DeathCount { get; set; }
     
     public bool InteractableRange { get; set; }
     public bool InteractPressed { get; set; }

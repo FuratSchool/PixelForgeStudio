@@ -14,7 +14,10 @@ public class PlayerStatus : MonoBehaviour
     {
         return Health;
     }
-
+    public int Coins
+    {
+        get => coins;
+    }
     public void SetSpawnPoint(Vector3 spawnPosition)
     {
         playerSpawnPoint = spawnPosition;
