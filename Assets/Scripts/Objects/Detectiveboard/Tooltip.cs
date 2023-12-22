@@ -16,6 +16,7 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
     private bool PrefabActive;
     private bool PrefabSpawned;
     private bool _Selected;
+    public int TextSize { get; set; } = 36;
 
     public void Start()
     {
@@ -34,7 +35,9 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         _tooltipObject.transform.SetParent(transform.parent.parent);
         var container = _tooltipObject.transform.GetChild(0).GetChild(0);
         container.transform.GetChild(0).GetComponent<TMP_Text>().text = _tooltipHeader;
+        container.transform.GetChild(0).GetComponent<TMP_Text>().fontSize = TextSize;
         container.transform.GetChild(1).GetComponent<TMP_Text>().text = _tooltipText;
+        container.transform.GetChild(1).GetComponent<TMP_Text>().fontSize = TextSize;
         _tooltipObject.transform.position = mousePos;
         if (mousePos.x > Screen.width - _tooltipObject.transform.GetChild(0).GetComponent<RectTransform>().rect.width)
         {
