@@ -25,6 +25,7 @@ public class Tooltip : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        Debug.Log("Pointer Enter");
         if(PrefabSpawned) return;
         PrefabSpawned = true;
         PrefabActive = true;

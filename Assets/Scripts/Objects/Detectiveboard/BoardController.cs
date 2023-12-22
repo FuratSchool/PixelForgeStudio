@@ -46,6 +46,7 @@ public class BoardController : MonoBehaviour
     {
         FindObjectOfType<CameraController>().SetCameraActive(false);
         BoardUIActive = true;
+        _uiController.transform.GetComponent<Canvas>().sortingOrder = 1;
         BoardUIobject.SetActive(true);
         if(_playerController.GetPlayerInput().currentControlScheme.Equals("Controller"))
         {
@@ -72,6 +73,7 @@ public class BoardController : MonoBehaviour
     
     public void DeactivateBoardUI()
     {
+        _uiController.transform.GetComponent<Canvas>().sortingOrder = 0;
         FindObjectOfType<CameraController>().SetCameraActive(true);
         var tooltipobject = GameObject.FindGameObjectWithTag("ToolTip");
         if (tooltipobject != null)
@@ -94,7 +96,7 @@ public class BoardController : MonoBehaviour
             _currentItemsOnBoard++;
         }
         var SpawnedItem = Instantiate(item, inGameObject.transform.position, Quaternion.identity);
-        SpawnedItem.transform.parent = BoardUIobject.transform.GetChild(0).transform;
+        SpawnedItem.transform.SetParent(BoardUIobject.transform.GetChild(0).transform);
         return SpawnedItem;
     }
 
