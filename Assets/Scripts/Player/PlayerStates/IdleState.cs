@@ -17,6 +17,8 @@ public class IdleState : IPlayerState
     {
         base.UpdateState();
         
+        if(_pc.EmotePressed)
+            _playerStateMachine.ChangeState(_pc.EmoteState);
         if(_pc.InteractableRange){
             _textActive = true;
             EnableInteractDialogueActive(_pc.GetUIController(), _pc.GetPlayerInput(),_pc.InteractableText);
