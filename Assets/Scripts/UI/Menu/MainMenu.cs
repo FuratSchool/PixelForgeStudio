@@ -10,7 +10,9 @@ public class MainMenu : MonoBehaviour
 {
     // Start is called before the first frame update
     public void playGame(){
-        FindObjectOfType<SceneController>().LoadScene("Level1WaterFall"); //goes to the next scene.
+        Time.timeScale = 1;
+        FindObjectOfType<SceneController>().TimePlayed = Time.time;
+        FindObjectOfType<SceneController>().LoadScene("TutorialSceneV1"); //goes to the next scene.
     }
 
     public void quitGame(){

@@ -11,7 +11,7 @@ using UnityEngine;
             //_playerStateMachine.Animator.Play("Falling");
             _playerStateMachine.Animator.SetInteger("State", 6);
             if (!_pc.jumped) _pc.jumpReleased = true;
-
+            _pc.EnableGrimParticles(false);
 
         }
         public override void UpdateState()
@@ -47,13 +47,14 @@ using UnityEngine;
         
         public override void ExitState()
         {
+            _pc.EnableGrimParticles(true);
             //_playerStateMachine.Animator.Play("Landing");
         }
         public override void LateUpdateState()
         {
             base.LateUpdateState();
             _pc.GetRigidbody().AddForce(Physics.gravity*_pc.gravityMultiplier);
-            _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * (_pc.MoveSpeed * Time.deltaTime), 
+            _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * ((_pc.MoveSpeed * _pc.SpeedBoostMultiplier) * Time.deltaTime), 
                 Space.World);
             
         }
