@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class FallingPlatform : MonoBehaviour
 {
     [SerializeField] private float _fallDelay = 1.5f;
     [SerializeField] private float _respawnDelay = 5f;
+    [SerializeField] private float _shakeStrength = 1f;
     private Vector3 _startPos;
     private Rigidbody _rb;
     void Start()
@@ -18,6 +20,7 @@ public class FallingPlatform : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            
             if(_rb.isKinematic)
                 StartCoroutine(Fall());
         }
@@ -25,6 +28,7 @@ public class FallingPlatform : MonoBehaviour
     
     IEnumerator Fall()
     {
+        transform.DOShakePosition(_fallDelay, _shakeStrength);
         yield return new WaitForSeconds(_fallDelay);
         _rb.isKinematic = false;
         yield return new WaitForSeconds(_respawnDelay);
