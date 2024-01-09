@@ -28,8 +28,8 @@ public class JumpingState : IPlayerState
         base.UpdateState();
         if (_pc._canDash && _pc.dashPressed) 
             _playerStateMachine.ChangeState(_pc.DashingState);
-        if (_pc.GetRigidbody().velocity.y < -0 && _jumpOver)
-            _playerStateMachine.ChangeState(_pc.FallingState);
+        // if (_pc.GetRigidbody().velocity.y < -0)
+        //     _playerStateMachine.ChangeState(_pc.FallingState);
         if (_pc.SpacePressed && _pc.canDoubleJump && _pc.jumpReleased)
             _playerStateMachine.ChangeState(_pc.DoubleJumpState);
 
