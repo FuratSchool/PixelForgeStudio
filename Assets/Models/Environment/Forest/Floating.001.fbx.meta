@@ -3,7 +3,17 @@ guid: 29d71248dfa6a48c1b4a27447d8dcc48
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Snow Color
+    second: {fileID: 2100000, guid: 31c99a8fdcdcf495e8147c03f6d4233c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Stone Color
+    second: {fileID: 2100000, guid: 1fcd2284bbee7461f9a4ee65299c61f3, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
