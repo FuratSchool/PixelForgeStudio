@@ -22,6 +22,7 @@ public class PlayerController : PlayerStateMachine
     private bool leftFootActive;
     public float totalTime = 0;
     public bool _isRunning;
+    public bool CanJumpAgain { get; set; } = true;
     
     [Header("Jumping")]
     [SerializeField] public float jumpTime = 0.35f;
@@ -231,7 +232,7 @@ public class PlayerController : PlayerStateMachine
     }
     private void OnJumpReleased()
     {
-        jumpReleased = true;
+        if(jumped) jumpReleased = true;
     }
     
     private void OnSprintStart() { _isRunning = true; }

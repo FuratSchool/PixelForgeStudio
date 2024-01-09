@@ -25,7 +25,7 @@ public class IdleState : IPlayerState
         }
         if ((Mathf.Abs(_pc.Movement.x) > Mathf.Epsilon)||(Mathf.Abs(_pc.Movement.y) > Mathf.Epsilon))
             _playerStateMachine.ChangeState(_pc.WalkingState);
-        if (_pc.SpacePressed && _pc.canJump)
+        if (_pc.SpacePressed && _pc.canJump && _pc.CanJumpAgain)
             _playerStateMachine.ChangeState((_pc.JumpingState));
         if (_pc._canDash && _pc.dashPressed && _pc.KeyDebounced) 
             _playerStateMachine.ChangeState(_pc.DashingState);

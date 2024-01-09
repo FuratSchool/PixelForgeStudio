@@ -17,7 +17,7 @@ public class IPlayerState
     public virtual void UpdateState()
     {
         IsTransitioning();
-        
+        if (!_pc.SpacePressed) _pc.CanJumpAgain = true;
         if (_pc.GetRigidbody().transform.position.y < -40 || _pc.touchedWater)
         {
             _playerStateMachine.ChangeState(_pc.DeathState);
