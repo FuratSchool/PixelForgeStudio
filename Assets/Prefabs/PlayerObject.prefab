@@ -373,13 +373,15 @@ MonoBehaviour:
   jumpTimeCounter: 0
   force: 25
   forceHoldJump: 0.2
-  raycastDistance: 1.7
+  raycastDistance: 1.8
   gravityMultiplier: 1
   canJump: 1
   canDoubleJump: 0
   jumped: 0
   jumpReleased: 1
   grounded: 0
+  visualEffect: {fileID: 0}
+  SpeedBoostMultiplier: 1
   tr: {fileID: 2128684162189081619}
   dashingTime: 0.5
   dashingCooldown: 1
