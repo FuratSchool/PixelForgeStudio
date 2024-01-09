@@ -14,12 +14,7 @@ public class JumpingState : IPlayerState
         base.EnterState();
         _pc.jumped = true;
         _pc.GetAudio().PlayOneShot(_pc.JumpingSound);
-        
-        /*if (_pc.ShiftPressed)
-        {
-            _pc.MoveSpeed = _pc.SprintSpeed;
-        }*/
-        //_playerStateMachine.Animator.Play("Start Jump");
+        _pc.EnableGrimParticles(false);
         _playerStateMachine.Animator.SetInteger("State", 3);
         StartJump();
 
@@ -59,17 +54,14 @@ public class JumpingState : IPlayerState
 
     public override void ExitState()
     {
+        _pc.EnableGrimParticles(true);
         _pc.canJump = false;
     }
-
-
-
-
 
     public override void LateUpdateState()
     {
         base.LateUpdateState();
-        _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * (_pc.MoveSpeed * Time.deltaTime), 
+        _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * ((_pc.MoveSpeed * _pc.SpeedBoostMultiplier) * Time.deltaTime), 
             Space.World);
         if (!_pc.canJump) return; //for dialogue
         /*if (_pc.IsGrounded() && _pc.SpacePressed && _pc.isJumping == false)
