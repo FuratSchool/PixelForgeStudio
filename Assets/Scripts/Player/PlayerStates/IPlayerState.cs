@@ -6,6 +6,7 @@ public class IPlayerState
     protected PlayerStateMachine _playerStateMachine;
     protected PlayerController _pc;
     
+    
     public IPlayerState(string name,PlayerStateMachine playerStateMachine)
     {
         this.name = name;
@@ -18,7 +19,7 @@ public class IPlayerState
     {
         IsTransitioning();
         if (!_pc.SpacePressed) _pc.CanJumpAgain = true;
-        if (_pc.GetRigidbody().transform.position.y < -40 || _pc.touchedWater)
+        if (_pc.GetRigidbody().transform.position.y < _pc.deathRange || _pc.touchedWater)
         {
             _playerStateMachine.ChangeState(_pc.DeathState);
         }
