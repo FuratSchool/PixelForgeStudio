@@ -10,7 +10,7 @@ public class IdleState : IPlayerState
         base.EnterState();
         _playerStateMachine.Animator.Play("Idle");
         _playerStateMachine.Animator.SetInteger("State", 0);
-
+        _pc.EnableGrimParticles(false);
     }
 
     public override void UpdateState()
@@ -47,6 +47,7 @@ public class IdleState : IPlayerState
     }
     public override void ExitState()
     {
+        _pc.EnableGrimParticles(true);
         if (_textActive)
         {
             DisableInteractDialogueActive(_pc.GetUIController());
