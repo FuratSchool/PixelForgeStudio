@@ -91,7 +91,7 @@ public class PlayerController : PlayerStateMachine
     [Header("footprints")]
     public float footstepIntervalWalking = 0.3f;
     public float footstepIntervalRunning = 0.15f;
-
+    private PlayerStatus _playerStatus;
     private Rigidbody _rigidbody;
     private PlayerStateMachine _stateMachine;
     private UIController _uiController;
@@ -185,6 +185,8 @@ public class PlayerController : PlayerStateMachine
         _dialogueManager = FindObjectOfType<DialogueManager>();
         //TR = GetComponent<TrailRenderer>();
         _rigidbody = GetComponent<Rigidbody>();
+        _playerStatus = GetComponent<PlayerStatus>();
+        _playerStatus.SetSpawnPoint(transform.position);
         _playerInput = GetComponent<PlayerInput>();
         _camera = Camera.main;
         GetDirection(PlayerInput());
@@ -192,6 +194,7 @@ public class PlayerController : PlayerStateMachine
         Application.targetFrameRate = 120;
         visualEffect = FindObjectOfType<VisualEffect>();
         _visualEffectBaseColor = visualEffect.GetVector4("Color");
+        
     }
     
     protected override IPlayerState GetInitialState()

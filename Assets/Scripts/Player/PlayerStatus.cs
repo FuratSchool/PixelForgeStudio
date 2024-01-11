@@ -7,7 +7,7 @@ public class PlayerStatus : MonoBehaviour
     public static PlayerStatus playerStatus;
     private int coins = 0;
     
-    private Vector3 playerSpawnPoint = new(-3.84f, -0.3f, -54.38f);
+    private Vector3 playerSpawnPoint;
     private int Health { get; }
     
     public int getPlayerHealth()
