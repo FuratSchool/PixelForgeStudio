@@ -507,6 +507,8 @@ MonoBehaviour:
   jumped: 0
   jumpReleased: 1
   grounded: 0
+  visualEffect: {fileID: 0}
+  SpeedBoostMultiplier: 1
   tr: {fileID: 2128684162189081619}
   dashingTime: 0.5
   dashingCooldown: 1
@@ -520,8 +522,8 @@ MonoBehaviour:
   SwingDelay: 1
   lr: {fileID: 6113694536196822892}
   Hand: {fileID: 8280275655525851216}
-  Scythe: {fileID: 0}
-  Handle: {fileID: 0}
+  Scythe: {fileID: 1608097666021215496}
+  Handle: {fileID: 6951804030682515339}
   joint: {fileID: 0}
   player: {fileID: 4521968622420406398}
   SwingableObjectPos: {x: 0, y: 0, z: 0}
