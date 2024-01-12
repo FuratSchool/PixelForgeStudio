@@ -59,9 +59,12 @@ public class PlayerController : PlayerStateMachine
     private float _turnSmoothVelocity;
     
     [Header("Swinging")]
-    [SerializeField] private float swingDistance = 4f;
-    [SerializeField] private float exitForce = 15f;
-    [SerializeField] private float swingTime = 3f;
+    [SerializeField] public float swingDistance = 17f;
+    [SerializeField] public float standardSwingDistance = 17f;
+    [SerializeField] public float exitForce = 15f;
+    [SerializeField] public float standardExitForce = 15f;
+    [SerializeField] public float swingTime = 4f;
+    [SerializeField] public float standardSwingTime = 4f;
     [SerializeField] private float SwingDelay = 1f;
     [SerializeField] public LineRenderer lr;
     [SerializeField] public GameObject Hand;

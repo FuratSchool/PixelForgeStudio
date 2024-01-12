@@ -5,12 +5,30 @@ using UnityEngine;
 
 public class SwingableObject : MonoBehaviour
 {
+    [SerializeField] private float swingDistance = 0f;
+    [SerializeField] private float swingTime = 0f;
+    [SerializeField] private float swingForce = 0f;
+
+    private PlayerController _playerController;
+    private void Start()
+    {
+        _playerController = FindObjectOfType<PlayerController>();
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            FindObjectOfType<PlayerController>().inSwingingRange = true;
-            FindObjectOfType<PlayerController>().SwingableObjectGAME = transform.gameObject;
+            if(swingDistance > 0f){
+                _playerController.swingDistance = swingDistance;
+            }
+            if(swingTime > 0f){
+                _playerController.swingTime = swingTime;
+            }
+            if(swingForce > 0f){
+                _playerController.exitForce = swingForce;
+            }
+            _playerController.inSwingingRange = true;
+            _playerController.SwingableObjectGAME = transform.gameObject;
         }
     }
 
@@ -18,7 +36,10 @@ public class SwingableObject : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            FindObjectOfType<PlayerController>().inSwingingRange = false;
+            _playerController.swingDistance = _playerController.standardSwingDistance;
+            _playerController.swingTime = _playerController.standardSwingTime;
+            _playerController.exitForce = _playerController.standardExitForce;
+            _playerController.inSwingingRange = false;
         }
     }
 }
