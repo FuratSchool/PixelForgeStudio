@@ -9,17 +9,15 @@ public class JumpingState : IPlayerState
     }
     
     private bool _uiActive = false;
+    private bool _jumpOver = false;
     public override void EnterState()
     {
         base.EnterState();
+        _jumpOver = false;
         _pc.jumped = true;
+        _pc.isJumping = true;
         _pc.GetAudio().PlayOneShot(_pc.JumpingSound);
-        
-        /*if (_pc.ShiftPressed)
-        {
-            _pc.MoveSpeed = _pc.SprintSpeed;
-        }*/
-        //_playerStateMachine.Animator.Play("Start Jump");
+        _pc.EnableGrimParticles(false);
         _playerStateMachine.Animator.SetInteger("State", 3);
         StartJump();
 
@@ -31,8 +29,8 @@ public class JumpingState : IPlayerState
         base.UpdateState();
         if (_pc._canDash && _pc.dashPressed) 
             _playerStateMachine.ChangeState(_pc.DashingState);
-        if (_pc.GetRigidbody().velocity.y < 0)
-            _playerStateMachine.ChangeState(_pc.FallingState);
+        // if (_pc.GetRigidbody().velocity.y < -0)
+        //     _playerStateMachine.ChangeState(_pc.FallingState);
         if (_pc.SpacePressed && _pc.canDoubleJump && _pc.jumpReleased)
             _playerStateMachine.ChangeState(_pc.DoubleJumpState);
 
@@ -56,56 +54,27 @@ public class JumpingState : IPlayerState
         }
     }
     
-
     public override void ExitState()
     {
+        _pc.EnableGrimParticles(true);
         _pc.canJump = false;
     }
-
-
-
-
-
     public override void LateUpdateState()
     {
         base.LateUpdateState();
-        _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * (_pc.MoveSpeed * Time.deltaTime), 
+        _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * ((_pc.MoveSpeed * _pc.SpeedBoostMultiplier) * Time.deltaTime), 
             Space.World);
         if (!_pc.canJump) return; //for dialogue
-        /*if (_pc.IsGrounded() && _pc.SpacePressed && _pc.isJumping == false)
+        
+        ContinueJump();
+        
+        if (!_pc.SpacePressed)
         {
-            _pc.isJumping = true;
-            //_pc.SpaceReleased = false;
-            _pc.jumpTimeCounter = _pc.jumpTime;
-            _pc.GetRigidbody().AddForce(Vector3.up * _pc.force, ForceMode.Impulse);
-        }*/
-        /*if(_pc.isJumping && _pc.SpacePressed)
-        {
-            if (_pc.jumpTimeCounter > 0)
-            {
-                _pc.GetRigidbody().AddForce(Vector3.up * _pc.forceHoldJump, ForceMode.Impulse);
-                _pc.jumpTimeCounter -= Time.deltaTime;
-                
-            }
-            else
-            {
-                _pc.isJumping = false;
-                //_playerStateMachine.ChangeState(_pc.FallingState);
-            }
+            _pc.CanJumpAgain = true;
         }
         else
         {
-            _pc.jumpTimeCounter = 0;
-            _pc.isJumping = false;
-            
-        }*/
-        ContinueJump();
-        
-        
-
-        if (!_pc.SpacePressed)
-        {
-            //_playerStateMachine.ChangeState(_pc.FallingState);
+            _pc.CanJumpAgain = false;
         }
     }
     private void StartJump()
@@ -127,6 +96,7 @@ public class JumpingState : IPlayerState
             //_pc.isJumping = false;
             _pc.canJump = false;
             _playerStateMachine.ChangeState(_pc.FallingState);
+            _jumpOver = true;
         }
     }
 }

@@ -65,7 +65,7 @@ public class SprintingState : IPlayerState
     public override void LateUpdateState()
     {
         base.LateUpdateState();
-        _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * (_pc.MoveSpeed * Time.deltaTime), 
+        _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * ((_pc.MoveSpeed * _pc.SpeedBoostMultiplier) * Time.deltaTime), 
             Space.World);
         _pc.FootPrint(_pc.footstepIntervalRunning);
     }

@@ -3,6 +3,7 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.VFX;
 
 public class PlayerController : PlayerStateMachine
 {
@@ -21,6 +22,7 @@ public class PlayerController : PlayerStateMachine
     private bool leftFootActive;
     public float totalTime = 0;
     public bool _isRunning;
+    public bool CanJumpAgain { get; set; } = true;
     
     [Header("Jumping")]
     [SerializeField] public float jumpTime = 0.35f;
@@ -35,6 +37,12 @@ public class PlayerController : PlayerStateMachine
     public bool jumped;
     public bool jumpReleased = false;
     public bool grounded;
+    
+    private IEnumerator SpeedboostCoroutine;
+    public VisualEffect visualEffect;
+    private Color _visualEffectBaseColor;
+    public bool SpeedboostActive { get; set; }
+    public float SpeedBoostMultiplier = 1f;
     
     [Header("Dashing")]
     [SerializeField] private TrailRenderer tr;
@@ -183,6 +191,8 @@ public class PlayerController : PlayerStateMachine
         GetDirection(PlayerInput());
         m_Collider = GetComponent<BoxCollider>();
         Application.targetFrameRate = 120;
+        visualEffect = FindObjectOfType<VisualEffect>();
+        _visualEffectBaseColor = visualEffect.GetVector4("Color");
     }
     
     protected override IPlayerState GetInitialState()
@@ -224,7 +234,7 @@ public class PlayerController : PlayerStateMachine
     }
     private void OnJumpReleased()
     {
-        jumpReleased = true;
+        if(jumped) jumpReleased = true;
     }
     
     private void OnSprintStart() { _isRunning = true; }
@@ -380,5 +390,40 @@ public class PlayerController : PlayerStateMachine
         KeyDebounced = false;
         yield return new WaitForSeconds(0.25f);
         KeyDebounced = true;
+    }
+
+    public void StartSpeedBoost(float boost, float duration, Color color)
+    {
+        if(SpeedboostActive) StopCoroutine(SpeedboostCoroutine);
+        SpeedboostCoroutine = ESpeedBoost(boost, duration,color);
+        StartCoroutine(SpeedboostCoroutine);
+        
+    }
+
+    private IEnumerator ESpeedBoost(float boost, float duration,Color color)
+    {
+        SpeedboostActive = true;
+        SpeedBoostMultiplier = boost;
+        visualEffect.SetVector4("Color",color);
+        yield return new WaitForSeconds(duration);
+        visualEffect.SetVector4("Color",_visualEffectBaseColor);
+        SpeedBoostMultiplier = 1f;
+        SpeedboostActive = false;
+    }
+
+    public void EnableGrimParticles(bool enable)
+    {
+        if (enable)
+        {
+            visualEffect.SetFloat("FlameRate", 50f);
+            visualEffect.SetFloat("SmokeRate", 2f);
+            visualEffect.SetFloat("AmberRate", 16f);
+        }
+        else
+        {
+            visualEffect.SetFloat("FlameRate", 0f);
+            visualEffect.SetFloat("SmokeRate", 0f);
+            visualEffect.SetFloat("AmberRate", 0f);
+        }
     }
 }
