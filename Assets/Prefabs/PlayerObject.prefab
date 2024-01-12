@@ -367,6 +367,7 @@ MonoBehaviour:
     type: 3}
   footPrintsLeft: {fileID: 4681874753066359916, guid: 06d3623a661d9c942bb0c4392d846fcf,
     type: 3}
+  Chair: {fileID: 4794267723799084944, guid: 404ec46aa8c66824489c7c306794d1ee, type: 3}
   totalTime: 0
   _isRunning: 0
   jumpTime: 0.4
@@ -380,6 +381,8 @@ MonoBehaviour:
   jumped: 0
   jumpReleased: 1
   grounded: 0
+  visualEffect: {fileID: 0}
+  SpeedBoostMultiplier: 1
   tr: {fileID: 2128684162189081619}
   dashingTime: 0.5
   dashingCooldown: 1
