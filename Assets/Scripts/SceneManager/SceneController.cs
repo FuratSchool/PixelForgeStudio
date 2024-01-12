@@ -28,7 +28,11 @@ public class SceneController : MonoBehaviour
             DestroyImmediate(gameObject); 
         }
     }
-
+    public double TimePlayed
+    {
+        get;
+        set;
+    }
     private void Update()
     {
         if (Input.GetKey(KeyCode.F12))

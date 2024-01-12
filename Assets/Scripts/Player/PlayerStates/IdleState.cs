@@ -3,24 +3,31 @@ using UnityEngine;
 public class IdleState : IPlayerState
 {
     public IdleState (PlayerController pc) : base("IdleState", pc) {_pc = (PlayerController)this._playerStateMachine;}
-
+    
+    private bool _textActive = false;
     public override void EnterState()
     {
         base.EnterState();
         _playerStateMachine.Animator.Play("Idle");
         _playerStateMachine.Animator.SetInteger("State", 0);
-
+        _pc.EnableGrimParticles(false);
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-       
+        
+        if(_pc.InteractableRange){
+            _textActive = true;
+            EnableInteractDialogueActive(_pc.GetUIController(), _pc.GetPlayerInput(),_pc.InteractableText);
+            if (_pc.InteractPressed && _pc.KeyDebounced)
+                _playerStateMachine.ChangeState(_pc.InteractingState);
+        }
         if ((Mathf.Abs(_pc.Movement.x) > Mathf.Epsilon)||(Mathf.Abs(_pc.Movement.y) > Mathf.Epsilon))
             _playerStateMachine.ChangeState(_pc.WalkingState);
-        if (_pc.SpacePressed && _pc.canJump)
+        if (_pc.SpacePressed && _pc.canJump && _pc.CanJumpAgain)
             _playerStateMachine.ChangeState((_pc.JumpingState));
-        if (_pc._canDash && _pc.dashPressed) 
+        if (_pc._canDash && _pc.dashPressed && _pc.KeyDebounced) 
             _playerStateMachine.ChangeState(_pc.DashingState);
         if (_pc.SwingPressed && _pc._canSwing && _pc.InRange)
             _playerStateMachine.ChangeState(_pc.SwingingState);
@@ -30,21 +37,21 @@ public class IdleState : IPlayerState
         
         if (_pc.InDialogeTriggerZone && _pc.NPC.hasBeenTalkedTo == false)
         {
-            EnableInteractDialogueActive(_pc.GetUIController(), _pc.GetPlayerInput());
+            _textActive = true;
+            EnableInteractDialogueActive(_pc.GetUIController(), _pc.GetPlayerInput(),_pc.DialogueText);
             if (_pc.InteractPressed)
             {
                 _playerStateMachine.ChangeState(_pc.TalkingState);
             }
         }
-        else
-        {
-            DisableInteractDialogueActive(_pc.GetUIController());
-        }
     }
     public override void ExitState()
     {
-        DisableInteractDialogueActive(_pc.GetUIController());
-        //_playerStateMachine.Animator.enabled = false;
-
+        _pc.EnableGrimParticles(true);
+        if (_textActive)
+        {
+            DisableInteractDialogueActive(_pc.GetUIController());
+            _textActive = false;
+        }
     }
 }

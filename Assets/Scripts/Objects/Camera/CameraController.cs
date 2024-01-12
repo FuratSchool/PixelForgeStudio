@@ -56,4 +56,9 @@ public class CameraController : MonoBehaviour
             _camera.m_YAxis.m_InvertInput = _settingsData.invertedY;
         }
     }
+    
+    public void SetCameraActive(bool active)
+    {
+        _camera.enabled = active;
+    }
 }
