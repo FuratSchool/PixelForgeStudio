@@ -19,6 +19,7 @@ public class CheckPointHandler : MonoBehaviour
     {
         if (other.CompareTag("Player") && !triggered)
         {
+            if(other.transform.parent != null) return;
             Debug.Log("Player entered the checkpoint");
             SavePlayerProgress();
             triggered = true;
