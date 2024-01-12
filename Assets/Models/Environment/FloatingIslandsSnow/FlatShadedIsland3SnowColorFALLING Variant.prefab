@@ -1,0 +1,137 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7957161414119778864
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 197319425945254062, guid: 7493eeaf1a34447a4af00b00a28cf612,
+        type: 3}
+      propertyPath: m_Name
+      value: FlatShadedIsland3SnowColorFALLING Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 717994649606709780, guid: 7493eeaf1a34447a4af00b00a28cf612,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.4396
+      objectReference: {fileID: 0}
+    - target: {fileID: 717994649606709780, guid: 7493eeaf1a34447a4af00b00a28cf612,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.79547006
+      objectReference: {fileID: 0}
+    - target: {fileID: 717994649606709780, guid: 7493eeaf1a34447a4af00b00a28cf612,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 633
+      objectReference: {fileID: 0}
+    - target: {fileID: 717994649606709780, guid: 7493eeaf1a34447a4af00b00a28cf612,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -92.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 717994649606709780, guid: 7493eeaf1a34447a4af00b00a28cf612,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 233.70001
+      objectReference: {fileID: 0}
+    - target: {fileID: 717994649606709780, guid: 7493eeaf1a34447a4af00b00a28cf612,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.98632514
+      objectReference: {fileID: 0}
+    - target: {fileID: 717994649606709780, guid: 7493eeaf1a34447a4af00b00a28cf612,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 717994649606709780, guid: 7493eeaf1a34447a4af00b00a28cf612,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.16481155
+      objectReference: {fileID: 0}
+    - target: {fileID: 717994649606709780, guid: 7493eeaf1a34447a4af00b00a28cf612,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 717994649606709780, guid: 7493eeaf1a34447a4af00b00a28cf612,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 717994649606709780, guid: 7493eeaf1a34447a4af00b00a28cf612,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -18.973
+      objectReference: {fileID: 0}
+    - target: {fileID: 717994649606709780, guid: 7493eeaf1a34447a4af00b00a28cf612,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 197319425945254062, guid: 7493eeaf1a34447a4af00b00a28cf612,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 614682095902482414}
+    - targetCorrespondingSourceObject: {fileID: 197319425945254062, guid: 7493eeaf1a34447a4af00b00a28cf612,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8094098332925486585}
+  m_SourcePrefab: {fileID: 100100000, guid: 7493eeaf1a34447a4af00b00a28cf612, type: 3}
+--- !u!1 &7840908639132832414 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 197319425945254062, guid: 7493eeaf1a34447a4af00b00a28cf612,
+    type: 3}
+  m_PrefabInstance: {fileID: 7957161414119778864}
+  m_PrefabAsset: {fileID: 0}
+--- !u!54 &614682095902482414
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7840908639132832414}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 112
+  m_CollisionDetection: 0
+--- !u!114 &8094098332925486585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7840908639132832414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a9e0d5edb4e4e14bb7353c09cc9af54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fallDelay: 1
+  _respawnDelay: 5
+  _shakeStrength: 0.5
+  Rotate: 0
