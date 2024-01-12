@@ -11,6 +11,8 @@ public class CutsceneScript : MonoBehaviour
     [SerializeField] private VideoPlayer IntroVideoPlayer;
     [SerializeField] private VideoPlayer LoopVideoPlayer;
     [SerializeField] private RenderTexture loopRenderTexture;
+    private bool _ended;
+    private float time = 0;
     private void Start()
     {
         IntroVideoPlayer.loopPointReached += EndReached;
@@ -19,9 +21,15 @@ public class CutsceneScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.F4))
+        if (Input.GetKey(KeyCode.F4) && _ended == false)
         {
             EndCutscene();
+        }
+
+        if (_ended && time < 1)
+        {
+            time += Time.deltaTime * 0.5f;
+            _MainMenu.GetComponent<CanvasGroup>().alpha = Mathf.Lerp(0, 1, time);
         }
     }
 
@@ -32,9 +40,10 @@ public class CutsceneScript : MonoBehaviour
 
     void EndCutscene()
     {
-        
         GetComponentInChildren<RawImage>().texture = loopRenderTexture;
         LoopVideoPlayer.Play();
         IntroVideoPlayer.time = 0;
+        _MainMenu.SetActive(true);
+        _ended = true;
     }
 }
