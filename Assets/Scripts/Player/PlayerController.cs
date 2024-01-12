@@ -19,11 +19,12 @@ public class PlayerController : PlayerStateMachine
     public Vector2 Movement = Vector2.zero;
     public Transform footPrintsRight;
     public Transform footPrintsLeft;
+    public GameObject Chair;
     private bool leftFootActive;
     public float totalTime = 0;
     public bool _isRunning;
     public bool CanJumpAgain { get; set; } = true;
-    
+    public bool waitOver { get; set; } = true;
     [Header("Jumping")]
     [SerializeField] public float jumpTime = 0.35f;
     [SerializeField] public float jumpTimeCounter;
@@ -37,6 +38,7 @@ public class PlayerController : PlayerStateMachine
     public bool jumped;
     public bool jumpReleased = false;
     public bool grounded;
+    public bool EmotePressed { get; set; }
     
     private IEnumerator SpeedboostCoroutine;
     public VisualEffect visualEffect;
@@ -124,6 +126,7 @@ public class PlayerController : PlayerStateMachine
     [HideInInspector] public DoubleJump DoubleJumpState;
     [HideInInspector] public LandingState LandingState;
     [HideInInspector] public InteractingState InteractingState;
+    [HideInInspector] public EmoteState EmoteState;
     public float MoveSpeed
     {
         get => moveSpeed;
@@ -180,6 +183,7 @@ public class PlayerController : PlayerStateMachine
         DoubleJumpState = new DoubleJump(this);
         LandingState = new LandingState(this);
         InteractingState = new InteractingState(this);
+        EmoteState = new EmoteState(this);
         _uiController = FindObjectOfType<UIController>();
         _dialogueManager = FindObjectOfType<DialogueManager>();
         //TR = GetComponent<TrailRenderer>();
@@ -253,7 +257,10 @@ public class PlayerController : PlayerStateMachine
     {
         InteractPressed = Convert.ToBoolean(inputValue.Get<float>());
     }
-   
+    public void OnEmote(InputValue inputValue)
+    {
+        EmotePressed = Convert.ToBoolean(inputValue.Get<float>());
+    }
     public bool IsGrounded()
     {
         var layermask = 1 << 6;
@@ -366,7 +373,16 @@ public class PlayerController : PlayerStateMachine
             
         totalTime = 0;
     }
+
+    public GameObject InstantiateFunc(GameObject obj, Vector3 pos, Quaternion rot)
+    {
+        return Instantiate(obj, pos, rot);
+    }
     
+    public void DestroyFunc(GameObject obj)
+    {
+        Destroy(obj);
+    }
     public void EndSwing()
     {
         lr.positionCount = 0;
@@ -380,7 +396,17 @@ public class PlayerController : PlayerStateMachine
         yield return new WaitForSeconds(SwingDelay);
         _canSwing = true;
     }
-    
+
+    public void WaitSecs(float sec)
+    {
+        StartCoroutine(WaitSec(sec));
+    }
+    private IEnumerator WaitSec(float sec)
+    {
+        waitOver = false;
+        yield return new WaitForSeconds(sec);
+        waitOver = true;
+    }
     public IEnumerator KeyDebounce()
     {
         KeyDebounced = false;
