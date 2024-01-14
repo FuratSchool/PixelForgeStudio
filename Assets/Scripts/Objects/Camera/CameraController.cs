@@ -19,9 +19,9 @@ public class CameraController : MonoBehaviour
     private void Awake()
     {
         _sceneController = FindObjectOfType<SceneController>();
+        _camera = GetComponent<CinemachineFreeLook>();
         if (_sceneController != null)
         {
-            _camera = GetComponent<CinemachineFreeLook>();
             _camera.m_YAxis.m_MaxSpeed = _defaultSensitivityY;
             _camera.m_XAxis.m_MaxSpeed = _defaultSensitivityX;
             UpdateCameraSettings(FindObjectOfType<SceneController>().Settings);
