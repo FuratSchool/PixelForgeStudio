@@ -2,40 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InteractingState : IPlayerState
+public class InteractingState : PlayerState
 {
-    public InteractingState (PlayerController pc) : base("InteractingState", pc) {_pc = (PlayerController)this._playerStateMachine;}
+    public InteractingState (PlayerController pc) : base("InteractingState", pc) {PC = (PlayerController)this.PlayerStateMachine;}
     
     public override void EnterState()
     {
-        _pc.KeyDebounced = false;
-        _pc.StartCoroutine(_pc.KeyDebounce());
+        PC.KeyDebounced = false;
+        PC.StartCoroutine(PC.KeyDebounce());
         var objects = GameObject.FindGameObjectsWithTag("Interactable");
         foreach (var obj in objects)
         {
-            obj.SendMessage("InInteractState", _pc, SendMessageOptions.DontRequireReceiver);
+            obj.SendMessage("InInteractState", PC, SendMessageOptions.DontRequireReceiver);
         }
     }
     public override void UpdateState()
     {
         base.UpdateState();
-        if (_pc.InteractPressed && _pc.KeyDebounced)
+        if (PC.InteractPressed && PC.KeyDebounced)
         {
-            
-            _playerStateMachine.ChangeState(_pc.IdleState);
+            PlayerStateMachine.ChangeState(PC.IdleState);
         }
     }
     
     public override void ExitState()
     {
-        _pc.StartCoroutine(_pc.KeyDebounce());
+        PC.StartCoroutine(PC.KeyDebounce());
         var objects = GameObject.FindGameObjectsWithTag("Interactable");
         foreach (var obj in objects)
         {
-            obj.SendMessage("InInteractState", _pc, SendMessageOptions.DontRequireReceiver);
+            obj.SendMessage("InInteractState", PC, SendMessageOptions.DontRequireReceiver);
         }
     }
-    public override void LateUpdateState()
-    {
-    }
+    public override void LateUpdateState() { }
 }

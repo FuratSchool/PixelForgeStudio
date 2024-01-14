@@ -1,21 +1,22 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class JumpingState : IPlayerState
+public class JumpingState : PlayerState
 {
     public JumpingState(PlayerController pc) : base("JumpingState", pc)
     {
-        _pc = (PlayerController)this._playerStateMachine;
+        PC = (PlayerController)this.PlayerStateMachine;
     }
     
     private bool _uiActive = false;
     public override void EnterState()
     {
         base.EnterState();
-        _pc.jumped = true;
-        _pc.GetAudio().PlayOneShot(_pc.JumpingSound);
-        _pc.EnableGrimParticles(false);
-        _playerStateMachine.Animator.SetInteger("State", 3);
+        PC.jumped = true;
+        PC.isJumping = true;
+        PC.GetAudio().PlayOneShot(PC.JumpingSound);
+        PC.EnableGrimParticles(false);
+        PlayerStateMachine.Animator.SetInteger("State", 3);
         StartJump();
 
     }
@@ -24,101 +25,73 @@ public class JumpingState : IPlayerState
     {
         
         base.UpdateState();
-        if (_pc._canDash && _pc.dashPressed) 
-            _playerStateMachine.ChangeState(_pc.DashingState);
-        if (_pc.GetRigidbody().velocity.y < 0)
-            _playerStateMachine.ChangeState(_pc.FallingState);
-        if (_pc.SpacePressed && _pc.canDoubleJump && _pc.jumpReleased)
-            _playerStateMachine.ChangeState(_pc.DoubleJumpState);
+        if (PC._canDash && PC.dashPressed) 
+            PlayerStateMachine.ChangeState(PC.DashingState);
+        // if (_pc.GetRigidbody().velocity.y < -0)
+        //     _playerStateMachine.ChangeState(_pc.FallingState);
+        if (PC.SpacePressed && PC.canDoubleJump && PC.jumpReleased)
+            PlayerStateMachine.ChangeState(PC.DoubleJumpState);
 
 
         if (CheckSwing())
         {
             _uiActive = true;
-            EnableSwingText(_pc.GetUIController(), _pc.GetPlayerInput());
-            if (_pc.SwingPressed)
+            EnableSwingText(PC.GetUIController(), PC.GetPlayerInput());
+            if (PC.SwingPressed)
             {
-                _playerStateMachine.ChangeState(_pc.SwingingState);
+                PlayerStateMachine.ChangeState(PC.SwingingState);
             }
         }
         else
         {
             if(_uiActive)
             {
-                DisableSwingText(_pc.GetUIController());
+                DisableSwingText(PC.GetUIController());
                 _uiActive = false;
             }
         }
     }
     
-
     public override void ExitState()
     {
-        _pc.EnableGrimParticles(true);
-        _pc.canJump = false;
+        PC.EnableGrimParticles(true);
+        PC.canJump = false;
     }
-
     public override void LateUpdateState()
     {
         base.LateUpdateState();
-        _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * ((_pc.MoveSpeed * _pc.SpeedBoostMultiplier) * Time.deltaTime), 
+        PC.GetRigidbody().transform.Translate(PC.GetDirection(PC.PlayerInput()).normalized * ((PC.MoveSpeed * PC.speedBoostMultiplier) * Time.deltaTime), 
             Space.World);
-        if (!_pc.canJump) return; //for dialogue
-        /*if (_pc.IsGrounded() && _pc.SpacePressed && _pc.isJumping == false)
+        if (!PC.canJump) return; //for dialogue
+        
+        ContinueJump();
+        
+        if (!PC.SpacePressed)
         {
-            _pc.isJumping = true;
-            //_pc.SpaceReleased = false;
-            _pc.jumpTimeCounter = _pc.jumpTime;
-            _pc.GetRigidbody().AddForce(Vector3.up * _pc.force, ForceMode.Impulse);
-        }*/
-        /*if(_pc.isJumping && _pc.SpacePressed)
-        {
-            if (_pc.jumpTimeCounter > 0)
-            {
-                _pc.GetRigidbody().AddForce(Vector3.up * _pc.forceHoldJump, ForceMode.Impulse);
-                _pc.jumpTimeCounter -= Time.deltaTime;
-                
-            }
-            else
-            {
-                _pc.isJumping = false;
-                //_playerStateMachine.ChangeState(_pc.FallingState);
-            }
+            PC.CanJumpAgain = true;
         }
         else
         {
-            _pc.jumpTimeCounter = 0;
-            _pc.isJumping = false;
-            
-        }*/
-        ContinueJump();
-        
-        
-
-        if (!_pc.SpacePressed)
-        {
-            //_playerStateMachine.ChangeState(_pc.FallingState);
+            PC.CanJumpAgain = false;
         }
     }
     private void StartJump()
     {
-        _pc.jumpTimeCounter = _pc.jumpTime;
-        _pc.GetRigidbody().AddForce(Vector3.up * _pc.force, ForceMode.Impulse);
-        //_pc.isJumping = true;
+        PC.jumpTimeCounter = PC.jumpTime;
+        PC.GetRigidbody().AddForce(Vector3.up * PC.force, ForceMode.Impulse);
     }
     
     private void ContinueJump()
     {
-        if (_pc.jumpTimeCounter > 0 && _pc.SpacePressed)
+        if (PC.jumpTimeCounter > 0 && PC.SpacePressed)
         {
-            _pc.GetRigidbody().AddForce(Vector3.up * _pc.forceHoldJump, ForceMode.Impulse);
-            _pc.jumpTimeCounter -= Time.deltaTime;
+            PC.GetRigidbody().AddForce(Vector3.up * PC.forceHoldJump, ForceMode.Impulse);
+            PC.jumpTimeCounter -= Time.deltaTime;
         }
         else
         {
-            //_pc.isJumping = false;
-            _pc.canJump = false;
-            _playerStateMachine.ChangeState(_pc.FallingState);
+            PC.canJump = false;
+            PlayerStateMachine.ChangeState(PC.FallingState);
         }
     }
 }

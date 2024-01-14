@@ -15,12 +15,17 @@ public class CameraController : MonoBehaviour
     private float correctionX = 1;
     private float correctionY = 1;
     private SettingsData _settingsData;
+    private SceneController _sceneController;
     private void Awake()
     {
+        _sceneController = FindObjectOfType<SceneController>();
         _camera = GetComponent<CinemachineFreeLook>();
-        _defaultSensitivityY = _camera.m_YAxis.m_MaxSpeed;
-        _defaultSensitivityX = _camera.m_XAxis.m_MaxSpeed;
-         UpdateCameraSettings(FindObjectOfType<SceneController>().Settings);
+        if (_sceneController != null)
+        {
+            _camera.m_YAxis.m_MaxSpeed = _defaultSensitivityY;
+            _camera.m_XAxis.m_MaxSpeed = _defaultSensitivityX;
+            UpdateCameraSettings(FindObjectOfType<SceneController>().Settings);
+        }
     }
 
     public void UpdateCameraSettings(SettingsData settings)

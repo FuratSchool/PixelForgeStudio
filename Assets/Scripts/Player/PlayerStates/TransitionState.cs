@@ -2,21 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TransitionState : IPlayerState
+public class TransitionState : PlayerState
 {
     
-    public TransitionState (PlayerController pc) : base("TransitionState", pc) {_pc = (PlayerController)this._playerStateMachine;}
+    public TransitionState (PlayerController pc) : base("TransitionState", pc) {PC = (PlayerController)this.PlayerStateMachine;}
     public override void EnterState()
     {
         base.EnterState();  
-        _playerStateMachine.Animator.Play("Transition");
+        PlayerStateMachine.Animator.Play("Transition");
     }
 
     public override void UpdateState()
     {
         base.UpdateState();
-        if (_pc.isTransitioning == false)  
-            _playerStateMachine.ChangeState(_pc.IdleState);
+        if (PC.isTransitioning == false)  
+            PlayerStateMachine.ChangeState(PC.IdleState);
     }
 
 }

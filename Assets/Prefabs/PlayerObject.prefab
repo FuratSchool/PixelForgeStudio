@@ -232,6 +232,7 @@ Transform:
   - {fileID: 3089826990192223462}
   - {fileID: 6147742913902635926}
   - {fileID: 5824099331698641111}
+  - {fileID: 2083525148017468523}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &5212095433703627546
@@ -367,19 +368,22 @@ MonoBehaviour:
     type: 3}
   footPrintsLeft: {fileID: 4681874753066359916, guid: 06d3623a661d9c942bb0c4392d846fcf,
     type: 3}
+  Chair: {fileID: 4794267723799084944, guid: 404ec46aa8c66824489c7c306794d1ee, type: 3}
   totalTime: 0
   _isRunning: 0
   jumpTime: 0.4
   jumpTimeCounter: 0
   force: 25
   forceHoldJump: 0.2
-  raycastDistance: 1.7
+  raycastDistance: 2
   gravityMultiplier: 1
   canJump: 1
   canDoubleJump: 0
   jumped: 0
   jumpReleased: 1
   grounded: 0
+  visualEffect: {fileID: 0}
+  SpeedBoostMultiplier: 1
   tr: {fileID: 2128684162189081619}
   dashingTime: 0.5
   dashingCooldown: 1
@@ -5647,6 +5651,37 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!1 &6569578317801341575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2083525148017468523}
+  m_Layer: 6
+  m_Name: ChairSpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2083525148017468523
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6569578317801341575}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.98}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6360843627563097466}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7384839398176270825
 GameObject:
   m_ObjectHideFlags: 0

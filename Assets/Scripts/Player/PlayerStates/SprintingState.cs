@@ -1,63 +1,57 @@
 using UnityEngine;
 
-public class SprintingState : IPlayerState
+public class SprintingState : PlayerState
 {
-    public SprintingState (PlayerController pc) : base("SprintingState", pc) {_pc = (PlayerController)this._playerStateMachine;}
+    public SprintingState (PlayerController pc) : base("SprintingState", pc) {PC = (PlayerController)this.PlayerStateMachine;}
 
     private bool _textActive = false;
     public override void EnterState()
     {
         base.EnterState();
-        //_pc.MoveSpeed = _pc.SprintSpeed;
-        //_playerStateMachine.Animator.Play("Sprinting");
-        _playerStateMachine.Animator.SetInteger("State", 2);
-    
+        PlayerStateMachine.Animator.SetInteger("State", 2);
     }
     public override void UpdateState()
     {
         base.UpdateState();
-        if(_pc.InteractableRange){
-            EnableInteractDialogueActive(_pc.GetUIController(), _pc.GetPlayerInput(),_pc.InteractableText);
+        if(PC.InteractableRange){
+            EnableInteractDialogueActive(PC.GetUIController(), PC.GetPlayerInput(),PC.InteractableText);
             _textActive = true;
-            if (_pc.InteractPressed && _pc.KeyDebounced)
-                _playerStateMachine.ChangeState(_pc.InteractingState);
+            if (PC.InteractPressed && PC.KeyDebounced)
+                PlayerStateMachine.ChangeState(PC.InteractingState);
         }
-        if (Mathf.Abs(_pc.Movement.x) < Mathf.Epsilon && Mathf.Abs(_pc.Movement.y) < Mathf.Epsilon)
-            _playerStateMachine.ChangeState(_pc.IdleState);
-        if (_pc.SpacePressed && _pc.canJump)
-            _playerStateMachine.ChangeState((_pc.JumpingState));
-        if (!_pc._isRunning)
-            _playerStateMachine.ChangeState(_pc.WalkingState);
-        if (_pc._canDash && _pc.dashPressed) 
-            _playerStateMachine.ChangeState(_pc.DashingState);
-        if (_pc.SwingPressed && _pc._canSwing && _pc.InRange)
-            _playerStateMachine.ChangeState(_pc.SwingingState);
-        if(!_pc.IsGrounded())
-            _playerStateMachine.ChangeState(_pc.FallingState);
-        if (_pc.InDialogeTriggerZone && _pc.NPC.hasBeenTalkedTo == false)
+        else if (Mathf.Abs(PC.Movement.x) < Mathf.Epsilon && Mathf.Abs(PC.Movement.y) < Mathf.Epsilon)
+            PlayerStateMachine.ChangeState(PC.IdleState);
+        else if (PC.SpacePressed && PC.canJump)
+            PlayerStateMachine.ChangeState((PC.JumpingState));
+        else if (!PC.isRunning)
+            PlayerStateMachine.ChangeState(PC.WalkingState);
+        else if (PC._canDash && PC.dashPressed) 
+            PlayerStateMachine.ChangeState(PC.DashingState);
+        else if (PC.SwingPressed && PC._canSwing && PC.InRange)
+            PlayerStateMachine.ChangeState(PC.SwingingState);
+        else if(!PC.IsGrounded())
+            PlayerStateMachine.ChangeState(PC.FallingState);
+        else if (PC.InDialogeTriggerZone && PC.NPC.hasBeenTalkedTo == false)
         {
             _textActive = true;
-            EnableInteractDialogueActive(_pc.GetUIController(), _pc.GetPlayerInput(), _pc.DialogueText);
-            if (_pc.InteractPressed)
+            EnableInteractDialogueActive(PC.GetUIController(), PC.GetPlayerInput(), PC.DialogueText);
+            if (PC.InteractPressed)
             {
-                _playerStateMachine.ChangeState(_pc.TalkingState);
+                PlayerStateMachine.ChangeState(PC.TalkingState);
             }
         }
-
-        if (!_pc.InteractableRange && !_pc.InDialogeTriggerZone)
+        else if (!PC.InteractableRange && !PC.InDialogeTriggerZone)
         {
-            DisableInteractDialogueActive(_pc.GetUIController());
+            DisableInteractDialogueActive(PC.GetUIController());
         }
     }
 
     public override void ExitState()
     {
-        //_pc.MoveSpeed = _pc.WalkSpeed;
-        //_playerStateMachine.Animator.SetBool("IsSprinting", false);        
-        _pc.GetAudio().Stop();
+        PC.GetAudio().Stop();
         if (_textActive)
         {
-            DisableInteractDialogueActive(_pc.GetUIController());
+            DisableInteractDialogueActive(PC.GetUIController());
             _textActive = false;
         }
     }
@@ -65,8 +59,8 @@ public class SprintingState : IPlayerState
     public override void LateUpdateState()
     {
         base.LateUpdateState();
-        _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * ((_pc.MoveSpeed * _pc.SpeedBoostMultiplier) * Time.deltaTime), 
+        PC.GetRigidbody().transform.Translate(PC.GetDirection(PC.PlayerInput()).normalized * ((PC.MoveSpeed * PC.speedBoostMultiplier) * Time.deltaTime), 
             Space.World);
-        _pc.FootPrint(_pc.footstepIntervalRunning);
+        PC.FootPrint(PC.footstepIntervalRunning);
     }
 }

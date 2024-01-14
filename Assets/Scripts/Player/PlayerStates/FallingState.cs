@@ -1,61 +1,58 @@
 using Unity.VisualScripting;
 using UnityEngine;
-    public class FallingState : IPlayerState
+    public class FallingState : PlayerState
     {
         public FallingState(PlayerController pc) : base("FallingState", pc)
         {
-            _pc = (PlayerController)this._playerStateMachine;
+            PC = (PlayerController)this.PlayerStateMachine;
         }
         public override void EnterState()
         {
-            //_playerStateMachine.Animator.Play("Falling");
-            _playerStateMachine.Animator.SetInteger("State", 6);
-            if (!_pc.jumped) _pc.jumpReleased = true;
-            _pc.EnableGrimParticles(false);
-
+            PlayerStateMachine.Animator.SetInteger("State", 6);
+            if (!PC.jumped) PC.jumpReleased = true;
+            PC.EnableGrimParticles(false);
         }
+        
         public override void UpdateState()
         {
             base.UpdateState();
 
-            if (_pc.IsGrounded())
+            if (PC.IsGrounded())
             {
-                _pc.MoveSpeed = _pc.WalkSpeed;
-                _playerStateMachine.ChangeState((_pc.LandingState));
+                PC.MoveSpeed = PC.WalkSpeed;
+                PlayerStateMachine.ChangeState((PC.LandingState));
             }
-            if (_pc._canDash && _pc.dashPressed) 
-                _playerStateMachine.ChangeState(_pc.DashingState);
-            if (_pc.SwingPressed && _pc._canSwing && _pc.InRange)
-                _playerStateMachine.ChangeState(_pc.SwingingState);
-            if (_pc.SpacePressed && _pc.canDoubleJump && _pc.jumpReleased)
-                _playerStateMachine.ChangeState(_pc.DoubleJumpState);
+            else if (PC._canDash && PC.dashPressed) 
+                PlayerStateMachine.ChangeState(PC.DashingState);
+            else if (PC.SwingPressed && PC._canSwing && PC.InRange)
+                PlayerStateMachine.ChangeState(PC.SwingingState);
+            else if (PC.SpacePressed && PC.canDoubleJump && PC.jumpReleased)
+                PlayerStateMachine.ChangeState(PC.DoubleJumpState);
             
-            if (CheckSwing())
+            else if (CheckSwing())
             {
-                EnableSwingText(_pc.GetUIController(), _pc.GetPlayerInput());
-                if (_pc.SwingPressed)
+                EnableSwingText(PC.GetUIController(), PC.GetPlayerInput());
+                if (PC.SwingPressed)
                 {
-                    _playerStateMachine.ChangeState(_pc.SwingingState);
+                    PlayerStateMachine.ChangeState(PC.SwingingState);
                 }
             }
             else
             {
-                DisableSwingText(_pc.GetUIController());
+                DisableSwingText(PC.GetUIController());
             }
             
         }
         
         public override void ExitState()
         {
-            _pc.EnableGrimParticles(true);
-            //_playerStateMachine.Animator.Play("Landing");
+            PC.EnableGrimParticles(true);
         }
         public override void LateUpdateState()
         {
             base.LateUpdateState();
-            _pc.GetRigidbody().AddForce(Physics.gravity*_pc.gravityMultiplier);
-            _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * ((_pc.MoveSpeed * _pc.SpeedBoostMultiplier) * Time.deltaTime), 
+            PC.GetRigidbody().AddForce(Physics.gravity*PC.gravityMultiplier);
+            PC.GetRigidbody().transform.Translate(PC.GetDirection(PC.PlayerInput()).normalized * ((PC.MoveSpeed * PC.speedBoostMultiplier) * Time.deltaTime), 
                 Space.World);
-            
         }
     }
