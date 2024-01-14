@@ -15,6 +15,16 @@ public class WalkingState : PlayerState
     {
         base.UpdateState();
         
+        if (PC.InDialogeTriggerZone && PC.NPC.hasBeenTalkedTo == false)
+        {
+            _textActive = true;
+            EnableInteractDialogueActive(PC.GetUIController(), PC.GetPlayerInput(), PC.DialogueText);
+            if (PC.InteractPressed)
+            {
+                PlayerStateMachine.ChangeState(PC.TalkingState);
+                return;
+            }
+        }
         if(PC.InteractableRange){
             _textActive = true;
             EnableInteractDialogueActive(PC.GetUIController(), PC.GetPlayerInput(),PC.InteractableText);
@@ -34,15 +44,7 @@ public class WalkingState : PlayerState
         else if(!PC.IsGrounded())
             PlayerStateMachine.ChangeState(PC.FallingState);
         
-        else if (PC.InDialogeTriggerZone && PC.NPC.hasBeenTalkedTo == false)
-        {
-            _textActive = true;
-            EnableInteractDialogueActive(PC.GetUIController(), PC.GetPlayerInput(), PC.DialogueText);
-            if (PC.InteractPressed)
-            {
-                PlayerStateMachine.ChangeState(PC.TalkingState);
-            }
-        }
+        
 
         else if (!PC.InteractableRange && !PC.InDialogeTriggerZone)
         {

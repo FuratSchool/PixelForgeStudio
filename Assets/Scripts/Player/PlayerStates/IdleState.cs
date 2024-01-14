@@ -24,9 +24,10 @@ public class IdleState : PlayerState
             if (PC.InteractPressed)
             {
                 PlayerStateMachine.ChangeState(PC.TalkingState);
+                return;
             }
         }
-        else if(PC.EmotePressed)
+        if(PC.EmotePressed)
             PlayerStateMachine.ChangeState(PC.EmoteState);
         else if(PC.InteractableRange){
             _textActive = true;
