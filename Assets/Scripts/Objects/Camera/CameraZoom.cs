@@ -19,6 +19,7 @@ public class CameraZoom : MonoBehaviour
     public AxisState zAxis = new AxisState(0f, 1f, false, true, 50f, 0.1f, 0.11f, "Mouse ScrollWheel", false);
     void Start()
     {
+        zAxis.Value = 1;
         FreelookCam = GetComponent<CinemachineFreeLook>();
         if (FreelookCam != null)
         {

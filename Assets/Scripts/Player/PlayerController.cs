@@ -3,28 +3,30 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using UnityEngine.VFX;
 
 public class PlayerController : PlayerStateMachine
 {
     private Camera _camera;
     
-    private BoxCollider m_Collider;
+    private BoxCollider _mCollider;
     private RaycastHit _hit;
     
     [Header("Movement")]
     [SerializeField] private float walkSpeed = 10.0f;
     [SerializeField] private float sprintSpeed = 15.0f;
-    private float moveSpeed;
+    private float _moveSpeed;
     public Vector2 Movement = Vector2.zero;
     public Transform footPrintsRight;
     public Transform footPrintsLeft;
-    public GameObject Chair;
-    private bool leftFootActive;
+    public GameObject chair;
+    private bool _leftFootActive;
     public float totalTime = 0;
-    public bool _isRunning;
+    public bool isRunning;
     public bool CanJumpAgain { get; set; } = true;
-    public bool waitOver { get; set; } = true;
+    public bool WaitOver { get; set; } = true;
+    
     [Header("Jumping")]
     [SerializeField] public float jumpTime = 0.35f;
     [SerializeField] public float jumpTimeCounter;
@@ -40,11 +42,11 @@ public class PlayerController : PlayerStateMachine
     public bool grounded;
     public bool EmotePressed { get; set; }
     
-    private IEnumerator SpeedboostCoroutine;
+    private IEnumerator _speedBoostCoroutine;
     public VisualEffect visualEffect;
     private Color _visualEffectBaseColor;
-    public bool SpeedboostActive { get; set; }
-    public float SpeedBoostMultiplier = 1f;
+    private bool _speedBoostActive;
+    public float speedBoostMultiplier = 1f;
     
     [Header("Dashing")]
     [SerializeField] private TrailRenderer tr;
@@ -53,7 +55,6 @@ public class PlayerController : PlayerStateMachine
     [SerializeField] private float dashingPower = 30f;
     [SerializeField] private float dashEndTime = .35f;
     public bool isDashing;
-    //private Vector3 _lastDirection;
     private Vector3 _dashDirection;
 
     [Header("Turning")] 
@@ -129,8 +130,8 @@ public class PlayerController : PlayerStateMachine
     [HideInInspector] public EmoteState EmoteState;
     public float MoveSpeed
     {
-        get => moveSpeed;
-        set => moveSpeed = value;
+        get => _moveSpeed;
+        set => _moveSpeed = value;
     }
     
     public float SprintSpeed
@@ -186,18 +187,17 @@ public class PlayerController : PlayerStateMachine
         EmoteState = new EmoteState(this);
         _uiController = FindObjectOfType<UIController>();
         _dialogueManager = FindObjectOfType<DialogueManager>();
-        //TR = GetComponent<TrailRenderer>();
         _rigidbody = GetComponent<Rigidbody>();
         _playerInput = GetComponent<PlayerInput>();
         _camera = Camera.main;
         GetDirection(PlayerInput());
-        m_Collider = GetComponent<BoxCollider>();
+        _mCollider = GetComponent<BoxCollider>();
         Application.targetFrameRate = 120;
         visualEffect = FindObjectOfType<VisualEffect>();
         _visualEffectBaseColor = visualEffect.GetVector4("Color");
     }
     
-    protected override IPlayerState GetInitialState()
+    protected override PlayerState GetInitialState()
     {
         return IdleState;
     }
@@ -239,9 +239,9 @@ public class PlayerController : PlayerStateMachine
         if(jumped) jumpReleased = true;
     }
     
-    private void OnSprintStart() { _isRunning = true; }
+    private void OnSprintStart() { isRunning = true; }
 
-    private void OnSprintFinish() { _isRunning = false; }
+    private void OnSprintFinish() { isRunning = false; }
     
     private void OnDash(InputValue inputValue)
     {
@@ -265,7 +265,7 @@ public class PlayerController : PlayerStateMachine
     {
         var layermask = 1 << 6;
         //bool ground = Physics.Raycast(transform.position, Vector3.down,out var hit, raycastDistance, ~layermask);
-        bool ground = Physics.BoxCast(m_Collider.bounds.center, transform.localScale, -transform.up,out _hit,transform.rotation, raycastDistance , ~layermask );
+        bool ground = Physics.BoxCast(_mCollider.bounds.center, transform.localScale, -transform.up,out _hit,transform.rotation, raycastDistance , ~layermask );
         
         /*if (_hit.collider != null)
         {
@@ -338,7 +338,6 @@ public class PlayerController : PlayerStateMachine
         _rigidbody.velocity = _dashDirection * dashingPower;
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
-        //Animator.Play("Stop Dash");
         Animator.SetInteger("State", 8);
         yield return new WaitForSeconds(dashEndTime);
         tr.emitting = false;
@@ -353,13 +352,13 @@ public class PlayerController : PlayerStateMachine
         totalTime += Time.deltaTime;
         if (!(totalTime > interfall)) return;
         var rotAmount = Quaternion.Euler(90, 0, 0);
-        if (leftFootActive)
+        if (_leftFootActive)
         {
             var footPrint = Instantiate(footPrintsLeft, (transform.position), (transform.rotation * rotAmount));
             footPrint.transform.SetParent(transform);
             footPrint.transform.localPosition = new Vector3(-.5f,0,0);
             footPrint.transform.SetParent(null);
-            leftFootActive = false;
+            _leftFootActive = false;
 
         }
         else
@@ -368,7 +367,7 @@ public class PlayerController : PlayerStateMachine
             footPrint.transform.SetParent(transform);
             footPrint.transform.localPosition = new Vector3(.5f,0,0);
             footPrint.transform.SetParent(null);
-            leftFootActive = true;
+            _leftFootActive = true;
         }
             
         totalTime = 0;
@@ -403,9 +402,9 @@ public class PlayerController : PlayerStateMachine
     }
     private IEnumerator WaitSec(float sec)
     {
-        waitOver = false;
+        WaitOver = false;
         yield return new WaitForSeconds(sec);
-        waitOver = true;
+        WaitOver = true;
     }
     public IEnumerator KeyDebounce()
     {
@@ -416,21 +415,21 @@ public class PlayerController : PlayerStateMachine
 
     public void StartSpeedBoost(float boost, float duration, Color color)
     {
-        if(SpeedboostActive) StopCoroutine(SpeedboostCoroutine);
-        SpeedboostCoroutine = ESpeedBoost(boost, duration,color);
-        StartCoroutine(SpeedboostCoroutine);
+        if(_speedBoostActive) StopCoroutine(_speedBoostCoroutine);
+        _speedBoostCoroutine = ESpeedBoost(boost, duration,color);
+        StartCoroutine(_speedBoostCoroutine);
         
     }
 
     private IEnumerator ESpeedBoost(float boost, float duration,Color color)
     {
-        SpeedboostActive = true;
-        SpeedBoostMultiplier = boost;
+        _speedBoostActive = true;
+        speedBoostMultiplier = boost;
         visualEffect.SetVector4("Color",color);
         yield return new WaitForSeconds(duration);
         visualEffect.SetVector4("Color",_visualEffectBaseColor);
-        SpeedBoostMultiplier = 1f;
-        SpeedboostActive = false;
+        speedBoostMultiplier = 1f;
+        _speedBoostActive = false;
     }
 
     public void EnableGrimParticles(bool enable)

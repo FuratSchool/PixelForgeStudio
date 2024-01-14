@@ -1,25 +1,25 @@
-public class DeathState : IPlayerState
+public class DeathState : PlayerState
 {
-    public DeathState (PlayerController pc) : base("DeathState", pc) {_pc = (PlayerController)this._playerStateMachine;}
+    public DeathState (PlayerController pc) : base("DeathState", pc) {PC = (PlayerController)this.PlayerStateMachine;}
 
     public override void EnterState()
     {
         base.EnterState();
-        _pc.GetRigidbody().isKinematic = true;
+        PC.GetRigidbody().isKinematic = true;
     }
 
     public override void UpdateState()
     {
         
-        var spawnPoint = _pc.GetComponent<PlayerStatus>().GetSpawnPoint();
-        _pc.transform.position = spawnPoint;
-            _pc.touchedWater = false;
-            _pc.DeathCount++;
-        _playerStateMachine.ChangeState(_pc.IdleState);
+        var spawnPoint = PC.GetComponent<PlayerStatus>().GetSpawnPoint();
+        PC.transform.position = spawnPoint;
+            PC.touchedWater = false;
+            PC.DeathCount++;
+        PlayerStateMachine.ChangeState(PC.IdleState);
     }
     public override void ExitState()
     {
         base.ExitState();
-        _pc.GetRigidbody().isKinematic = false;
+        PC.GetRigidbody().isKinematic = false;
     }
 }
