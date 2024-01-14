@@ -22,11 +22,12 @@ public class InteractingState : PlayerState
         if (PC.InteractPressed && PC.KeyDebounced)
         {
             PlayerStateMachine.ChangeState(PC.IdleState);
-        }
+        } 
     }
     
     public override void ExitState()
     {
+        PC.InteractPressed = false;
         PC.StartCoroutine(PC.KeyDebounce());
         var objects = GameObject.FindGameObjectsWithTag("Interactable");
         foreach (var obj in objects)
