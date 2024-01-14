@@ -17,7 +17,10 @@ public class SprintingState : PlayerState
             EnableInteractDialogueActive(PC.GetUIController(), PC.GetPlayerInput(),PC.InteractableText);
             _textActive = true;
             if (PC.InteractPressed && PC.KeyDebounced)
+            {
                 PlayerStateMachine.ChangeState(PC.InteractingState);
+                return;
+            }
         }
         if (PC.InDialogeTriggerZone && PC.NPC.hasBeenTalkedTo == false)
         {

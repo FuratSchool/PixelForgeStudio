@@ -27,9 +27,7 @@ public class JumpingState : PlayerState
         base.UpdateState();
         if (PC._canDash && PC.dashPressed) 
             PlayerStateMachine.ChangeState(PC.DashingState);
-        // if (_pc.GetRigidbody().velocity.y < -0)
-        //     _playerStateMachine.ChangeState(_pc.FallingState);
-        if (PC.SpacePressed && PC.canDoubleJump && PC.jumpReleased)
+        else if (PC.SpacePressed && PC.canDoubleJump && PC.jumpReleased)
             PlayerStateMachine.ChangeState(PC.DoubleJumpState);
 
 
@@ -40,6 +38,7 @@ public class JumpingState : PlayerState
             if (PC.SwingPressed)
             {
                 PlayerStateMachine.ChangeState(PC.SwingingState);
+                return;
             }
         }
         else

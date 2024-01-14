@@ -29,9 +29,12 @@ public class WalkingState : PlayerState
             _textActive = true;
             EnableInteractDialogueActive(PC.GetUIController(), PC.GetPlayerInput(),PC.InteractableText);
             if (PC.InteractPressed && PC.KeyDebounced)
+            {
                 PlayerStateMachine.ChangeState(PC.InteractingState);
+                return;
+            }
         }
-        else if ((Mathf.Abs(PC.Movement.x) < Mathf.Epsilon)&&(Mathf.Abs(PC.Movement.y) < Mathf.Epsilon))
+        if ((Mathf.Abs(PC.Movement.x) < Mathf.Epsilon)&&(Mathf.Abs(PC.Movement.y) < Mathf.Epsilon))
             PlayerStateMachine.ChangeState(PC.IdleState);
         else if (PC.SpacePressed && PC.canJump)
             PlayerStateMachine.ChangeState((PC.JumpingState));

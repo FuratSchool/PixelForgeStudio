@@ -27,14 +27,17 @@ public class IdleState : PlayerState
                 return;
             }
         }
-        if(PC.EmotePressed)
-            PlayerStateMachine.ChangeState(PC.EmoteState);
-        else if(PC.InteractableRange){
+        if(PC.InteractableRange){
             _textActive = true;
             EnableInteractDialogueActive(PC.GetUIController(), PC.GetPlayerInput(),PC.InteractableText);
             if (PC.InteractPressed && PC.KeyDebounced)
+            {
                 PlayerStateMachine.ChangeState(PC.InteractingState);
+                return;
+            }
         }
+        if(PC.EmotePressed)
+            PlayerStateMachine.ChangeState(PC.EmoteState);
         else if ((Mathf.Abs(PC.Movement.x) > Mathf.Epsilon)||(Mathf.Abs(PC.Movement.y) > Mathf.Epsilon))
             PlayerStateMachine.ChangeState(PC.WalkingState);
         else if (PC.SpacePressed && PC.canJump && PC.CanJumpAgain)
