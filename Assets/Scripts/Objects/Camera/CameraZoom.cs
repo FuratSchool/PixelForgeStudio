@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraZoom : MonoBehaviour
 {
@@ -46,7 +47,7 @@ public class CameraZoom : MonoBehaviour
             }
         }
     }
-
+    
     private void OnDestroy()
     {
         for (int i = 0; i < originalOrbits.Length; i++)

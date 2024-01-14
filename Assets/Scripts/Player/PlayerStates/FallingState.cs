@@ -29,12 +29,13 @@ using UnityEngine;
             else if (PC.SpacePressed && PC.canDoubleJump && PC.jumpReleased)
                 PlayerStateMachine.ChangeState(PC.DoubleJumpState);
             
-            else if (CheckSwing())
+            if (CheckSwing())
             {
                 EnableSwingText(PC.GetUIController(), PC.GetPlayerInput());
                 if (PC.SwingPressed)
                 {
                     PlayerStateMachine.ChangeState(PC.SwingingState);
+                    return;
                 }
             }
             else

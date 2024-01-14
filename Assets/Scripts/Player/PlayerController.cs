@@ -447,4 +447,11 @@ public class PlayerController : PlayerStateMachine
             visualEffect.SetFloat("AmberRate", 0f);
         }
     }
+    
+    public void OnCameraZoom(InputValue value)
+    {
+        var cameraZoom = FindObjectOfType<CameraZoom>();
+        if (cameraZoom == null) return;
+        cameraZoom.zAxis.Value += (value.Get<float>()*0.1f);
+    }
 }

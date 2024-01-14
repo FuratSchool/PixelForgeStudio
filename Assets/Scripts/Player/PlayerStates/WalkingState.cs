@@ -15,13 +15,26 @@ public class WalkingState : PlayerState
     {
         base.UpdateState();
         
+        if (PC.InDialogeTriggerZone && PC.NPC.hasBeenTalkedTo == false)
+        {
+            _textActive = true;
+            EnableInteractDialogueActive(PC.GetUIController(), PC.GetPlayerInput(), PC.DialogueText);
+            if (PC.InteractPressed)
+            {
+                PlayerStateMachine.ChangeState(PC.TalkingState);
+                return;
+            }
+        }
         if(PC.InteractableRange){
             _textActive = true;
             EnableInteractDialogueActive(PC.GetUIController(), PC.GetPlayerInput(),PC.InteractableText);
             if (PC.InteractPressed && PC.KeyDebounced)
+            {
                 PlayerStateMachine.ChangeState(PC.InteractingState);
+                return;
+            }
         }
-        else if ((Mathf.Abs(PC.Movement.x) < Mathf.Epsilon)&&(Mathf.Abs(PC.Movement.y) < Mathf.Epsilon))
+        if ((Mathf.Abs(PC.Movement.x) < Mathf.Epsilon)&&(Mathf.Abs(PC.Movement.y) < Mathf.Epsilon))
             PlayerStateMachine.ChangeState(PC.IdleState);
         else if (PC.SpacePressed && PC.canJump)
             PlayerStateMachine.ChangeState((PC.JumpingState));
@@ -34,15 +47,7 @@ public class WalkingState : PlayerState
         else if(!PC.IsGrounded())
             PlayerStateMachine.ChangeState(PC.FallingState);
         
-        else if (PC.InDialogeTriggerZone && PC.NPC.hasBeenTalkedTo == false)
-        {
-            _textActive = true;
-            EnableInteractDialogueActive(PC.GetUIController(), PC.GetPlayerInput(), PC.DialogueText);
-            if (PC.InteractPressed)
-            {
-                PlayerStateMachine.ChangeState(PC.TalkingState);
-            }
-        }
+        
 
         else if (!PC.InteractableRange && !PC.InDialogeTriggerZone)
         {
