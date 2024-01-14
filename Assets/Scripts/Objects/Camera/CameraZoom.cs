@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
@@ -42,6 +43,15 @@ public class CameraZoom : MonoBehaviour
                 FreelookCam.m_Orbits[i].m_Height = originalOrbits[i].m_Height * zoomScale;
                 FreelookCam.m_Orbits[i].m_Radius = originalOrbits[i].m_Radius * zoomScale;
             }
+        }
+    }
+
+    private void OnDestroy()
+    {
+        for (int i = 0; i < originalOrbits.Length; i++)
+        {
+            FreelookCam.m_Orbits[i].m_Height = originalOrbits[i].m_Height;
+            FreelookCam.m_Orbits[i].m_Radius = originalOrbits[i].m_Radius;
         }
     }
 }

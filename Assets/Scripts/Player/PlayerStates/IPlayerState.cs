@@ -32,8 +32,8 @@ public class IPlayerState
         _pc.grounded = _pc.IsGrounded();
         if (_pc.IsGrounded())
         {
-            
-
+            _pc.canJump = true;
+            _pc.canDoubleJump = true;
         }
     }
     public virtual void ExitState() { }

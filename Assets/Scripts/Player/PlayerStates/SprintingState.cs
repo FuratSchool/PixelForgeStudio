@@ -11,7 +11,6 @@ public class SprintingState : IPlayerState
         //_pc.MoveSpeed = _pc.SprintSpeed;
         //_playerStateMachine.Animator.Play("Sprinting");
         _playerStateMachine.Animator.SetInteger("State", 2);
-    
     }
     public override void UpdateState()
     {
