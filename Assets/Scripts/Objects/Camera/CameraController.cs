@@ -38,7 +38,7 @@ public class CameraController : MonoBehaviour
     {
         _settingsData = settings;
         _camera.m_YAxis.m_MaxSpeed = _defaultSensitivityY * (_settingsData.sensitivityY * correctionY);
-        _camera.m_XAxis.m_MaxSpeed = _defaultSensitivityY * (_settingsData.sensitivityX * correctionX);
+        _camera.m_XAxis.m_MaxSpeed = _defaultSensitivityX * (_settingsData.sensitivityX * correctionX);
         _camera.m_XAxis.m_InvertInput = _settingsData.invertedX;
         _camera.m_YAxis.m_InvertInput = _settingsData.invertedY;
     }
