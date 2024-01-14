@@ -473,6 +473,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Whisp_Coin
       objectReference: {fileID: 0}
+    - target: {fileID: 5548843385962537874, guid: 70b26dfdbb4c9534999f318a4ed3f4b9,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c6243389d60b45340aaaedc332136a81, type: 2}
     - target: {fileID: 7677467145605852282, guid: 70b26dfdbb4c9534999f318a4ed3f4b9,
         type: 3}
       propertyPath: moveWithTransform

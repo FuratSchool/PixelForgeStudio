@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_Morphing
+  m_Name: GhostBallShader
   m_Shader: {fileID: -6465566751694194690, guid: fbabcc8ae76221a488566e192da23175,
     type: 3}
   m_Parent: {fileID: 0}
@@ -51,7 +51,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Alpha: 0.54
+    - _Alpha: 0.94
     - _Density: 20
     - _Distance: 0.15
     - _Noise_Scale: 50
@@ -59,5 +59,5 @@ Material:
     - _QueueOffset: 0
     - _Speed: 2
     m_Colors:
-    - _Color: {r: 0.028034905, g: 0.78574824, b: 0.8490566, a: 0}
+    - _Color: {r: 3.621323, g: 0, b: 7.1698112, a: 0}
   m_BuildTextureStacks: []
