@@ -25,6 +25,7 @@ public class TalkingState : PlayerState
     public override void ExitState()
     {
         DisableInteractDialogueActive(PC.GetUIController());
+        PC.StartCoroutine(PC.KeyDebounce());
         PC.NPC.hasBeenTalkedTo = true;
         PC.SpacePressed = false;
         if(PC.NPC.canTalkAgain)
