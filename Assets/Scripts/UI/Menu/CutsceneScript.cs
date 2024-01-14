@@ -45,5 +45,10 @@ public class CutsceneScript : MonoBehaviour
         IntroVideoPlayer.time = 0;
         _MainMenu.SetActive(true);
         _ended = true;
+        var buttons = FindObjectsOfType<Button>();
+        foreach (var button in buttons)
+        {
+            button.interactable = true;
+        }
     }
 }
