@@ -25,7 +25,6 @@ public class PauseMenu : MonoBehaviour
     void Start()
     {
         pauseMenu.SetActive(false);
-        optionsMenu.GetComponent<SettingsMenu>().InGameScene = true;
         _player = GameObject.Find("PlayerObject");
     }
 
@@ -46,7 +45,7 @@ public class PauseMenu : MonoBehaviour
                     {
                         if (isOptionsOpen)
                         {
-                            CloseOptionsMenu();
+                            optionsMenu.GetComponent<NewSettingsMenu>().OnBack(null);
                         }
                         else
                         {
@@ -65,7 +64,7 @@ public class PauseMenu : MonoBehaviour
                 {
                     if (isOptionsOpen)
                     {
-                        CloseOptionsMenu();
+                        optionsMenu.GetComponent<NewSettingsMenu>().OnBack(null);
                     }
                     else
                     {
@@ -92,6 +91,8 @@ public class PauseMenu : MonoBehaviour
     public void PauseGame()
     {
         pauseMenu.SetActive(true);
+        _player.GetComponent<PlayerInput>().enabled = false;
+        optionsMenu.GetComponent<PlayerInput>().enabled = true;
         FindObjectOfType<UIController>().SetCoinAlpha(1);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstSelectedButton);
@@ -102,6 +103,8 @@ public class PauseMenu : MonoBehaviour
 
     public void ResumeGame()
     {
+        _player.GetComponent<PlayerInput>().enabled = true;
+        optionsMenu.GetComponent<PlayerInput>().enabled = false;
         FindObjectOfType<UIController>().SetCoinAlpha(0);
         pauseMenu.SetActive(false);
         Time.timeScale = 1f; //resumes the ingame time
@@ -118,6 +121,7 @@ public class PauseMenu : MonoBehaviour
     
     public void CloseOptionsMenu()
     {
+        Debug.Log("Closing options menu");
         optionsMenu.SetActive(false);
         pauseMenu.transform.GetChild(0).gameObject.SetActive(true);
         CoinsUI.SetActive(true);

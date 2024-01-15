@@ -12,6 +12,7 @@ public class Navigation : MonoBehaviour
     private string ActiveControlScheme;
     [SerializeField] private GameObject fistMainMenu;
     public bool inMenu;
+    public GameObject LoadingScreen;
 
     private void Update()
     {

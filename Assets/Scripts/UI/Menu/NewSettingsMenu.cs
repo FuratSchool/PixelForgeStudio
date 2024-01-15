@@ -46,26 +46,19 @@ public class NewSettingsMenu : MonoBehaviour
     private Resolution[] _resolutions;
     public GameObject _currentSelecetedhorizontalSelector { get; set; }
     private PlayerInput _input;
-    public bool InGameScene {get; set;} =false;
+    public bool InGameScene = false;
     private bool InputDisable = false;
     private int activeMenu;
     
     void Start()
     {
         audioMixer = Resources.Load("Audio/MainMixer", typeof(AudioMixer)) as AudioMixer;
-        //this._settings = sceneController.Settings;
+        if(sceneController == null)
+            sceneController = FindObjectOfType<SceneController>();
         activeMenu = startMenu;
         updateMenu(activeMenu);
         InitResolutions();
-        if (InGameScene)
-        {
-            GetComponent<PlayerInput>().enabled = false;
-            _input = GameObject.Find("PlayerObject").GetComponent<PlayerInput>();
-        }
-        else
-        {
-            _input = GetComponent<PlayerInput>();
-        }
+        _input = GetComponent<PlayerInput>();
         GeneralButton.GetComponent<Button>().onClick.AddListener(GeneralMenuActive);
         ControlsButton.GetComponent<Button>().onClick.AddListener(ControlsMenuActive);
         AudioButton.GetComponent<Button>().onClick.AddListener(AudioMenuActive);
@@ -75,7 +68,7 @@ public class NewSettingsMenu : MonoBehaviour
     }
     private void UserChangedControls(InputUser user, InputUserChange change, InputDevice device)
     {
-        if ((user.controlScheme.Value.name.Equals("Controller")))
+        if (user.controlScheme != null && user.controlScheme.Value.name.Equals("Controller"))
         {
             if (EventSystem.current.currentSelectedGameObject == null)
             {
@@ -104,6 +97,7 @@ public class NewSettingsMenu : MonoBehaviour
             _input.actions.actionMaps[1].Enable();
         InputDisable = false;
         GeneralMenuActive();
+        updateSettings();
     }
     
     void OnMenuLeft()
@@ -125,28 +119,35 @@ public class NewSettingsMenu : MonoBehaviour
         updateMenu(activeMenu);
     }
     
-    void OnBack(InputValue inputValue)
+    public void OnBack(InputValue inputValue)
     {
         if (!InputDisable)
         {
             _input.actions.actionMaps[0].Enable();
             InputDisable = false;
             sceneController.Settings.rebinds = _input.actions.SaveBindingOverridesAsJson();
-            Debug.Log(sceneController.Settings.masterVolume);
-            
-            _settingsMenu.SetActive(false);
-            
             activeMenu = startMenu;
-            
             var rebinds = actions.SaveBindingOverridesAsJson();
             sceneController.Settings.rebinds = rebinds;
             sceneController.SaveSettings(sceneController.Settings);
-            
-            backToMenu.SetActive(true);
-            var player_input = transform.parent.GetComponent<PlayerInput>();
-            if(player_input != null)
-                player_input.enabled = true;
+            if (InGameScene)
+            {
+                FindObjectOfType<PauseMenu>().CloseOptionsMenu();
+            }
+            else
+            {
+                _settingsMenu.SetActive(false);
+                backToMenu.SetActive(true);
+                var player_input = transform.parent.GetComponent<PlayerInput>();
+                if(player_input != null)
+                    player_input.enabled = true;
+            }
         }
+    }
+
+    private void OnDisable()
+    {
+        InputUser.onChange -= UserChangedControls;
     }
 
     void OnReset()
@@ -359,6 +360,7 @@ public class NewSettingsMenu : MonoBehaviour
     
     public void UpdateAudio()
     {
+        check_scenecontroller();
         MasterVolumeSilder.value = sceneController.Settings.masterVolume;
         BackgroundVolumeSlider.value = sceneController.Settings.backgroundVolume;
         EffectsVolumeSlider.value = sceneController.Settings.effectsVolume;

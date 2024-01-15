@@ -38,6 +38,7 @@ public class MainMenu : MonoBehaviour
     
     private void OnDisable()
     {
+        
         FindObjectOfType<Navigation>().inMenu = false;
         EventSystem.current.SetSelectedGameObject(null);
         

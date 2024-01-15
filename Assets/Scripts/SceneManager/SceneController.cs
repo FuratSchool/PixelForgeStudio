@@ -15,7 +15,7 @@ public class SceneController : MonoBehaviour
     public AudioMixer audioMixer;
     private string ActiveSceneName;
     public SettingsData Settings;
-    public GameObject LoadingScreen;
+    private GameObject LoadingScreen;
     private bool loadingDone = false;
     private AsyncOperation asyncLoad;
     private void Awake()
@@ -49,11 +49,16 @@ public class SceneController : MonoBehaviour
 
     private void Start()
     {
+        LoadingScreen = FindObjectOfType<Navigation>().LoadingScreen;
         loadSettings();
     }
     
     public void LoadSceneAsync(string sceneName)
     {
+        if (LoadingScreen == null)
+        {
+            LoadingScreen = FindObjectOfType<Navigation>().LoadingScreen;
+        }
         LoadingScreen.SetActive(true);
         StartCoroutine(LoadSceneAsyncCoroutine(sceneName));
     }

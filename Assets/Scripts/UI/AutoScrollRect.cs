@@ -43,16 +43,13 @@ public class AutoScrollRect : MonoBehaviour
         {
             if (selected.transform.parent.parent.parent != contentRectTransform.transform)
             {
-                if (selected.transform.parent.parent.parent.parent != null)
+                if (selected.transform.parent.parent.parent.parent != contentRectTransform.transform)
                 {
-                    if (selected.transform.parent.parent.parent.parent != contentRectTransform.transform)
-                    {
-                        return;
-                    }
-                    else
-                    {
-                        isfourthparent = true;
-                    }
+                    return;
+                }
+                else
+                {
+                    isfourthparent = true;
                 }
             }
             else
@@ -83,14 +80,14 @@ public class AutoScrollRect : MonoBehaviour
             float step = selectedPosition - above;
             float newY = currentScrollRectPosition + step;
             float newNormalizedY = newY / contentHeightDifference;
-            scrollRect.normalizedPosition = Vector2.Lerp(scrollRect.normalizedPosition, new Vector2(0, newNormalizedY), scrollSpeed * Time.deltaTime);
+            scrollRect.normalizedPosition = Vector2.Lerp(scrollRect.normalizedPosition, new Vector2(0, newNormalizedY), scrollSpeed * Time.unscaledDeltaTime);
         }
         else if (selectedPosition < below)
         {
             float step = selectedPosition - below;
             float newY = currentScrollRectPosition + step;
             float newNormalizedY = newY / contentHeightDifference;
-            scrollRect.normalizedPosition = Vector2.Lerp(scrollRect.normalizedPosition, new Vector2(0, newNormalizedY), scrollSpeed * Time.deltaTime);
+            scrollRect.normalizedPosition = Vector2.Lerp(scrollRect.normalizedPosition, new Vector2(0, newNormalizedY), scrollSpeed * Time.unscaledDeltaTime);
         }
     }
 }
