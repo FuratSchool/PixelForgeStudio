@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -41,7 +42,11 @@ public class NewSettingsMenu : MonoBehaviour
         AudioButton.GetComponent<Button>().onClick.AddListener(AudioMenuActive);
     }
 
-    // Update is called once per frame
+    private void OnEnable()
+    {
+        InputDisable = false;
+        GeneralMenuActive();
+    }
 
     void OnMenuLeft()
     {
