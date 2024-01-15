@@ -87,6 +87,15 @@
                     "initialStateCheck": true
                 },
                 {
+                    "name": "EmoteGang",
+                    "type": "Value",
+                    "id": "3d56f693-1a01-4b94-afad-dd444a0ada46",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "CameraZoom",
                     "type": "Button",
                     "id": "a74f957f-95ed-4cde-8951-c409c32582f6",
@@ -378,7 +387,7 @@
                     "path": "<Keyboard>/z",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "KeyboardMouse",
                     "action": "Emote",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -389,7 +398,7 @@
                     "path": "<Gamepad>/dpad/right",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": "Controller",
                     "action": "Emote",
                     "isComposite": false,
                     "isPartOfComposite": false
@@ -426,6 +435,28 @@
                     "action": "CameraZoom",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "fda44070-628e-4d68-a2b7-6159a4cae0a7",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "EmoteGang",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ccb97186-575a-4bf6-a13f-3b9bc667bcde",
+                    "path": "<Gamepad>/dpad/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Controller",
+                    "action": "EmoteGang",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
