@@ -43,13 +43,16 @@ public class AutoScrollRect : MonoBehaviour
         {
             if (selected.transform.parent.parent.parent != contentRectTransform.transform)
             {
-                if (selected.transform.parent.parent.parent.parent != contentRectTransform.transform)
+                if (selected.transform.parent.parent.parent.parent != null)
                 {
-                    return;
-                }
-                else
-                {
-                    isfourthparent = true;
+                    if (selected.transform.parent.parent.parent.parent != contentRectTransform.transform)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        isfourthparent = true;
+                    }
                 }
             }
             else

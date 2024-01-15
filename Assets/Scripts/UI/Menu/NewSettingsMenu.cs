@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Users;
 using UnityEngine.Rendering;
 using UnityEngine.UI;
 
@@ -13,7 +14,8 @@ public class NewSettingsMenu : MonoBehaviour
 {
     
     [SerializeField] private GameObject _settingsMenu;
-
+    
+    [SerializeField] private InputActionAsset actions;
     [SerializeField] private GameObject ControlsButton;
     [SerializeField] private GameObject GeneralButton;
     [SerializeField] private GameObject AudioButton;
@@ -36,13 +38,13 @@ public class NewSettingsMenu : MonoBehaviour
     [SerializeField] private HorizontalSelector CameraInvertYToggle;
     [SerializeField] private HorizontalSelector CameraInvertXToggle;
     [SerializeField] private HorizontalSelector CameraSensitivityDropdown;
+    [SerializeField] private GameObject backToMenu;
     
     [SerializeField] private SceneController sceneController;
     private AudioMixer audioMixer;
     
     private Resolution[] _resolutions;
     public GameObject _currentSelecetedhorizontalSelector { get; set; }
-    private SettingsData _settings;
     private PlayerInput _input;
     public bool InGameScene {get; set;} =false;
     private bool InputDisable = false;
@@ -67,19 +69,39 @@ public class NewSettingsMenu : MonoBehaviour
         GeneralButton.GetComponent<Button>().onClick.AddListener(GeneralMenuActive);
         ControlsButton.GetComponent<Button>().onClick.AddListener(ControlsMenuActive);
         AudioButton.GetComponent<Button>().onClick.AddListener(AudioMenuActive);
+        InputUser.onChange += UserChangedControls;
         updateSettings();
         
     }
-
+    private void UserChangedControls(InputUser user, InputUserChange change, InputDevice device)
+    {
+        if ((user.controlScheme.Value.name.Equals("Controller")))
+        {
+            if (EventSystem.current.currentSelectedGameObject == null)
+            {
+                if (activeMenu == 1)
+                {
+                    _currentSelecetedhorizontalSelector = ControlsSlider.transform.parent.gameObject;
+                    SelectControlsMenu();
+                }
+                else if (activeMenu == 2)
+                    SelectGeneralMenu();
+                else if (activeMenu == 3)
+                    SelectAudioMenu();
+            }
+        }
+    }
     private void updateSettings()
     {
         UpdateAudio();
         UpdateControls();
         UpdateVideo();
+        actions.LoadBindingOverridesFromJson(sceneController.Settings.rebinds);
     }
     private void OnEnable()
     {
-        _input.actions.actionMaps[1].Enable();
+        if(_input != null)
+            _input.actions.actionMaps[1].Enable();
         InputDisable = false;
         GeneralMenuActive();
     }
@@ -111,9 +133,27 @@ public class NewSettingsMenu : MonoBehaviour
             InputDisable = false;
             sceneController.Settings.rebinds = _input.actions.SaveBindingOverridesAsJson();
             Debug.Log(sceneController.Settings.masterVolume);
-            sceneController.SaveSettings(sceneController.Settings);
+            
             _settingsMenu.SetActive(false);
+            
+            activeMenu = startMenu;
+            
+            var rebinds = actions.SaveBindingOverridesAsJson();
+            sceneController.Settings.rebinds = rebinds;
+            sceneController.SaveSettings(sceneController.Settings);
+            
+            backToMenu.SetActive(true);
+            var player_input = transform.parent.GetComponent<PlayerInput>();
+            if(player_input != null)
+                player_input.enabled = true;
         }
+    }
+
+    void OnReset()
+    {
+        if(InputDisable) return;
+        sceneController.Settings = new SettingsData("",1920,1080,0,0,0,true,false,false,1);
+        updateSettings();
     }
     void OnLeftright(InputValue inputValue)
     {
@@ -151,9 +191,13 @@ public class NewSettingsMenu : MonoBehaviour
         OptionsButtonHighLightEnable(GeneralButton);
         OptionsButtonHighLightDisable(ControlsButton);
         OptionsButtonHighLightDisable(AudioButton);
+        SelectGeneralMenu();
+    }
+
+    private void SelectGeneralMenu()
+    {
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(GeneralMenu.transform.GetChild(0).GetChild(0).GetChild(0).gameObject);
-        
     }
     void ControlsMenuActive()
     {
@@ -163,9 +207,14 @@ public class NewSettingsMenu : MonoBehaviour
         OptionsButtonHighLightDisable(GeneralButton);
         OptionsButtonHighLightEnable(ControlsButton);
         OptionsButtonHighLightDisable(AudioButton);
+        SelectControlsMenu();
+        _currentSelecetedhorizontalSelector = ControlsSlider.transform.parent.gameObject;
+    }
+    
+    private void SelectControlsMenu()
+    {
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(ControlsSlider);
-        _currentSelecetedhorizontalSelector = ControlsSlider.transform.parent.gameObject;
         
     }
     void AudioMenuActive()
@@ -176,8 +225,14 @@ public class NewSettingsMenu : MonoBehaviour
         OptionsButtonHighLightDisable(GeneralButton);
         OptionsButtonHighLightDisable(ControlsButton);
         OptionsButtonHighLightEnable(AudioButton);
+        SelectAudioMenu();
+    }
+    
+    private void SelectAudioMenu()
+    {
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(AudioMenu.transform.GetChild(0).GetChild(0).gameObject);
+        
     }
     
     public void OptionsButtonHighLightEnable(GameObject Object)
@@ -231,8 +286,7 @@ public class NewSettingsMenu : MonoBehaviour
 
     public void SetMasterVolume(float volume)
     {
-        if(sceneController == null)
-            sceneController = FindObjectOfType<SceneController>();
+        check_scenecontroller();
         sceneController.Settings.masterVolume = volume;
         Debug.Log(sceneController.Settings.masterVolume);
         if(audioMixer == null)
@@ -241,6 +295,7 @@ public class NewSettingsMenu : MonoBehaviour
     }
     public void SetEffectsVolume(float volume)
     {
+        check_scenecontroller();
         sceneController.Settings.effectsVolume = volume;
         if(audioMixer == null)
             audioMixer = Resources.Load("Audio/MainMixer", typeof(AudioMixer)) as AudioMixer;
@@ -248,6 +303,7 @@ public class NewSettingsMenu : MonoBehaviour
     }
     public void SetBackgroundVolume(float volume)
     {
+        check_scenecontroller();
         sceneController.Settings.backgroundVolume = volume;
         if(audioMixer == null)
             audioMixer = Resources.Load("Audio/MainMixer", typeof(AudioMixer)) as AudioMixer;
@@ -256,56 +312,82 @@ public class NewSettingsMenu : MonoBehaviour
     
     public void SetFullscreen(int isFullscreen)
     {
-        this._settings.fullscreen = Convert.ToBoolean(isFullscreen);
-        Screen.fullScreen = this._settings.fullscreen;
+        check_scenecontroller();
+        sceneController.Settings.fullscreen = Convert.ToBoolean(isFullscreen);
+        Screen.fullScreen = sceneController.Settings.fullscreen;
     }
     
     public void SetInvertedX(int isInverted)
     {
-        this._settings.invertedX = Convert.ToBoolean(isInverted);
+        check_scenecontroller();
+        sceneController.Settings.invertedX = Convert.ToBoolean(isInverted);
         if (InGameScene)
         {
-            FindObjectOfType<CameraController>().UpdateCameraSettings(this._settings);
+            FindObjectOfType<CameraController>().UpdateCameraSettings(sceneController.Settings);
+        }
+    }
+    
+    public void SetCameraSensitivity(int setting)
+    {
+        check_scenecontroller();
+        sceneController.Settings.invertedX = Convert.ToBoolean(setting);
+        if (InGameScene)
+        {
+            FindObjectOfType<CameraController>().UpdateCameraSettings(sceneController.Settings);
         }
     }
     
     public void SetInvertedY(int isInverted)
     {
-        this._settings.invertedY = Convert.ToBoolean(isInverted);
+        check_scenecontroller();
+        sceneController.Settings.invertedY = Convert.ToBoolean(isInverted);
         if (InGameScene)
         {
-            FindObjectOfType<CameraController>().UpdateCameraSettings(this._settings);
+            FindObjectOfType<CameraController>().UpdateCameraSettings(sceneController.Settings);
         }
         
     }
     
     public void SetResolution(int resolutionIndex)
     {
+        check_scenecontroller();
         Resolution resolution = _resolutions[resolutionIndex];
-        this._settings.resolutionHeight = resolution.height;
-        this._settings.resolutionWidth = resolution.width;
-        Screen.SetResolution(this._settings.resolutionWidth,this._settings.resolutionHeight,Screen.fullScreen);
+        sceneController.Settings.resolutionHeight = resolution.height;
+        sceneController.Settings.resolutionWidth = resolution.width;
+        Screen.SetResolution(sceneController.Settings.resolutionWidth,sceneController.Settings.resolutionHeight,Screen.fullScreen);
     }
     
     public void UpdateAudio()
     {
-        MasterVolumeSilder.value = this._settings.masterVolume;
-        BackgroundVolumeSlider.value = this._settings.backgroundVolume;
-        EffectsVolumeSlider.value = this._settings.effectsVolume;
+        MasterVolumeSilder.value = sceneController.Settings.masterVolume;
+        BackgroundVolumeSlider.value = sceneController.Settings.backgroundVolume;
+        EffectsVolumeSlider.value = sceneController.Settings.effectsVolume;
     }
 
     public void UpdateVideo()
     {
-        int index = Array.FindIndex(_resolutions, res => res.width == this._settings.resolutionWidth && res.height == this._settings.resolutionHeight);
+        
+        int index = Array.FindIndex(_resolutions, res => res.width == sceneController.Settings.resolutionWidth && res.height == sceneController.Settings.resolutionHeight);
         ResolutionDropdown.Value = index;
         ResolutionDropdown.RefreshShownValue();
-        FullscreenToggle.Value = Convert.ToInt32(this._settings.fullscreen);
+        FullscreenToggle.Value = Convert.ToInt32(sceneController.Settings.fullscreen);
+        FullscreenToggle.RefreshShownValue();
     }
 
     public void UpdateControls()
     {
-        CameraInvertYToggle.Value = Convert.ToInt32(this._settings.invertedY);
-        CameraInvertXToggle.Value = Convert.ToInt32(this._settings.invertedX);
-        CameraSensitivityDropdown.Value = this._settings.sensitivity;
+        CameraInvertYToggle.Value = Convert.ToInt32(sceneController.Settings.invertedY);
+        CameraInvertXToggle.Value = Convert.ToInt32(sceneController.Settings.invertedX);
+        CameraSensitivityDropdown.Value = sceneController.Settings.sensitivity;
+        CameraInvertYToggle.RefreshShownValue();
+        CameraInvertXToggle.RefreshShownValue();
+        CameraSensitivityDropdown.RefreshShownValue();
     }
+
+    public void check_scenecontroller()
+    {
+        if(sceneController == null)
+            sceneController = FindObjectOfType<SceneController>();
+    }
+
 }
