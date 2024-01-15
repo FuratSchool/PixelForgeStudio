@@ -331,7 +331,7 @@ public class NewSettingsMenu : MonoBehaviour
     public void SetCameraSensitivity(int setting)
     {
         check_scenecontroller();
-        sceneController.Settings.invertedX = Convert.ToBoolean(setting);
+        sceneController.Settings.sensitivity = setting;
         if (InGameScene)
         {
             FindObjectOfType<CameraController>().UpdateCameraSettings(sceneController.Settings);
@@ -368,7 +368,8 @@ public class NewSettingsMenu : MonoBehaviour
 
     public void UpdateVideo()
     {
-        
+        if (_resolutions == null)
+            InitResolutions();
         int index = Array.FindIndex(_resolutions, res => res.width == sceneController.Settings.resolutionWidth && res.height == sceneController.Settings.resolutionHeight);
         ResolutionDropdown.Value = index;
         ResolutionDropdown.RefreshShownValue();
