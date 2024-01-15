@@ -15,4 +15,15 @@ public class FootPrint : MonoBehaviour
     {
         
     }
+    
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (!collision.gameObject.tag.Equals("Player"))
+        {
+            if (collision.gameObject.tag.Equals("platform"))
+            {
+                transform.SetParent(collision.transform);
+            }
+        }
+    }
 }

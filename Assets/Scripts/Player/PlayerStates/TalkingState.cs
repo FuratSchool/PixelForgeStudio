@@ -1,40 +1,35 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class TalkingState : IPlayerState
+public class TalkingState : PlayerState
 {
-    public TalkingState (PlayerController pc) : base("TalkingState", pc) {_pc = (PlayerController)this._playerStateMachine;}
+    public TalkingState (PlayerController pc) : base("TalkingState", pc) {PC = (PlayerController)this.PlayerStateMachine;}
     public override void EnterState()
     {
-        _pc.NPC.hasBeenTalkedTo = true;
-        _pc.GetDialogueManager().StartDialogue(_pc.NPC.dialogue);
-        _pc.DialogueActive = true;
-        //_playerStateMachine.Animator.Play("Talking");
-        _playerStateMachine.Animator.SetInteger("State", 7);
+        PC.NPC.hasBeenTalkedTo = true;
+        PC.GetDialogueManager().StartDialogue(PC.NPC.dialogue);
+        PC.DialogueActive = true;
+        PlayerStateMachine.Animator.SetInteger("State", 7);
     }
 
     public override void UpdateState()
     {
-        if (!_pc.DialogueActive)
-            _playerStateMachine.ChangeState(_pc.IdleState);
+        if (!PC.DialogueActive)
+            PlayerStateMachine.ChangeState(PC.IdleState);
     }
 
-    public override void FixedUpdateState()
-    {
-    }
+    public override void FixedUpdateState() { }
 
-    public override void LateUpdateState()
-    {
-    }
+    public override void LateUpdateState() { }
 
     public override void ExitState()
     {
-        DisableInteractDialogueActive(_pc.GetUIController());
-        _pc.NPC.hasBeenTalkedTo = true;
-        _pc.SpacePressed = false;
-        if(_pc.NPC.canTalkAgain)
-            _pc.NPC.hasBeenTalkedTo = false;
-        //_playerStateMachine.Animator.SetBool(("IsTalking"), false);
+        DisableInteractDialogueActive(PC.GetUIController());
+        PC.StartCoroutine(PC.KeyDebounce());
+        PC.NPC.hasBeenTalkedTo = true;
+        PC.SpacePressed = false;
+        if(PC.NPC.canTalkAgain)
+            PC.NPC.hasBeenTalkedTo = false;
 
     }
 }
