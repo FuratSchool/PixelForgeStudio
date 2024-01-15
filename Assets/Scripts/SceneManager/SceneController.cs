@@ -16,6 +16,9 @@ public class SceneController : MonoBehaviour
     private string ActiveSceneName;
     public SettingsData Settings;
     public RebindActionUI rebindActionUI;
+    public GameObject LoadingScreen;
+    private bool loadingDone = false;
+    private AsyncOperation asyncLoad;
     private void Awake()
     {
         if(spawned == false)
@@ -39,13 +42,39 @@ public class SceneController : MonoBehaviour
         {
             this.LoadScene("MainMenu");
         }
+        if (loadingDone)
+        {
+            StartCoroutine(LoadTime(3f));
+        }
     }
 
     private void Start()
     {
         loadSettings();
     }
-
+    
+    public void LoadSceneAsync(string sceneName)
+    {
+        LoadingScreen.SetActive(true);
+        StartCoroutine(LoadSceneAsyncCoroutine(sceneName));
+    }
+    
+    private IEnumerator LoadSceneAsyncCoroutine(string sceneName)
+    {
+        asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        asyncLoad.allowSceneActivation = false;
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+            loadingDone= true;
+        }
+    }
+    
+    private IEnumerator LoadTime(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        asyncLoad.allowSceneActivation = true;
+    }
     public void LoadScene(string sceneName)
     {
         ActiveSceneName = sceneName;
