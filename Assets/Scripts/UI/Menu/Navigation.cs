@@ -43,4 +43,6 @@ public class Navigation : MonoBehaviour
         else
             Cursor.visible = true;
     }
+    
+    
 }
