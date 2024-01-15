@@ -44,6 +44,7 @@ public class SettingsUIButtons : MonoBehaviour, ISelectHandler, IDeselectHandler
 
     public void OnDeselect(BaseEventData eventData)
     {
+        
         if(isHorizontalSelector)
             _newSettingsMenu._currentSelecetedhorizontalSelector = null;
         SetHighlight(false);

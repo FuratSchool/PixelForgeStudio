@@ -36,7 +36,7 @@ public class SettingsMenu : MonoBehaviour
         var rebinds = actions.SaveBindingOverridesAsJson();
         InputUser.onChange -= UserChangedControls;
         settings.rebinds = rebinds;
-        FindObjectOfType<SceneController>().Settings.rebinds = rebinds;
+        //FindObjectOfType<SceneController>().Settings.rebinds = rebinds;
         LoadSaveSettings.SaveData(settings);
         if(inGameScene)
            GetComponent<PlayerInput>().enabled = false;
@@ -103,7 +103,7 @@ public class SettingsMenu : MonoBehaviour
     
     public void SetSensitivityY(float sensitivity)
     {
-        settings.sensitivityY = sensitivity;
+        //settings.sensitivityY = sensitivity;
         if (InGameScene)
         {
             FindObjectOfType<CameraController>().UpdateCameraSettings(settings);
@@ -112,7 +112,7 @@ public class SettingsMenu : MonoBehaviour
     
     public void SetSensitivityX(float sensitivity)
     {
-        settings.sensitivityX = sensitivity;
+        //settings.sensitivityX = sensitivity;
         if (InGameScene)
         {
             FindObjectOfType<CameraController>().UpdateCameraSettings(settings);
@@ -168,8 +168,8 @@ public class SettingsMenu : MonoBehaviour
     {
         GameObject.Find("InvertedCamera").transform.GetChild(2).GetComponent<Toggle>().isOn = settings.invertedY;
         GameObject.Find("InvertedCamera").transform.GetChild(0).GetComponent<Toggle>().isOn = settings.invertedX;
-        GameObject.Find("CameraSpeedY").transform.GetChild(0).GetComponent<Slider>().value = settings.sensitivityY;
-        GameObject.Find("CameraSpeedX").transform.GetChild(0).GetComponent<Slider>().value = settings.sensitivityX;
+        // GameObject.Find("CameraSpeedY").transform.GetChild(0).GetComponent<Slider>().value = settings.sensitivityY;
+        // GameObject.Find("CameraSpeedX").transform.GetChild(0).GetComponent<Slider>().value = settings.sensitivityX;
     }
     
 

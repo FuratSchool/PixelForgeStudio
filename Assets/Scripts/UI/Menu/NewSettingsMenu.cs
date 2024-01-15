@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
@@ -24,30 +25,65 @@ public class NewSettingsMenu : MonoBehaviour
     [Range(1,3)]
     [SerializeField] private int startMenu = 2;
     [SerializeField] private HorizontalSelector horizontalSelector;
+
+
+    [SerializeField] private Slider MasterVolumeSilder;
+    [SerializeField] private Slider BackgroundVolumeSlider;
+    [SerializeField] private Slider EffectsVolumeSlider;
+    [SerializeField] private HorizontalSelector ResolutionDropdown;
+    [SerializeField] private HorizontalSelector FullscreenToggle;
+
+    [SerializeField] private HorizontalSelector CameraInvertYToggle;
+    [SerializeField] private HorizontalSelector CameraInvertXToggle;
+    [SerializeField] private HorizontalSelector CameraSensitivityDropdown;
+    
+    [SerializeField] private SceneController sceneController;
+    private AudioMixer audioMixer;
     
     private Resolution[] _resolutions;
     public GameObject _currentSelecetedhorizontalSelector { get; set; }
-    
+    private SettingsData _settings;
+    private PlayerInput _input;
+    public bool InGameScene {get; set;} =false;
     private bool InputDisable = false;
     private int activeMenu;
-    // Start is called before the first frame update
+    
     void Start()
     {
+        audioMixer = Resources.Load("Audio/MainMixer", typeof(AudioMixer)) as AudioMixer;
+        //this._settings = sceneController.Settings;
         activeMenu = startMenu;
         updateMenu(activeMenu);
         InitResolutions();
-        
+        if (InGameScene)
+        {
+            GetComponent<PlayerInput>().enabled = false;
+            _input = GameObject.Find("PlayerObject").GetComponent<PlayerInput>();
+        }
+        else
+        {
+            _input = GetComponent<PlayerInput>();
+        }
         GeneralButton.GetComponent<Button>().onClick.AddListener(GeneralMenuActive);
         ControlsButton.GetComponent<Button>().onClick.AddListener(ControlsMenuActive);
         AudioButton.GetComponent<Button>().onClick.AddListener(AudioMenuActive);
+        updateSettings();
+        
     }
 
+    private void updateSettings()
+    {
+        UpdateAudio();
+        UpdateControls();
+        UpdateVideo();
+    }
     private void OnEnable()
     {
+        _input.actions.actionMaps[1].Enable();
         InputDisable = false;
         GeneralMenuActive();
     }
-
+    
     void OnMenuLeft()
     {
         if(InputDisable)
@@ -69,8 +105,15 @@ public class NewSettingsMenu : MonoBehaviour
     
     void OnBack(InputValue inputValue)
     {
-        if(!InputDisable)
+        if (!InputDisable)
+        {
+            _input.actions.actionMaps[0].Enable();
+            InputDisable = false;
+            sceneController.Settings.rebinds = _input.actions.SaveBindingOverridesAsJson();
+            Debug.Log(sceneController.Settings.masterVolume);
+            sceneController.SaveSettings(sceneController.Settings);
             _settingsMenu.SetActive(false);
+        }
     }
     void OnLeftright(InputValue inputValue)
     {
@@ -175,5 +218,94 @@ public class NewSettingsMenu : MonoBehaviour
         horizontalSelector.AddOptions(options);
         //resolutionDropdown.value = currentResolutionIndex;
         horizontalSelector.RefreshShownValue();
+        
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            OnBack(null);
+        }
+    }
+
+    public void SetMasterVolume(float volume)
+    {
+        if(sceneController == null)
+            sceneController = FindObjectOfType<SceneController>();
+        sceneController.Settings.masterVolume = volume;
+        Debug.Log(sceneController.Settings.masterVolume);
+        if(audioMixer == null)
+            audioMixer = Resources.Load("Audio/MainMixer", typeof(AudioMixer)) as AudioMixer;
+        audioMixer.SetFloat("MasterVolume", sceneController.Settings.masterVolume);
+    }
+    public void SetEffectsVolume(float volume)
+    {
+        sceneController.Settings.effectsVolume = volume;
+        if(audioMixer == null)
+            audioMixer = Resources.Load("Audio/MainMixer", typeof(AudioMixer)) as AudioMixer;
+        audioMixer.SetFloat("EffectsVolume", sceneController.Settings.effectsVolume);
+    }
+    public void SetBackgroundVolume(float volume)
+    {
+        sceneController.Settings.backgroundVolume = volume;
+        if(audioMixer == null)
+            audioMixer = Resources.Load("Audio/MainMixer", typeof(AudioMixer)) as AudioMixer;
+        audioMixer.SetFloat("BackgroundVolume", sceneController.Settings.backgroundVolume);
+    }
+    
+    public void SetFullscreen(int isFullscreen)
+    {
+        this._settings.fullscreen = Convert.ToBoolean(isFullscreen);
+        Screen.fullScreen = this._settings.fullscreen;
+    }
+    
+    public void SetInvertedX(int isInverted)
+    {
+        this._settings.invertedX = Convert.ToBoolean(isInverted);
+        if (InGameScene)
+        {
+            FindObjectOfType<CameraController>().UpdateCameraSettings(this._settings);
+        }
+    }
+    
+    public void SetInvertedY(int isInverted)
+    {
+        this._settings.invertedY = Convert.ToBoolean(isInverted);
+        if (InGameScene)
+        {
+            FindObjectOfType<CameraController>().UpdateCameraSettings(this._settings);
+        }
+        
+    }
+    
+    public void SetResolution(int resolutionIndex)
+    {
+        Resolution resolution = _resolutions[resolutionIndex];
+        this._settings.resolutionHeight = resolution.height;
+        this._settings.resolutionWidth = resolution.width;
+        Screen.SetResolution(this._settings.resolutionWidth,this._settings.resolutionHeight,Screen.fullScreen);
+    }
+    
+    public void UpdateAudio()
+    {
+        MasterVolumeSilder.value = this._settings.masterVolume;
+        BackgroundVolumeSlider.value = this._settings.backgroundVolume;
+        EffectsVolumeSlider.value = this._settings.effectsVolume;
+    }
+
+    public void UpdateVideo()
+    {
+        int index = Array.FindIndex(_resolutions, res => res.width == this._settings.resolutionWidth && res.height == this._settings.resolutionHeight);
+        ResolutionDropdown.Value = index;
+        ResolutionDropdown.RefreshShownValue();
+        FullscreenToggle.Value = Convert.ToInt32(this._settings.fullscreen);
+    }
+
+    public void UpdateControls()
+    {
+        CameraInvertYToggle.Value = Convert.ToInt32(this._settings.invertedY);
+        CameraInvertXToggle.Value = Convert.ToInt32(this._settings.invertedX);
+        CameraSensitivityDropdown.Value = this._settings.sensitivity;
     }
 }

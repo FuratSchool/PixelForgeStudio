@@ -37,8 +37,8 @@ public class CameraController : MonoBehaviour
     public void UpdateCameraSettings(SettingsData settings)
     {
         _settingsData = settings;
-        _camera.m_YAxis.m_MaxSpeed = _defaultSensitivityY * (_settingsData.sensitivityY * correctionY);
-        _camera.m_XAxis.m_MaxSpeed = _defaultSensitivityX * (_settingsData.sensitivityX * correctionX);
+        _camera.m_YAxis.m_MaxSpeed = _defaultSensitivityY * (_settingsData.sensitivity * correctionY);
+        _camera.m_XAxis.m_MaxSpeed = _defaultSensitivityX * (_settingsData.sensitivity * correctionX);
         _camera.m_XAxis.m_InvertInput = _settingsData.invertedX;
         _camera.m_YAxis.m_InvertInput = _settingsData.invertedY;
     }
@@ -71,8 +71,8 @@ public class CameraController : MonoBehaviour
 
                 correctionX = ControllerCorrectionX;
                 correctionY = ControllerCorrectionY;
-                _camera.m_YAxis.m_MaxSpeed = _defaultSensitivityY * (_settingsData.sensitivityY * correctionY);
-                _camera.m_XAxis.m_MaxSpeed = _defaultSensitivityX * (_settingsData.sensitivityX * correctionX);
+                _camera.m_YAxis.m_MaxSpeed = _defaultSensitivityY * (_settingsData.sensitivity * correctionY);
+                _camera.m_XAxis.m_MaxSpeed = _defaultSensitivityX * (_settingsData.sensitivity * correctionX);
                 _camera.m_XAxis.m_InvertInput = _settingsData.invertedX;
                 _camera.m_YAxis.m_InvertInput = _settingsData.invertedY;
             }
@@ -80,8 +80,8 @@ public class CameraController : MonoBehaviour
             {
                 correctionX = 1;
                 correctionY = 1;
-                _camera.m_YAxis.m_MaxSpeed = _defaultSensitivityY * (_settingsData.sensitivityY * correctionY);
-                _camera.m_XAxis.m_MaxSpeed = _defaultSensitivityX * (_settingsData.sensitivityX * correctionX);
+                _camera.m_YAxis.m_MaxSpeed = _defaultSensitivityY * (_settingsData.sensitivity * correctionY);
+                _camera.m_XAxis.m_MaxSpeed = _defaultSensitivityX * (_settingsData.sensitivity * correctionX);
                 _camera.m_XAxis.m_InvertInput = _settingsData.invertedX;
                 _camera.m_YAxis.m_InvertInput = _settingsData.invertedY;
             }
