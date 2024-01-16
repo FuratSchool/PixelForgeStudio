@@ -68,6 +68,11 @@ public class NewSettingsMenu : MonoBehaviour
     }
     private void UserChangedControls(InputUser user, InputUserChange change, InputDevice device)
     {
+        var controltext =GameObject.FindGameObjectsWithTag("ControlText");
+        foreach (var text in controltext)
+        {
+            text.SendMessage("OnChangeInput", user.controlScheme.Value.name, SendMessageOptions.DontRequireReceiver);
+        }
         if (user.controlScheme != null && user.controlScheme.Value.name.Equals("Controller"))
         {
             if (EventSystem.current.currentSelectedGameObject == null)
@@ -93,6 +98,7 @@ public class NewSettingsMenu : MonoBehaviour
     }
     private void OnEnable()
     {
+        InputUser.onChange += UserChangedControls;
         if(_input != null)
             _input.actions.actionMaps[1].Enable();
         InputDisable = false;
