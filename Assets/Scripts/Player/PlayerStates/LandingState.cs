@@ -7,6 +7,10 @@ public class LandingState : PlayerState
     private bool _busyLanding;
     public override void EnterState()
     {
+        PC.landingParticles.Stop();
+        var main = PC.landingParticles.main;
+        main.startColor = PC.ColorParticles;
+        PC.landingParticles.Play();
         base.EnterState();
         PlayerStateMachine.Animator.SetInteger("State", 9);
         _busyLanding = true;
