@@ -28,13 +28,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4229906270027892248}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.60380435, y: -0.00000012645314, z: 0.00000009578452, w: 0.79713255}
+  m_LocalRotation: {x: 0.6038064, y: 0, z: 0, w: 0.797131}
   m_LocalPosition: {x: -1.36, y: 4.9000006, z: 308.62997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 74.286, y: 0, z: 0}
 --- !u!20 &4196125389982184854
 Camera:
   m_ObjectHideFlags: 0
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_ShowCameraFrustum: 0
   m_IgnoreTimeScale: 0
   m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
+  m_UpdateMethod: 1
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1

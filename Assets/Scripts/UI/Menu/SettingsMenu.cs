@@ -119,6 +119,7 @@ public class SettingsMenu : MonoBehaviour
         }
     }
 
+    [Obsolete("Obsolete")]
     private void InitResolutions()
     {
         _resolutions = Screen.resolutions;

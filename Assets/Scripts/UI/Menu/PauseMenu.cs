@@ -14,8 +14,8 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject OptionsButton;
     [SerializeField] private GameObject UIObject;
     [SerializeField] private GameObject CoinsUI;
-
-    public static bool isPaused;
+    [SerializeField] private BoardController _boardController;
+    public  bool isPaused;
     
     private bool isOptionsOpen;
     private GameObject _player;
@@ -34,20 +34,48 @@ public class PauseMenu : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)) //if the escape key is pressed
         {
-            if(isPaused) //if the game is paused
+            if (_boardController != null)
             {
-                if (isOptionsOpen)
+                if (_boardController.BoardUIActive)
                 {
-                    CloseOptionsMenu();
+                    _player.GetComponent<PlayerController>().InteractPressed = true;
                 }
                 else
                 {
-                    ResumeGame(); //resumes the game
+                    if(isPaused) //if the game is paused
+                    {
+                        if (isOptionsOpen)
+                        {
+                            CloseOptionsMenu();
+                        }
+                        else
+                        {
+                            ResumeGame(); //resumes the game
+                        }
+                    }
+                    else
+                    {
+                        PauseGame(); //pauses the game
+                    }
                 }
             }
             else
             {
-                PauseGame(); //pauses the game
+                if(isPaused) //if the game is paused
+                {
+                    if (isOptionsOpen)
+                    {
+                        CloseOptionsMenu();
+                    }
+                    else
+                    {
+                        ResumeGame(); //resumes the game
+                    }
+                }
+                else
+                {
+                    PauseGame(); //pauses the game
+                }
             }
         }
         
