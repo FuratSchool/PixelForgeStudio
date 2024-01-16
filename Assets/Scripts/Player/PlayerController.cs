@@ -23,6 +23,7 @@ public class PlayerController : PlayerStateMachine
     public float totalTime = 0;
     public bool _isRunning;
     public bool CanJumpAgain { get; set; } = true;
+    public bool EnableMovement;
     
     [Header("Jumping")]
     [SerializeField] public float jumpTime = 0.35f;

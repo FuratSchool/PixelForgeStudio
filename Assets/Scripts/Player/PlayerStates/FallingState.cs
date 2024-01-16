@@ -54,8 +54,9 @@ using UnityEngine;
         {
             base.LateUpdateState();
             _pc.GetRigidbody().AddForce(Physics.gravity*_pc.gravityMultiplier);
-            _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * ((_pc.MoveSpeed * _pc.SpeedBoostMultiplier) * Time.deltaTime), 
-                Space.World);
-            
+            if(_pc.EnableMovement){
+                _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * ((_pc.MoveSpeed * _pc.SpeedBoostMultiplier) * Time.deltaTime), 
+                    Space.World);
+            }
         }
     }
