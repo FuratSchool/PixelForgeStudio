@@ -21,6 +21,7 @@ public class PlayerController : PlayerStateMachine
     public Transform footPrintsRight;
     public Transform footPrintsLeft;
     public GameObject chair;
+    public  bool _busyLanding;
     private bool _leftFootActive;
     public float totalTime = 0;
     public bool isRunning;

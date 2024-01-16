@@ -4,14 +4,15 @@ using UnityEngine;
 public class LandingState : PlayerState
 {
     public LandingState (PlayerController pc) : base("LandingState", pc) {PC = (PlayerController)this.PlayerStateMachine;}
-    private bool _busyLanding;
+    
+    private bool _waitStarted;
     public override void EnterState()
     {
         base.EnterState();
         PlayerStateMachine.Animator.SetInteger("State", 9);
-        _busyLanding = true;
-        PC.StartCoroutine(Landing());
-        
+        if(!_waitStarted)
+            PC.StartCoroutine(Landing());
+        PC.GetRigidbody().isKinematic = true;
         PC.canJump = true; PC.canDoubleJump = true; PC.jumpReleased = false;
         PC.jumped = false;
 
@@ -20,7 +21,7 @@ public class LandingState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-        if (_busyLanding)
+        if (PC._busyLanding)
         {
             if ((Mathf.Abs(PC.Movement.x) > Mathf.Epsilon) || (Mathf.Abs(PC.Movement.y) > Mathf.Epsilon))
             {
@@ -40,12 +41,19 @@ public class LandingState : PlayerState
         PC.GetRigidbody().transform.Translate(PC.GetDirection(PC.PlayerInput()).normalized * ((PC.MoveSpeed * PC.speedBoostMultiplier) * Time.deltaTime), 
             Space.World);
     }
-    public override void ExitState() { }
+
+    public override void ExitState()
+    {
+        PC.GetRigidbody().isKinematic = false;
+    }
     
     public IEnumerator Landing()
     {
+        _waitStarted = true;
+        PC._busyLanding = true;
         yield return new WaitForSeconds(.3f);
-        _busyLanding = false;
+        PC._busyLanding = false;
+        _waitStarted = false;
     }
     
 }
