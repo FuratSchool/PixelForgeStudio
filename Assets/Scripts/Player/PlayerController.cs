@@ -34,6 +34,9 @@ public class PlayerController : PlayerStateMachine
     [SerializeField] public float forceHoldJump = 1f;
     [SerializeField] public float raycastDistance = .4f;
     [SerializeField] public float gravityMultiplier = 1.0f;
+    [SerializeField] public ParticleSystem landingParticles;
+    
+    public Color ColorParticles { get; set; }
     public bool SpacePressed { get; set; }
     public bool canJump;
     public bool canDoubleJump;
@@ -269,6 +272,9 @@ public class PlayerController : PlayerStateMachine
         var layermask = 1 << 6;
         //bool ground = Physics.Raycast(transform.position, Vector3.down,out var hit, raycastDistance, ~layermask);
         bool ground = Physics.BoxCast(_mCollider.bounds.center, transform.localScale, -transform.up,out _hit,transform.rotation, raycastDistance , ~layermask );
+        if(_hit.collider != null)
+            if(_hit.collider.GetComponent<Renderer>() != null)
+                ColorParticles = _hit.collider.transform.GetComponent<Renderer>().material.color;
         
         /*if (_hit.collider != null)
         {
