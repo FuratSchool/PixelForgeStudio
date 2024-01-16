@@ -8,11 +8,18 @@ public class EmoteState : PlayerState
     public override void EnterState()
     {
         PC.EnableGrimParticles(false);
-        PlayerStateMachine.Animator.SetInteger("State", 20);
+        PlayerStateMachine.Animator.SetInteger("State", PC.EmoteNumber);
         PC.WaitOver = false;
-        _chair = PC.InstantiateFunc(PC.chair, GameObject.Find("ChairSpawnPoint").transform.position, Quaternion.identity);
-        _chair.transform.Rotate((_chair.transform.rotation.x-90),PC.transform.localRotation.eulerAngles.y,0);
-        PC.WaitSecs(5);
+        if (PC.EmoteNumber == 20)
+        {
+            _chair = PC.InstantiateFunc(PC.chair, GameObject.Find("ChairSpawnPoint").transform.position,
+                Quaternion.identity);
+            _chair.transform.Rotate((_chair.transform.rotation.x - 90), PC.transform.localRotation.eulerAngles.y, 0);
+            PC.WaitSecs(5);
+        }else
+            PC.WaitSecs(2.7f);
+
+        
         base.EnterState();
     }
     public override void UpdateState()
@@ -24,7 +31,8 @@ public class EmoteState : PlayerState
 
     public override void ExitState()
     {
-        PC.DestroyFunc(_chair);
+        if(_chair != null)
+            PC.DestroyFunc(_chair);
         PC.EnableGrimParticles(true);
     }
 }

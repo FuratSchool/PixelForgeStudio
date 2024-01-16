@@ -45,6 +45,7 @@ public class PlayerController : PlayerStateMachine
     public bool jumpReleased = false;
     public bool grounded;
     public bool EmotePressed { get; set; }
+    public bool EmoteGangPressed { get; set; }
     
     public bool ExitSwing { get; set; }
     
@@ -90,6 +91,7 @@ public class PlayerController : PlayerStateMachine
     public GameObject SwingableObjectGAME { get; set; }
     public int DeathCount { get; set; }
     
+    public int EmoteNumber { get; set; }
     public bool InteractableRange { get; set; }
     public bool InteractPressed { get; set; }
     public bool KeyDebounced { get; set; } = true;
@@ -269,6 +271,11 @@ public class PlayerController : PlayerStateMachine
     public void OnEmote(InputValue inputValue)
     {
         EmotePressed = Convert.ToBoolean(inputValue.Get<float>());
+    }
+
+    public void OnEmoteGang(InputValue inputValue)
+    {
+        EmoteGangPressed = Convert.ToBoolean(inputValue.Get<float>());
     }
     public bool IsGrounded()
     {

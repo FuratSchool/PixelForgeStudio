@@ -36,8 +36,17 @@ public class IdleState : PlayerState
                 return;
             }
         }
-        if(PC.EmotePressed)
+
+        if (PC.EmotePressed)
+        {
+            PC.EmoteNumber = 20;
             PlayerStateMachine.ChangeState(PC.EmoteState);
+        }
+        else if (PC.EmoteGangPressed)
+        {
+            PC.EmoteNumber = 21;
+            PlayerStateMachine.ChangeState(PC.EmoteState);
+        }
         else if ((Mathf.Abs(PC.Movement.x) > Mathf.Epsilon)||(Mathf.Abs(PC.Movement.y) > Mathf.Epsilon))
             PlayerStateMachine.ChangeState(PC.WalkingState);
         else if (PC.SpacePressed && PC.canJump && PC.CanJumpAgain)
