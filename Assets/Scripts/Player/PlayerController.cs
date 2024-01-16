@@ -238,10 +238,13 @@ public class PlayerController : PlayerStateMachine
     {
         if(jumped) jumpReleased = true;
     }
-    
-    private void OnSprintStart() { isRunning = true; }
 
-    private void OnSprintFinish() { isRunning = false; }
+    private void OnSprintStart()
+    {
+        isRunning = !isRunning;
+    }
+
+    //private void OnSprintFinish() { isRunning = false; }
     
     private void OnDash(InputValue inputValue)
     {
