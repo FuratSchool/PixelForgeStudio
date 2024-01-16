@@ -4,14 +4,24 @@ using UnityEngine;
 public class LandingState : PlayerState
 {
     public LandingState (PlayerController pc) : base("LandingState", pc) {PC = (PlayerController)this.PlayerStateMachine;}
-    private bool _busyLanding;
+    
+    private bool _waitStarted;
+    private float timePassed;
     public override void EnterState()
     {
+        PC.landingParticles.Stop();
+        var main = PC.landingParticles.main;
+        main.startColor = PC.ColorParticles;
+        PC.landingParticles.Play();
         base.EnterState();
         PlayerStateMachine.Animator.SetInteger("State", 9);
-        _busyLanding = true;
-        PC.StartCoroutine(Landing());
-        
+        timePassed = 0;
+        if (PC.ExitSwing)
+        {
+            PC.ExitSwing = false;
+            PC.GetRigidbody().isKinematic = true;
+        }
+
         PC.canJump = true; PC.canDoubleJump = true; PC.jumpReleased = false;
         PC.jumped = false;
 
@@ -19,8 +29,10 @@ public class LandingState : PlayerState
 
     public override void UpdateState()
     {
+        
+        timePassed += Time.deltaTime;
         base.UpdateState();
-        if (_busyLanding)
+        if (timePassed > .15f)
         {
             if ((Mathf.Abs(PC.Movement.x) > Mathf.Epsilon) || (Mathf.Abs(PC.Movement.y) > Mathf.Epsilon))
             {
@@ -40,12 +52,9 @@ public class LandingState : PlayerState
         PC.GetRigidbody().transform.Translate(PC.GetDirection(PC.PlayerInput()).normalized * ((PC.MoveSpeed * PC.speedBoostMultiplier) * Time.deltaTime), 
             Space.World);
     }
-    public override void ExitState() { }
-    
-    public IEnumerator Landing()
+
+    public override void ExitState()
     {
-        yield return new WaitForSeconds(.3f);
-        _busyLanding = false;
+        PC.GetRigidbody().isKinematic = false;
     }
-    
 }

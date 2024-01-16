@@ -19,6 +19,7 @@ public class FallingPlatform : MonoBehaviour
         _startPos = transform.position;
         _startRot = transform.rotation;
         _rb = GetComponent<Rigidbody>();
+        GetComponent<MeshCollider>().convex = true;
         if(Rotate)
             _rb.freezeRotation = false;
         else

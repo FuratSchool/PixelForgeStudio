@@ -21,6 +21,7 @@ public class PlayerController : PlayerStateMachine
     public Transform footPrintsRight;
     public Transform footPrintsLeft;
     public GameObject chair;
+    public  bool _busyLanding;
     private bool _leftFootActive;
     public float totalTime = 0;
     public bool isRunning;
@@ -35,6 +36,9 @@ public class PlayerController : PlayerStateMachine
     [SerializeField] public float forceHoldJump = 1f;
     [SerializeField] public float raycastDistance = .4f;
     [SerializeField] public float gravityMultiplier = 1.0f;
+    [SerializeField] public ParticleSystem landingParticles;
+    
+    public Color ColorParticles { get; set; }
     public bool SpacePressed { get; set; }
     public bool canJump;
     public bool canDoubleJump;
@@ -42,6 +46,9 @@ public class PlayerController : PlayerStateMachine
     public bool jumpReleased = false;
     public bool grounded;
     public bool EmotePressed { get; set; }
+    public bool EmoteGangPressed { get; set; }
+    
+    public bool ExitSwing { get; set; }
     
     private IEnumerator _speedBoostCoroutine;
     public VisualEffect visualEffect;
@@ -88,6 +95,7 @@ public class PlayerController : PlayerStateMachine
     public GameObject SwingableObjectGAME { get; set; }
     public int DeathCount { get; set; }
     
+    public int EmoteNumber { get; set; }
     public bool InteractableRange { get; set; }
     public bool InteractPressed { get; set; }
     public bool KeyDebounced { get; set; } = true;
@@ -242,10 +250,13 @@ public class PlayerController : PlayerStateMachine
     {
         if(jumped) jumpReleased = true;
     }
-    
-    private void OnSprintStart() { isRunning = true; }
 
-    private void OnSprintFinish() { isRunning = false; }
+    private void OnSprintStart()
+    {
+        isRunning = !isRunning;
+    }
+
+    //private void OnSprintFinish() { isRunning = false; }
     
     private void OnDash(InputValue inputValue)
     {
@@ -265,11 +276,19 @@ public class PlayerController : PlayerStateMachine
     {
         EmotePressed = Convert.ToBoolean(inputValue.Get<float>());
     }
+
+    public void OnEmoteGang(InputValue inputValue)
+    {
+        EmoteGangPressed = Convert.ToBoolean(inputValue.Get<float>());
+    }
     public bool IsGrounded()
     {
         var layermask = 1 << 6;
         //bool ground = Physics.Raycast(transform.position, Vector3.down,out var hit, raycastDistance, ~layermask);
         bool ground = Physics.BoxCast(_mCollider.bounds.center, transform.localScale, -transform.up,out _hit,transform.rotation, raycastDistance , ~layermask );
+        if(_hit.collider != null)
+            if(_hit.collider.GetComponent<Renderer>() != null)
+                ColorParticles = _hit.collider.transform.GetComponent<Renderer>().material.color;
         
         /*if (_hit.collider != null)
         {
