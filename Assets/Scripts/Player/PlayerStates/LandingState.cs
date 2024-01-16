@@ -6,13 +6,18 @@ public class LandingState : PlayerState
     public LandingState (PlayerController pc) : base("LandingState", pc) {PC = (PlayerController)this.PlayerStateMachine;}
     
     private bool _waitStarted;
+    private float timePassed;
     public override void EnterState()
     {
         base.EnterState();
         PlayerStateMachine.Animator.SetInteger("State", 9);
-        if(!_waitStarted)
-            PC.StartCoroutine(Landing());
-        PC.GetRigidbody().isKinematic = true;
+        timePassed = 0;
+        if (PC.ExitSwing)
+        {
+            PC.ExitSwing = false;
+            PC.GetRigidbody().isKinematic = true;
+        }
+
         PC.canJump = true; PC.canDoubleJump = true; PC.jumpReleased = false;
         PC.jumped = false;
 
@@ -20,8 +25,10 @@ public class LandingState : PlayerState
 
     public override void UpdateState()
     {
+        
+        timePassed += Time.deltaTime;
         base.UpdateState();
-        if (PC._busyLanding)
+        if (timePassed > .15f)
         {
             if ((Mathf.Abs(PC.Movement.x) > Mathf.Epsilon) || (Mathf.Abs(PC.Movement.y) > Mathf.Epsilon))
             {
@@ -46,14 +53,4 @@ public class LandingState : PlayerState
     {
         PC.GetRigidbody().isKinematic = false;
     }
-    
-    public IEnumerator Landing()
-    {
-        _waitStarted = true;
-        PC._busyLanding = true;
-        yield return new WaitForSeconds(.3f);
-        PC._busyLanding = false;
-        _waitStarted = false;
-    }
-    
 }

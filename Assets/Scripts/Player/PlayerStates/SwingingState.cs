@@ -38,7 +38,9 @@ public class SwingingState : PlayerState
         }
     }
 
-    public override void ExitState() { }
+    public override void ExitState() {
+        PC.ExitSwing = true;
+     }
 
     private void Swing()
     {

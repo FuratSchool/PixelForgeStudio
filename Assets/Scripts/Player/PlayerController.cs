@@ -43,6 +43,8 @@ public class PlayerController : PlayerStateMachine
     public bool grounded;
     public bool EmotePressed { get; set; }
     
+    public bool ExitSwing { get; set; }
+    
     private IEnumerator _speedBoostCoroutine;
     public VisualEffect visualEffect;
     private Color _visualEffectBaseColor;
