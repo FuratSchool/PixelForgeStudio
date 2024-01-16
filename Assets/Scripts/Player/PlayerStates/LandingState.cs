@@ -29,7 +29,7 @@ public class LandingState : PlayerState
                 else 
                     PlayerStateMachine.ChangeState(PC.WalkingState);
             }
-            else if ((Mathf.Abs(PC.Movement.x) < Mathf.Epsilon) && (Mathf.Abs(PC.Movement.y) < Mathf.Epsilon))
+            else
                 PlayerStateMachine.ChangeState(PC.IdleState);
         }
     }
