@@ -9,6 +9,10 @@ public class LandingState : PlayerState
     private float timePassed;
     public override void EnterState()
     {
+        PC.landingParticles.Stop();
+        var main = PC.landingParticles.main;
+        main.startColor = PC.ColorParticles;
+        PC.landingParticles.Play();
         base.EnterState();
         PlayerStateMachine.Animator.SetInteger("State", 9);
         timePassed = 0;
