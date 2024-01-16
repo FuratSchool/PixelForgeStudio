@@ -15,6 +15,7 @@ using UnityEngine;
         
         public override void UpdateState()
         {
+            if(!PC.EnableMovement) return;
             base.UpdateState();
 
             if (PC.IsGrounded())
@@ -53,9 +54,9 @@ using UnityEngine;
         {
             base.LateUpdateState();
 
-            _pc.GetRigidbody().AddForce(Physics.gravity*_pc.gravityMultiplier);
-            if(_pc.EnableMovement){
-                _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * ((_pc.MoveSpeed * _pc.SpeedBoostMultiplier) * Time.deltaTime), 
+            PC.GetRigidbody().AddForce(Physics.gravity*PC.gravityMultiplier);
+            if(PC.EnableMovement){
+                PC.GetRigidbody().transform.Translate(PC.GetDirection(PC.PlayerInput()).normalized * ((PC.MoveSpeed * PC.speedBoostMultiplier) * Time.deltaTime), 
                     Space.World);
             }
 // Changed Today (16-1-2024)
