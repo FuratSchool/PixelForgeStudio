@@ -1414,6 +1414,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rock_1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3b725839f841efd439b66f97cc8a5234,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1946,6 +1951,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sharp Rock.001 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb0d1e7c3cafd2a4ebbd6ddc79e226a8,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2658,6 +2668,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Overhanging_Swing_Rock (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1308425ba7cc1714b835195b80100b27,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3931,6 +3946,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Rock_2 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 79ecb0f0055d5ca41b42d0e0d3f1d2a9,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5749,6 +5769,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sharp Rock.001 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb0d1e7c3cafd2a4ebbd6ddc79e226a8,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6983,6 +7008,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Overhanging_Swing_Rock (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1308425ba7cc1714b835195b80100b27,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10490,6 +10520,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rock_2
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 79ecb0f0055d5ca41b42d0e0d3f1d2a9,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12079,6 +12114,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rock_2 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 79ecb0f0055d5ca41b42d0e0d3f1d2a9,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12274,6 +12314,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Floating.001 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6341694842160232954, guid: ffc7c9b1d8bf11a4cb2d1e1e2fce27e8,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -13407,37 +13452,37 @@ PrefabInstance:
     - target: {fileID: 1100662664474211893, guid: 365caf1c5aacf3c44bde62c7883df8ca,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 140.89111
+      value: 142.76074
       objectReference: {fileID: 0}
     - target: {fileID: 1100662664474211893, guid: 365caf1c5aacf3c44bde62c7883df8ca,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1178.72
+      value: 1152.8099
       objectReference: {fileID: 0}
     - target: {fileID: 1100662664474211893, guid: 365caf1c5aacf3c44bde62c7883df8ca,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 102.471016
+      value: 92.64734
       objectReference: {fileID: 0}
     - target: {fileID: 1100662664474211893, guid: 365caf1c5aacf3c44bde62c7883df8ca,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.088093385
+      value: 0.09271453
       objectReference: {fileID: 0}
     - target: {fileID: 1100662664474211893, guid: 365caf1c5aacf3c44bde62c7883df8ca,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.032497022
+      value: -0.014850208
       objectReference: {fileID: 0}
     - target: {fileID: 1100662664474211893, guid: 365caf1c5aacf3c44bde62c7883df8ca,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.9340545
+      value: 0.98305184
       objectReference: {fileID: 0}
     - target: {fileID: 1100662664474211893, guid: 365caf1c5aacf3c44bde62c7883df8ca,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.34456602
+      value: 0.15745668
       objectReference: {fileID: 0}
     - target: {fileID: 1100662664474211893, guid: 365caf1c5aacf3c44bde62c7883df8ca,
         type: 3}
@@ -13612,12 +13657,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 548499612}
   m_PrefabAsset: {fileID: 0}
---- !u!2083052967 &550673659 stripped
-VisualEffect:
-  m_CorrespondingSourceObject: {fileID: 1753284546135393038, guid: d9c6a12f22541a14eb3eb6df2e83a221,
-    type: 3}
-  m_PrefabInstance: {fileID: 982918185}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &555092744
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13680,6 +13719,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Rock_2 (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 79ecb0f0055d5ca41b42d0e0d3f1d2a9,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -14391,6 +14435,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Rock_3 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 42d5bf46a9352df42bc0a3765fb3c689,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -16115,6 +16164,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rock_2 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 79ecb0f0055d5ca41b42d0e0d3f1d2a9,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -16516,6 +16570,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Rock_3 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 42d5bf46a9352df42bc0a3765fb3c689,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -17425,6 +17484,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Rock_3 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 42d5bf46a9352df42bc0a3765fb3c689,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -18444,22 +18508,12 @@ PrefabInstance:
     - target: {fileID: 508038981007421547, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.08866996
+      value: 0.092968695
       objectReference: {fileID: 0}
     - target: {fileID: 508038981007421547, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.03088928
-      objectReference: {fileID: 0}
-    - target: {fileID: 508038981007421547, guid: ec90d8a0462c69d4bb32642e6a121647,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.9401675
-      objectReference: {fileID: 0}
-    - target: {fileID: 508038981007421547, guid: ec90d8a0462c69d4bb32642e6a121647,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.32751903
+      value: -0.013165791
       objectReference: {fileID: 0}
     - target: {fileID: 1863149323569572988, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
@@ -18479,37 +18533,27 @@ PrefabInstance:
     - target: {fileID: 2565389217574949188, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.08921573
+      value: 0.09271453
       objectReference: {fileID: 0}
     - target: {fileID: 2565389217574949188, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.029275596
-      objectReference: {fileID: 0}
-    - target: {fileID: 2565389217574949188, guid: ec90d8a0462c69d4bb32642e6a121647,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.9459544
-      objectReference: {fileID: 0}
-    - target: {fileID: 2565389217574949188, guid: ec90d8a0462c69d4bb32642e6a121647,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.31040913
+      value: -0.014850206
       objectReference: {fileID: 0}
     - target: {fileID: 5347032101694491550, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 140.89111
+      value: 142.76074
       objectReference: {fileID: 0}
     - target: {fileID: 5347032101694491550, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1178.72
+      value: 1152.8099
       objectReference: {fileID: 0}
     - target: {fileID: 5347032101694491550, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 102.471016
+      value: 92.64734
       objectReference: {fileID: 0}
     - target: {fileID: 5347032101694491550, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
@@ -18549,22 +18593,17 @@ PrefabInstance:
     - target: {fileID: 7245231309209416369, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.08809341
+      value: 0.09319274
       objectReference: {fileID: 0}
     - target: {fileID: 7245231309209416369, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.032497033
-      objectReference: {fileID: 0}
-    - target: {fileID: 7245231309209416369, guid: ec90d8a0462c69d4bb32642e6a121647,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.9340545
+      value: -0.011472548
       objectReference: {fileID: 0}
     - target: {fileID: 7245231309209416369, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.34456602
+      value: 0.12164343
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -20847,6 +20886,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sharp Rock.001 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb0d1e7c3cafd2a4ebbd6ddc79e226a8,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21161,6 +21205,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Overhanging_Swing_Rock (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1308425ba7cc1714b835195b80100b27,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22942,6 +22991,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Default rock.001
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e6ade0b6b72de4cdca9d67dd1875068f,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -23228,6 +23282,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Overhanging_Swing_Rock
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1308425ba7cc1714b835195b80100b27,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -24387,6 +24446,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Overhanging_Swing_Rock (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1308425ba7cc1714b835195b80100b27,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -24642,27 +24706,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2740200232097415735, guid: d9c6a12f22541a14eb3eb6df2e83a221,
-        type: 3}
-      propertyPath: chair
-      value: 
-      objectReference: {fileID: 4794267723799084944, guid: 404ec46aa8c66824489c7c306794d1ee,
-        type: 3}
-    - target: {fileID: 2740200232097415735, guid: d9c6a12f22541a14eb3eb6df2e83a221,
-        type: 3}
-      propertyPath: visualEffect
-      value: 
-      objectReference: {fileID: 550673659}
-    - target: {fileID: 2740200232097415735, guid: d9c6a12f22541a14eb3eb6df2e83a221,
-        type: 3}
-      propertyPath: swingDistance
-      value: 24.31
-      objectReference: {fileID: 0}
-    - target: {fileID: 2740200232097415735, guid: d9c6a12f22541a14eb3eb6df2e83a221,
-        type: 3}
-      propertyPath: EnableMovement
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4521968622420406398, guid: d9c6a12f22541a14eb3eb6df2e83a221,
         type: 3}
       propertyPath: m_Name
@@ -25879,6 +25922,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Rock_1 (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3b725839f841efd439b66f97cc8a5234,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -27305,6 +27353,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FALLINGFLOATING Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5200150265118135660, guid: f804ef70efa52476ca0472f8aed914df,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -27466,6 +27519,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sharp Rock.001 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb0d1e7c3cafd2a4ebbd6ddc79e226a8,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -28772,6 +28830,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Overhanging_Swing_Rock
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1308425ba7cc1714b835195b80100b27,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -28932,7 +28995,7 @@ GameObject:
   - component: {fileID: 1165503422}
   m_Layer: 0
   m_Name: Objects
-  m_TagString: Untagged
+  m_TagString: CameraIgnore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29619,6 +29682,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Overhanging_Swing_Rock (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1308425ba7cc1714b835195b80100b27,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -31705,6 +31773,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Debri
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3b725839f841efd439b66f97cc8a5234,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -31866,6 +31939,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sharp Rock.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb0d1e7c3cafd2a4ebbd6ddc79e226a8,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -33025,6 +33103,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Rock_3
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 42d5bf46a9352df42bc0a3765fb3c689,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -34343,6 +34426,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Default rock.003
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 87d2cbf37785f456a8d3e32170610587,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -35404,6 +35492,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pointy_rocks (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 42daa78e520f2dd49bbf701aedc6c0f8,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -35819,6 +35912,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pointy_rocks (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 42daa78e520f2dd49bbf701aedc6c0f8,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -36152,6 +36250,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sharp Rock.001 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb0d1e7c3cafd2a4ebbd6ddc79e226a8,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -36903,6 +37006,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rock_1
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3b725839f841efd439b66f97cc8a5234,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -37082,6 +37190,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Rock_1 (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3b725839f841efd439b66f97cc8a5234,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -38952,6 +39065,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Trigger_Swing_Rock
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f210da68f0c796741b0afba1d9d6bb1f,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -40018,6 +40136,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Overhanging_Swing_Rock (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1308425ba7cc1714b835195b80100b27,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -40297,6 +40420,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Overhanging_Swing_Rock (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1308425ba7cc1714b835195b80100b27,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -40713,6 +40841,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Overhanging_Swing_Rock (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1308425ba7cc1714b835195b80100b27,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -41147,6 +41280,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pointy_rocks
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 42daa78e520f2dd49bbf701aedc6c0f8,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -41369,6 +41507,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Bigger_Pointy_rocks_
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 7d7e8365e79b0a34a9325099956c912b,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -42140,6 +42283,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sharp Rock.001
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb0d1e7c3cafd2a4ebbd6ddc79e226a8,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -42226,6 +42374,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Overhanging_Swing_Rock
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1308425ba7cc1714b835195b80100b27,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -42711,6 +42864,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Floating.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 6341694842160232954, guid: 17593f7e8739a423e9675a9cbb296540,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -43230,6 +43388,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Rock_2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 79ecb0f0055d5ca41b42d0e0d3f1d2a9,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -45302,6 +45465,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Floating.001 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 6341694842160232954, guid: 17593f7e8739a423e9675a9cbb296540,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -46171,6 +46339,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Default rock.003
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 87d2cbf37785f456a8d3e32170610587,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -46356,6 +46529,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FALLINGFLOATING Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 5200150265118135660, guid: f804ef70efa52476ca0472f8aed914df,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -46502,6 +46680,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: FALLINGFLOATING Variant (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5200150265118135660, guid: f804ef70efa52476ca0472f8aed914df,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -47027,6 +47210,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rock_2 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 79ecb0f0055d5ca41b42d0e0d3f1d2a9,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -47370,6 +47558,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sharp Rock.001 (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb0d1e7c3cafd2a4ebbd6ddc79e226a8,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -47684,6 +47877,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rock_3
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 42d5bf46a9352df42bc0a3765fb3c689,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -47869,6 +48067,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Overhanging_Swing_Rock (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1308425ba7cc1714b835195b80100b27,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -48715,6 +48918,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Default rock.002
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 49d7eaa8fdffc4ee8858b2953fff331e,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -48988,6 +49196,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Sharp Rock.001 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb0d1e7c3cafd2a4ebbd6ddc79e226a8,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -51227,6 +51440,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sharp Rock.001 (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: fb0d1e7c3cafd2a4ebbd6ddc79e226a8,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -51846,6 +52064,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Rock_1 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 3b725839f841efd439b66f97cc8a5234,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -52162,6 +52385,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Overhanging_Swing_Rock (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1308425ba7cc1714b835195b80100b27,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -52504,6 +52732,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Trigger_Swing_Rock
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f210da68f0c796741b0afba1d9d6bb1f,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

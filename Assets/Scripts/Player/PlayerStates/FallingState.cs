@@ -53,7 +53,7 @@ using UnityEngine;
         public override void LateUpdateState()
         {
             base.LateUpdateState();
-
+            
             PC.GetRigidbody().AddForce(Physics.gravity*PC.gravityMultiplier);
             if(PC.EnableMovement){
                 PC.GetRigidbody().transform.Translate(PC.GetDirection(PC.PlayerInput()).normalized * ((PC.MoveSpeed * PC.speedBoostMultiplier) * Time.deltaTime), 
