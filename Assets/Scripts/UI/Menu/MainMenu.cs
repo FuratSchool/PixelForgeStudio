@@ -29,5 +29,19 @@ public class MainMenu : MonoBehaviour
         
         Object.GetComponent<TMP_Text>().fontStyle &= ~FontStyles.Underline;
     }
+
+    private void OnEnable()
+    {
+        FindObjectOfType<Navigation>().inMenu = true;
+        EventSystem.current.SetSelectedGameObject(GameObject.Find("PlayButton"));
+    }
     
+    private void OnDisable()
+    {
+        var nav = FindObjectOfType<Navigation>();
+        if(nav != null)
+            nav.inMenu = false;
+        EventSystem.current.SetSelectedGameObject(null);
+        
+    }
 }

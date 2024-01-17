@@ -15,8 +15,7 @@ public class SceneController : MonoBehaviour
     public AudioMixer audioMixer;
     private string ActiveSceneName;
     public SettingsData Settings;
-    public RebindActionUI rebindActionUI;
-    public GameObject LoadingScreen;
+    private GameObject LoadingScreen;
     private bool loadingDone = false;
     private AsyncOperation asyncLoad;
     private void Awake()
@@ -50,11 +49,16 @@ public class SceneController : MonoBehaviour
 
     private void Start()
     {
+        LoadingScreen = FindObjectOfType<Navigation>().LoadingScreen;
         loadSettings();
     }
     
     public void LoadSceneAsync(string sceneName)
     {
+        if (LoadingScreen == null)
+        {
+            LoadingScreen = FindObjectOfType<Navigation>().LoadingScreen;
+        }
         LoadingScreen.SetActive(true);
         StartCoroutine(LoadSceneAsyncCoroutine(sceneName));
     }
@@ -90,5 +94,10 @@ public class SceneController : MonoBehaviour
         Screen.SetResolution(Settings.resolutionWidth, Settings.resolutionHeight, Settings.fullscreen);
         if (!string.IsNullOrEmpty(Settings.rebinds))
             act.LoadBindingOverridesFromJson(Settings.rebinds);
+    }
+    
+    public void SaveSettings(SettingsData settingsData)
+    {
+        LoadSaveSettings.SaveData(settingsData);
     }
 }

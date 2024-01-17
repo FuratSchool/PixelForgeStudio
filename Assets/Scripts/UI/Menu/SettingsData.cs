@@ -6,8 +6,7 @@ public struct SettingsData
     public bool fullscreen;
     public bool invertedY;
     public bool invertedX;
-    public float sensitivityY;
-    public float sensitivityX;
+    public int sensitivity;
     public int resolutionWidth;
     public int resolutionHeight;
     public string rebinds;
@@ -22,8 +21,7 @@ public struct SettingsData
         bool fullscreen = true, 
         bool invertedY = false, 
         bool invertedX = false,
-        float sensitivityY = 1, 
-        float sensitivityX = 1
+        int sensitivity = 1
         ) 
     {
         this.masterVolume = masterVolume;
@@ -34,8 +32,7 @@ public struct SettingsData
         this.fullscreen = fullscreen;
         this.invertedY = invertedY;
         this.invertedX = invertedX;
-        this.sensitivityY = sensitivityY;
-        this.sensitivityX = sensitivityX;
+        this.sensitivity = sensitivity;
         this.rebinds = rebinds;
     }
 }

@@ -13,7 +13,6 @@ public class RebindSaveLoad : MonoBehaviour
     {
         var rebinds = actions.SaveBindingOverridesAsJson();
         settings.rebinds = rebinds;
-        FindObjectOfType<SceneController>().Settings.rebinds = rebinds;
     }
     
     void OnEnable()
