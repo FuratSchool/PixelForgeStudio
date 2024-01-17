@@ -206,6 +206,7 @@ GameObject:
   - component: {fileID: 3799206481596633245}
   - component: {fileID: 6396388265731085025}
   - component: {fileID: 565109295787276982}
+  - component: {fileID: 4501205803485983810}
   m_Layer: 6
   m_Name: PlayerObject
   m_TagString: Player
@@ -664,6 +665,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ab19588434f30d43b01b16a2387fbd9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4501205803485983810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4521968622420406398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7be5e45ae63b5754989e8e7ba9916c04, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableReadThread: 0
+  receivedString: 
+  com: COM6
 --- !u!1 &4701207589610694960
 GameObject:
   m_ObjectHideFlags: 0
@@ -5714,7 +5730,7 @@ Transform:
   m_GameObject: {fileID: 7384839398176270825}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 4.88, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
