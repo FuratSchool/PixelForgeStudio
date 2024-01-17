@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -14,9 +15,11 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject OptionsButton;
     [SerializeField] private GameObject UIObject;
     [SerializeField] private GameObject CoinsUI;
+    [SerializeField] private GameObject SignUI;
     [SerializeField] private BoardController _boardController;
     public  bool isPaused;
     
+    private bool SignUIActive;
     private bool isOptionsOpen;
     private GameObject _player;
 
@@ -33,7 +36,12 @@ public class PauseMenu : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)) //if the escape key is pressed
         {
-            if (_boardController != null)
+            if (SignUIActive)
+            {
+                _player.GetComponent<PlayerController>().InteractPressed = true;
+                CloseSign();
+            }
+            else if (_boardController != null)
             {
                 if (_boardController.BoardUIActive)
                 {
@@ -138,5 +146,18 @@ public class PauseMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit(); //quits the game - only works in build
+    }
+    
+    public void OpenSign(string text)
+    {
+        SignUIActive = true;
+        SignUI.GetComponentInChildren<TMP_Text>().text = text;
+        SignUI.SetActive(true);
+    }
+    
+    public void CloseSign()
+    {
+        SignUIActive = false;
+        SignUI.SetActive(false);
     }
 }
