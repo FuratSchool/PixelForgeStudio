@@ -373,6 +373,7 @@ MonoBehaviour:
   _busyLanding: 0
   totalTime: 0
   isRunning: 0
+  EnableMovement: 1
   jumpTime: 0.4
   jumpTimeCounter: 0
   force: 25
@@ -394,9 +395,12 @@ MonoBehaviour:
   dashEndTime: 0.35
   isDashing: 0
   turnSmoothTime: 0.15
-  swingDistance: 7
+  swingDistance: 15
+  standardSwingDistance: 17
   exitForce: 20
+  standardExitForce: 15
   swingTime: 3
+  standardSwingTime: 4
   SwingDelay: 1
   lr: {fileID: 6113694536196822892}
   Hand: {fileID: 8280275655525851216}
