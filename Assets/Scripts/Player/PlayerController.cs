@@ -38,6 +38,7 @@ public class PlayerController : PlayerStateMachine
     [SerializeField] public float gravityMultiplier = 1.0f;
     [SerializeField] public ParticleSystem landingParticles;
     
+    private ArduinoInterface _arduinoInterface;
     public Color ColorParticles { get; set; }
     public bool SpacePressed { get; set; }
     public bool canJump;
@@ -197,6 +198,7 @@ public class PlayerController : PlayerStateMachine
         LandingState = new LandingState(this);
         InteractingState = new InteractingState(this);
         EmoteState = new EmoteState(this);
+        _arduinoInterface = GetComponent<ArduinoInterface>();
         _uiController = FindObjectOfType<UIController>();
         _dialogueManager = FindObjectOfType<DialogueManager>();
         _rigidbody = GetComponent<Rigidbody>();
@@ -448,9 +450,11 @@ public class PlayerController : PlayerStateMachine
     {
         _speedBoostActive = true;
         speedBoostMultiplier = boost;
+        _arduinoInterface.ColorToBlue();
         visualEffect.SetVector4("Color",color);
         yield return new WaitForSeconds(duration);
         visualEffect.SetVector4("Color",_visualEffectBaseColor);
+        _arduinoInterface.ColorToPurple();
         speedBoostMultiplier = 1f;
         _speedBoostActive = false;
     }
@@ -459,12 +463,14 @@ public class PlayerController : PlayerStateMachine
     {
         if (enable)
         {
+            _arduinoInterface.EnableLED();
             visualEffect.SetFloat("FlameRate", 50f);
             visualEffect.SetFloat("SmokeRate", 2f);
             visualEffect.SetFloat("AmberRate", 16f);
         }
         else
         {
+            _arduinoInterface.DisableLED();
             visualEffect.SetFloat("FlameRate", 0f);
             visualEffect.SetFloat("SmokeRate", 0f);
             visualEffect.SetFloat("AmberRate", 0f);
