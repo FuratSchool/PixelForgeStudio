@@ -12919,12 +12919,12 @@ PrefabInstance:
     - target: {fileID: 1100662664474211893, guid: 365caf1c5aacf3c44bde62c7883df8ca,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.092714496
+      value: 0.09271449
       objectReference: {fileID: 0}
     - target: {fileID: 1100662664474211893, guid: 365caf1c5aacf3c44bde62c7883df8ca,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.014850201
+      value: -0.0148502
       objectReference: {fileID: 0}
     - target: {fileID: 1100662664474211893, guid: 365caf1c5aacf3c44bde62c7883df8ca,
         type: 3}
@@ -12959,7 +12959,7 @@ PrefabInstance:
     - target: {fileID: 6859759751673130496, guid: 365caf1c5aacf3c44bde62c7883df8ca,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15081,7 +15081,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &643328686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15101,8 +15101,8 @@ MonoBehaviour:
   playOnAwake: 1
   playOnAwakeTime: 10
   points:
-  - position: {x: -545.499, y: 685.55237, z: 818.0096}
-    rotation: {x: 0.132091, y: -0.36589336, z: 0.078831464, w: 0.917856}
+  - position: {x: -544.822, y: 689.39545, z: 816.7375}
+    rotation: {x: 0.106544435, y: -0.36553097, z: 0.0421966, w: 0.92371786}
     handleprev: {x: 0, y: 0, z: -1}
     handlenext: {x: 0, y: 0, z: 1}
     curveTypeRotation: 0
@@ -15156,10 +15156,10 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     chained: 1
-  - position: {x: -547.96075, y: 526.5053, z: 816.60236}
-    rotation: {x: 0.3155507, y: -0.43228477, z: 0.16466515, w: 0.8285185}
-    handleprev: {x: -16.89209, y: 40.264435, z: -21.560852}
-    handlenext: {x: 16.89209, y: -40.264435, z: 21.560852}
+  - position: {x: -594.58575, y: 296.90936, z: 922.5676}
+    rotation: {x: 0.06668771, y: -0.34381577, z: 0.02450793, w: 0.9363454}
+    handleprev: {x: 89.57074, y: 112.77295, z: -137.13171}
+    handlenext: {x: -89.57074, y: -112.77295, z: 137.13171}
     curveTypeRotation: 0
     rotationCurve:
       serializedVersion: 2
@@ -15211,8 +15211,8 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
     chained: 1
-  - position: {x: -595.15533, y: 362.60425, z: 924.00824}
-    rotation: {x: 0.045843642, y: 0.59925044, z: -0.03433679, w: 0.7985101}
+  - position: {x: -760.0832, y: 150.4468, z: 1196.9159}
+    rotation: {x: -0.16854824, y: -0.387627, z: -0.072268754, w: 0.90339035}
     handleprev: {x: 0, y: 0, z: -1}
     handlenext: {x: 0, y: 0, z: 1}
     curveTypeRotation: 0
@@ -15271,7 +15271,7 @@ MonoBehaviour:
     inactivePathColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
     frustrumColor: {r: 1, g: 1, b: 1, a: 1}
     handleColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  looped: 0
+  looped: 1
   alwaysShow: 1
   afterLoop: 0
 --- !u!4 &643328687
@@ -17904,12 +17904,12 @@ PrefabInstance:
     - target: {fileID: 2565389217574949188, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.09271452
+      value: 0.0927145
       objectReference: {fileID: 0}
     - target: {fileID: 2565389217574949188, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.014850203
+      value: -0.014850202
       objectReference: {fileID: 0}
     - target: {fileID: 5347032101694491550, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
@@ -17964,17 +17964,17 @@ PrefabInstance:
     - target: {fileID: 7245231309209416369, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.09319277
+      value: 0.09319274
       objectReference: {fileID: 0}
     - target: {fileID: 7245231309209416369, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.011472554
+      value: -0.011472548
       objectReference: {fileID: 0}
     - target: {fileID: 7245231309209416369, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.12164346
+      value: 0.12164343
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
