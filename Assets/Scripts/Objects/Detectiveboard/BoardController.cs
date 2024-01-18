@@ -19,12 +19,10 @@ public class BoardController : MonoBehaviour
     public bool BoardUIActive { get; private set; }
     [SerializeField] private GameObject inGameObject;
     [SerializeField] private GameObject BoardUIobject;
+    [SerializeField] private PauseMenu _pauseMenu;
     [SerializeField] private int MaxItemsOnBoard = 10;
     
     private int _currentItemsOnBoard;
-    [Header("Debug Purposes")]
-    public GameObject testItem;
-    public bool debugBoard;
     private CinemachineFreeLook _freeLook;
 
     private float temp_x;
@@ -33,18 +31,10 @@ public class BoardController : MonoBehaviour
     {
         _uiController = FindObjectOfType<UIController>();
         _playerController = FindObjectOfType<PlayerController>();
-        
     }
-    
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.K) && debugBoard)
-            AddItemToBoard(testItem);
-        
-    }
-    
     public void ActivateBoardUI()
     {
+        if(_pauseMenu.isPaused) return;
         FindObjectOfType<CameraController>().SetCameraActive(false);
         BoardUIActive = true;
         _uiController.transform.GetComponent<Canvas>().sortingOrder = 1;

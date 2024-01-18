@@ -15,7 +15,9 @@ public class SceneController : MonoBehaviour
     public AudioMixer audioMixer;
     private string ActiveSceneName;
     public SettingsData Settings;
-    public RebindActionUI rebindActionUI;
+    private GameObject LoadingScreen;
+    private bool loadingDone = false;
+    private AsyncOperation asyncLoad;
     private void Awake()
     {
         if(spawned == false)
@@ -39,13 +41,44 @@ public class SceneController : MonoBehaviour
         {
             this.LoadScene("MainMenu");
         }
+        if (loadingDone)
+        {
+            StartCoroutine(LoadTime(3f));
+        }
     }
 
     private void Start()
     {
+        LoadingScreen = FindObjectOfType<Navigation>().LoadingScreen;
         loadSettings();
     }
-
+    
+    public void LoadSceneAsync(string sceneName)
+    {
+        if (LoadingScreen == null)
+        {
+            LoadingScreen = FindObjectOfType<Navigation>().LoadingScreen;
+        }
+        LoadingScreen.SetActive(true);
+        StartCoroutine(LoadSceneAsyncCoroutine(sceneName));
+    }
+    
+    private IEnumerator LoadSceneAsyncCoroutine(string sceneName)
+    {
+        asyncLoad = SceneManager.LoadSceneAsync(sceneName);
+        asyncLoad.allowSceneActivation = false;
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+            loadingDone= true;
+        }
+    }
+    
+    private IEnumerator LoadTime(float sec)
+    {
+        yield return new WaitForSeconds(sec);
+        asyncLoad.allowSceneActivation = true;
+    }
     public void LoadScene(string sceneName)
     {
         ActiveSceneName = sceneName;
@@ -61,5 +94,10 @@ public class SceneController : MonoBehaviour
         Screen.SetResolution(Settings.resolutionWidth, Settings.resolutionHeight, Settings.fullscreen);
         if (!string.IsNullOrEmpty(Settings.rebinds))
             act.LoadBindingOverridesFromJson(Settings.rebinds);
+    }
+    
+    public void SaveSettings(SettingsData settingsData)
+    {
+        LoadSaveSettings.SaveData(settingsData);
     }
 }

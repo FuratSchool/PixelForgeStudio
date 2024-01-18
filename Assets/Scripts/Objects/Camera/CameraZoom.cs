@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class CameraZoom : MonoBehaviour
 {
@@ -12,12 +14,13 @@ public class CameraZoom : MonoBehaviour
     [SerializeField] private float minZoom = 0.5f;
     
     [Range(1.0f,5.0f)]
-    [SerializeField] private float maxZoom = 1.0f;
+    [SerializeField] private float maxZoom = 2.0f;
     
     [AxisStateProperty]
     public AxisState zAxis = new AxisState(0f, 1f, false, true, 50f, 0.1f, 0.11f, "Mouse ScrollWheel", false);
     void Start()
     {
+        zAxis.Value = 1;
         FreelookCam = GetComponent<CinemachineFreeLook>();
         if (FreelookCam != null)
         {
@@ -42,6 +45,15 @@ public class CameraZoom : MonoBehaviour
                 FreelookCam.m_Orbits[i].m_Height = originalOrbits[i].m_Height * zoomScale;
                 FreelookCam.m_Orbits[i].m_Radius = originalOrbits[i].m_Radius * zoomScale;
             }
+        }
+    }
+    
+    private void OnDestroy()
+    {
+        for (int i = 0; i < originalOrbits.Length; i++)
+        {
+            FreelookCam.m_Orbits[i].m_Height = originalOrbits[i].m_Height;
+            FreelookCam.m_Orbits[i].m_Radius = originalOrbits[i].m_Radius;
         }
     }
 }

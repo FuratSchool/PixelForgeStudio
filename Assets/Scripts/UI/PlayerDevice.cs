@@ -15,7 +15,12 @@ public class PlayerDevice : MonoBehaviour
         {
             text.SendMessage("ControlChanged", input, SendMessageOptions.DontRequireReceiver);
         }
-
+        
+        var Interactables = GameObject.FindGameObjectsWithTag("Interactable");
+        foreach (var text in Interactables)
+        {
+            text.SendMessage("ChangeText", input, SendMessageOptions.DontRequireReceiver);
+        }
         if (input.currentControlScheme.Equals("Controller"))
             Cursor.visible = false;
         else

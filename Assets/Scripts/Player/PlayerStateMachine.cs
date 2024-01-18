@@ -5,66 +5,57 @@ using UnityEngine;
 public class PlayerStateMachine : MonoBehaviour
 {
 
-    IPlayerState currentState;
-    IPlayerState previousState; // Add this variable to track the previous state
-    private Animator _animator;
-    
+    private PlayerState _currentState;
+    private PlayerState _previousState;
+
     private void Start()
     {
-        _animator = GetComponentInChildren<Animator>();
-        currentState = GetInitialState();
-        if (currentState != null)
-            currentState.EnterState();
+        Animator = GetComponentInChildren<Animator>();
+        _currentState = GetInitialState();
+        if (_currentState != null)
+            _currentState.EnterState();
     }
     
     public void Update()
     {
-        if (currentState != null) currentState.UpdateState();
+        if (_currentState != null) _currentState.UpdateState();
     }
 
     public void FixedUpdate()
     {
-        if (currentState != null) currentState.FixedUpdateState();
+        if (_currentState != null) _currentState.FixedUpdateState();
     }
 
     public void LateUpdate()
     {
-        if (currentState != null) currentState.LateUpdateState();
+        if (_currentState != null) _currentState.LateUpdateState();
     }
     
-    public void ChangeState(IPlayerState newState)
+    public void ChangeState(PlayerState newState)
     {
-        Debug.Log($"Player's state changed to {newState.name}");
-        if (currentState != null)
+        Debug.Log($"Player's state changed to {newState.Name}");
+        if (_currentState != null)
         {
-            previousState = currentState; // Store the current state as the previous state
-            currentState.ExitState();
+            // Store the current state as the previous state
+            _previousState = _currentState; 
+            _currentState.ExitState();
         }
 
-        currentState = newState;
-        currentState.EnterState();
+        _currentState = newState;
+        _currentState.EnterState();
     }
-
-    
-
-    
-
-    public IPlayerState GetPreviousState()
+    public PlayerState GetPreviousState()
     {
-        return previousState;
+        return _previousState;
     }
-
-    public IPlayerState GetCurrentState()
+    public PlayerState GetCurrentState()
     {
-        return currentState;
+        return _currentState;
     }
     
-    public Animator Animator
-    {
-        get => _animator;
-        set => _animator = value;
-    }
-    protected virtual IPlayerState GetInitialState()
+    public Animator Animator { get; private set; }
+
+    protected virtual PlayerState GetInitialState()
     {
         return null;
     }

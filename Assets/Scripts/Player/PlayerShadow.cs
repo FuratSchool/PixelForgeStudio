@@ -21,7 +21,7 @@ public class PlayerShadow : MonoBehaviour
 
     public void Update()
     {
-        shadow.transform.localRotation = Quaternion.FromToRotation(Vector3.back, CheckGround().Item2);
+        shadow.transform.rotation = Quaternion.FromToRotation(Vector3.back, CheckGround().Item2);
         shadow.transform.position = new Vector3(shadow.position.x, CheckGround().Item1+.1f, shadow.position.z);
     }
 }

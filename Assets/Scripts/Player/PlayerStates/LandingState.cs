@@ -1,60 +1,60 @@
 using System.Collections;
 using UnityEngine;
 
-public class LandingState : IPlayerState
+public class LandingState : PlayerState
 {
-    public LandingState (PlayerController pc) : base("LandingState", pc) {_pc = (PlayerController)this._playerStateMachine;}
-
-    private bool busyLanding;
+    public LandingState (PlayerController pc) : base("LandingState", pc) {PC = (PlayerController)this.PlayerStateMachine;}
+    
+    private bool _waitStarted;
+    private float timePassed;
     public override void EnterState()
     {
+        PC.landingParticles.Stop();
+        var main = PC.landingParticles.main;
+        main.startColor = PC.ColorParticles;
+        PC.landingParticles.Play();
         base.EnterState();
-        //_playerStateMachine.Animator.Play("Landing");
-        _playerStateMachine.Animator.SetInteger("State", 9);
-        busyLanding = true;
-        _pc.StartCoroutine(Landing());
-        
-        _pc.canJump = true; _pc.canDoubleJump = true; _pc.jumpReleased = false;
-        _pc.jumped = false;
+        PlayerStateMachine.Animator.SetInteger("State", 9);
+        timePassed = 0;
+        if (PC.ExitSwing)
+        {
+            PC.ExitSwing = false;
+            PC.GetRigidbody().isKinematic = true;
+        }
+
+        PC.canJump = true; PC.canDoubleJump = true; PC.jumpReleased = false;
+        PC.jumped = false;
 
     }
 
     public override void UpdateState()
     {
+        
+        timePassed += Time.deltaTime;
         base.UpdateState();
-        if ((Mathf.Abs(_pc.Movement.x) > Mathf.Epsilon) || (Mathf.Abs(_pc.Movement.y) > Mathf.Epsilon))
+        if (timePassed > .15f)
         {
-            if (_pc._isRunning)
+            if ((Mathf.Abs(PC.Movement.x) > Mathf.Epsilon) || (Mathf.Abs(PC.Movement.y) > Mathf.Epsilon))
             {
-                _playerStateMachine.ChangeState(_pc.SprintingState);
-                return;
+                if (PC.isRunning) 
+                    PlayerStateMachine.ChangeState(PC.SprintingState);
+                else 
+                    PlayerStateMachine.ChangeState(PC.WalkingState);
             }
-
-            _playerStateMachine.ChangeState(_pc.WalkingState);
-            return;
+            else
+                PlayerStateMachine.ChangeState(PC.IdleState);
         }
-        if ((Mathf.Abs(_pc.Movement.x) < Mathf.Epsilon)&&(Mathf.Abs(_pc.Movement.y) < Mathf.Epsilon))
-            _playerStateMachine.ChangeState(_pc.IdleState);
-       
     }
     
     public override void LateUpdateState()
     {
         base.LateUpdateState();
-        _pc.GetRigidbody().transform.Translate(_pc.GetDirection(_pc.PlayerInput()).normalized * ((_pc.MoveSpeed * _pc.SpeedBoostMultiplier) * Time.deltaTime), 
+        PC.GetRigidbody().transform.Translate(PC.GetDirection(PC.PlayerInput()).normalized * ((PC.MoveSpeed * PC.speedBoostMultiplier) * Time.deltaTime), 
             Space.World);
-
     }
+
     public override void ExitState()
     {
-        
-
+        PC.GetRigidbody().isKinematic = false;
     }
-    
-    public IEnumerator Landing()
-    {
-        yield return new WaitForSeconds(.3f);
-        busyLanding = false;
-    }
-    
 }

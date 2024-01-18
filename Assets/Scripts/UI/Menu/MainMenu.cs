@@ -12,7 +12,7 @@ public class MainMenu : MonoBehaviour
     public void playGame(){
         Time.timeScale = 1;
         FindObjectOfType<SceneController>().TimePlayed = Time.time;
-        FindObjectOfType<SceneController>().LoadScene("TutorialSceneV1"); //goes to the next scene.
+        FindObjectOfType<SceneController>().LoadSceneAsync("TutorialWorld"); //goes to the next scene.
     }
 
     public void quitGame(){
@@ -29,5 +29,19 @@ public class MainMenu : MonoBehaviour
         
         Object.GetComponent<TMP_Text>().fontStyle &= ~FontStyles.Underline;
     }
+
+    private void OnEnable()
+    {
+        FindObjectOfType<Navigation>().inMenu = true;
+        EventSystem.current.SetSelectedGameObject(GameObject.Find("PlayButton"));
+    }
     
+    private void OnDisable()
+    {
+        var nav = FindObjectOfType<Navigation>();
+        if(nav != null)
+            nav.inMenu = false;
+        EventSystem.current.SetSelectedGameObject(null);
+        
+    }
 }
