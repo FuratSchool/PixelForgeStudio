@@ -42,8 +42,11 @@ public class SwingingState : IPlayerState
             _pc.lr.SetPosition(1, _pc.Handle.transform.position);
             _pc.Scythe.transform.position = _pc.SwingableObjectGAME.transform.position;
             _pc.Scythe.transform.LookAt(_pc.Hand.transform);
-            _pc.Scythe.transform.Rotate(0,0,-90);
-            _pc.Scythe.transform.localEulerAngles = new Vector3(0, _pc.Scythe.transform.localEulerAngles.y, 0);
+            var xRot = _pc.Scythe.transform.localEulerAngles.x;
+            if (_pc.Scythe.transform.localPosition.x < 0) xRot = (90 - xRot) + 90;
+            
+            //_pc.Scythe.transform.Rotate(0,-90,0);
+            _pc.Scythe.transform.localEulerAngles = new Vector3(xRot,0,  -90);
         }
     }
 

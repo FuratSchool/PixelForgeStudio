@@ -374,8 +374,8 @@ public class PlayerController : PlayerStateMachine
         lr.positionCount = 0;
         Destroy(joint);
         _isSwinging = false;
-        Scythe.transform.localPosition = new Vector3(0.0075f, 0, 0.013f);
-        Scythe.transform.localEulerAngles = new Vector3(0, 205, 0);
+        Scythe.transform.localPosition = new Vector3(-0.0004f, -0.007f, -0.004f);
+        Scythe.transform.localEulerAngles = new Vector3(-60f, -70, 70);
         player.GetComponent<Rigidbody>().AddForce(ExitForce * Vector3.up, ForceMode.Impulse);
         StartCoroutine(SwingDelayTimer());
     }
