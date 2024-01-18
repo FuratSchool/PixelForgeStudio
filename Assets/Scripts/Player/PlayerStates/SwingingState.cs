@@ -34,7 +34,11 @@ public class SwingingState : PlayerState
         if (PC.lr.positionCount != 0)
         {
             PC.lr.SetPosition(0, PC.Hand.transform.position);
-            PC.lr.SetPosition(1, PC.SwingableObjectPos); 
+            PC.lr.SetPosition(1, PC.Handle.transform.position);
+            PC.Scythe.transform.position = PC.SwingableObjectGAME.transform.position;
+            PC.Scythe.transform.LookAt(PC.Hand.transform);
+            PC.Scythe.transform.localEulerAngles = new Vector3(0, PC.Scythe.transform.localEulerAngles.y, 0);
+
         }
     }
 
