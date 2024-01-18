@@ -43,6 +43,7 @@ public class SwingingState : PlayerState
     }
 
     public override void ExitState() {
+        PC.StopCoroutine(TimedSwing());
         PC.ExitSwing = true;
      }
 
