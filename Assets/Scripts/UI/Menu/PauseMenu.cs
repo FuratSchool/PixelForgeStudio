@@ -25,6 +25,11 @@ public class PauseMenu : MonoBehaviour
 
     private string ActiveControlScheme;
     // Start is called before the first frame update
+    void Awake()
+    {
+       if(FindObjectOfType<SceneController>() != null)
+           FindObjectOfType<SceneController>().DestroyLoading();
+    }
     void Start()
     {
         pauseMenu.SetActive(false);
