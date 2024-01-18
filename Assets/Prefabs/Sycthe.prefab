@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 1976655119413447443}
   - component: {fileID: 3225042216063304886}
   - component: {fileID: 803137749086859388}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sycthe
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1163527355762266537}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.9961948, y: 0.000000032085698, z: -0.08715567, w: 0.000000022252475}
+  m_LocalRotation: {x: 0.9961947, y: 0, z: 0.08715588, w: 0}
   m_LocalPosition: {x: 0.00203, y: -0.00002, z: 0.00551}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
@@ -34,7 +34,7 @@ Transform:
   - {fileID: 1356746760696067771}
   - {fileID: 325984634906858999}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 15, z: 180}
+  m_LocalEulerAnglesHint: {x: 0, y: 170, z: 180}
 --- !u!33 &3225042216063304886
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 1356746760696067771}
   m_Layer: 6
   m_Name: swingpoint
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 325984634906858999}
   m_Layer: 6
   m_Name: handle
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
