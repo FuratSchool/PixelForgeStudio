@@ -1,35 +1,31 @@
 using System.Collections;
 using UnityEngine;
 
-public class DashingState : IPlayerState
+public class DashingState : PlayerState
 {
-    public DashingState (PlayerController pc) : base("DashingState", pc) {_pc = (PlayerController)this._playerStateMachine;}
+    public DashingState (PlayerController pc) : base("DashingState", pc) {PC = (PlayerController)this.PlayerStateMachine;}
     public override void EnterState()
     {
-        //_playerStateMachine.Animator.Play("Start Dash");
-        _playerStateMachine.Animator.SetInteger("State", 4);
-        _pc.StartCoroutine(_pc.Dash());
+        PlayerStateMachine.Animator.SetInteger("State", 4);
+        PC.StartCoroutine(PC.Dash());
     }
     public override void UpdateState()
     {
         base.UpdateState();
 
-        if (!_pc.IsGrounded() && !_pc.isDashing)
+        if (!PC.IsGrounded() && !PC.isDashing)
         {
-            _pc.dashPressed = false;
-            _playerStateMachine.ChangeState((_pc.FallingState));
+            PC.dashPressed = false;
+            PlayerStateMachine.ChangeState((PC.FallingState));
         }
 
-        if (_pc.IsGrounded() && !_pc.isDashing)
+        else if (PC.IsGrounded() && !PC.isDashing)
         {
-            _pc.dashPressed = false;
-            _playerStateMachine.ChangeState((_pc.IdleState));
+            PC.dashPressed = false;
+            PlayerStateMachine.ChangeState((PC.IdleState));
         }
 
     }
-
-    public override void ExitState()
-    {
-        //_playerStateMachine.Animator.Play("Idle");  
-    }
+    
+    public override void ExitState() { }
 }

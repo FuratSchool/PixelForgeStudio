@@ -7,7 +7,7 @@ using UnityEngine;
 public class FallingPlatform : MonoBehaviour
 {
     
-    [SerializeField] private float _fallDelay = 1.5f;
+    [SerializeField] private float _fallDelay;
     [SerializeField] private float _respawnDelay = 5f;
     [SerializeField] private float _shakeStrength = 1f;
     [SerializeField] private bool Rotate = false;
@@ -19,6 +19,7 @@ public class FallingPlatform : MonoBehaviour
         _startPos = transform.position;
         _startRot = transform.rotation;
         _rb = GetComponent<Rigidbody>();
+        GetComponent<MeshCollider>().convex = true;
         if(Rotate)
             _rb.freezeRotation = false;
         else

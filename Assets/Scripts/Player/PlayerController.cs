@@ -3,26 +3,31 @@ using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using UnityEngine.VFX;
 
 public class PlayerController : PlayerStateMachine
 {
     private Camera _camera;
     
-    private BoxCollider m_Collider;
+    private BoxCollider _mCollider;
     private RaycastHit _hit;
     
     [Header("Movement")]
     [SerializeField] private float walkSpeed = 10.0f;
     [SerializeField] private float sprintSpeed = 15.0f;
-    private float moveSpeed;
+    private float _moveSpeed;
     public Vector2 Movement = Vector2.zero;
     public Transform footPrintsRight;
     public Transform footPrintsLeft;
-    private bool leftFootActive;
+    public GameObject chair;
+    public  bool _busyLanding;
+    private bool _leftFootActive;
     public float totalTime = 0;
-    public bool _isRunning;
+    public bool isRunning;
     public bool CanJumpAgain { get; set; } = true;
+    public bool EnableMovement;
+    public bool WaitOver { get; set; } = true;
     
     [Header("Jumping")]
     [SerializeField] public float jumpTime = 0.35f;
@@ -31,18 +36,26 @@ public class PlayerController : PlayerStateMachine
     [SerializeField] public float forceHoldJump = 1f;
     [SerializeField] public float raycastDistance = .4f;
     [SerializeField] public float gravityMultiplier = 1.0f;
+    [SerializeField] public ParticleSystem landingParticles;
+    
+    private ArduinoInterface _arduinoInterface;
+    public Color ColorParticles { get; set; }
     public bool SpacePressed { get; set; }
     public bool canJump;
     public bool canDoubleJump;
     public bool jumped;
     public bool jumpReleased = false;
     public bool grounded;
+    public bool EmotePressed { get; set; }
+    public bool EmoteGangPressed { get; set; }
     
-    private IEnumerator SpeedboostCoroutine;
+    public bool ExitSwing { get; set; }
+    
+    private IEnumerator _speedBoostCoroutine;
     public VisualEffect visualEffect;
     private Color _visualEffectBaseColor;
-    public bool SpeedboostActive { get; set; }
-    public float SpeedBoostMultiplier = 1f;
+    private bool _speedBoostActive;
+    public float speedBoostMultiplier = 1f;
     
     [Header("Dashing")]
     [SerializeField] private TrailRenderer tr;
@@ -51,7 +64,6 @@ public class PlayerController : PlayerStateMachine
     [SerializeField] private float dashingPower = 30f;
     [SerializeField] private float dashEndTime = .35f;
     public bool isDashing;
-    //private Vector3 _lastDirection;
     private Vector3 _dashDirection;
 
     [Header("Turning")] 
@@ -59,12 +71,17 @@ public class PlayerController : PlayerStateMachine
     private float _turnSmoothVelocity;
     
     [Header("Swinging")]
-    [SerializeField] private float swingDistance = 4f;
-    [SerializeField] private float exitForce = 15f;
-    [SerializeField] private float swingTime = 3f;
+    [SerializeField] public float swingDistance = 17f;
+    [SerializeField] public float standardSwingDistance = 17f;
+    [SerializeField] public float exitForce = 15f;
+    [SerializeField] public float standardExitForce = 15f;
+    [SerializeField] public float swingTime = 4f;
+    [SerializeField] public float standardSwingTime = 4f;
     [SerializeField] private float SwingDelay = 1f;
     [SerializeField] public LineRenderer lr;
     [SerializeField] public GameObject Hand;
+    [SerializeField] public GameObject Scythe;
+    [SerializeField] public GameObject Handle;
     
     public string InteractableText { get; } = " To Interact";
     public string DialogueText { get; } = " To Talk";
@@ -81,6 +98,7 @@ public class PlayerController : PlayerStateMachine
     public GameObject SwingableObjectGAME { get; set; }
     public int DeathCount { get; set; }
     
+    public int EmoteNumber { get; set; }
     public bool InteractableRange { get; set; }
     public bool InteractPressed { get; set; }
     public bool KeyDebounced { get; set; } = true;
@@ -91,7 +109,7 @@ public class PlayerController : PlayerStateMachine
     [Header("footprints")]
     public float footstepIntervalWalking = 0.3f;
     public float footstepIntervalRunning = 0.15f;
-    private PlayerStatus _playerStatus;
+
     private Rigidbody _rigidbody;
     private PlayerStateMachine _stateMachine;
     private UIController _uiController;
@@ -108,8 +126,7 @@ public class PlayerController : PlayerStateMachine
     public bool dashPressed;
     public bool _canSwing = true;
     public bool InRange { get; set; }
-    public float deathRange = -80f;
-
+    
     public bool touchedWater { get; set; }
 
     [HideInInspector] public WalkingState WalkingState;
@@ -125,10 +142,11 @@ public class PlayerController : PlayerStateMachine
     [HideInInspector] public DoubleJump DoubleJumpState;
     [HideInInspector] public LandingState LandingState;
     [HideInInspector] public InteractingState InteractingState;
+    [HideInInspector] public EmoteState EmoteState;
     public float MoveSpeed
     {
-        get => moveSpeed;
-        set => moveSpeed = value;
+        get => _moveSpeed;
+        set => _moveSpeed = value;
     }
     
     public float SprintSpeed
@@ -181,23 +199,21 @@ public class PlayerController : PlayerStateMachine
         DoubleJumpState = new DoubleJump(this);
         LandingState = new LandingState(this);
         InteractingState = new InteractingState(this);
+        EmoteState = new EmoteState(this);
+        _arduinoInterface = GetComponent<ArduinoInterface>();
         _uiController = FindObjectOfType<UIController>();
         _dialogueManager = FindObjectOfType<DialogueManager>();
-        //TR = GetComponent<TrailRenderer>();
         _rigidbody = GetComponent<Rigidbody>();
-        _playerStatus = GetComponent<PlayerStatus>();
-        _playerStatus.SetSpawnPoint(transform.position);
         _playerInput = GetComponent<PlayerInput>();
         _camera = Camera.main;
         GetDirection(PlayerInput());
-        m_Collider = GetComponent<BoxCollider>();
+        _mCollider = GetComponent<BoxCollider>();
         Application.targetFrameRate = 120;
         visualEffect = FindObjectOfType<VisualEffect>();
         _visualEffectBaseColor = visualEffect.GetVector4("Color");
-        
     }
     
-    protected override IPlayerState GetInitialState()
+    protected override PlayerState GetInitialState()
     {
         return IdleState;
     }
@@ -238,10 +254,13 @@ public class PlayerController : PlayerStateMachine
     {
         if(jumped) jumpReleased = true;
     }
-    
-    private void OnSprintStart() { _isRunning = true; }
 
-    private void OnSprintFinish() { _isRunning = false; }
+    private void OnSprintStart()
+    {
+        isRunning = !isRunning;
+    }
+
+    //private void OnSprintFinish() { isRunning = false; }
     
     private void OnDash(InputValue inputValue)
     {
@@ -257,12 +276,23 @@ public class PlayerController : PlayerStateMachine
     {
         InteractPressed = Convert.ToBoolean(inputValue.Get<float>());
     }
-   
+    public void OnEmote(InputValue inputValue)
+    {
+        EmotePressed = Convert.ToBoolean(inputValue.Get<float>());
+    }
+
+    public void OnEmoteGang(InputValue inputValue)
+    {
+        EmoteGangPressed = Convert.ToBoolean(inputValue.Get<float>());
+    }
     public bool IsGrounded()
     {
         var layermask = 1 << 6;
         //bool ground = Physics.Raycast(transform.position, Vector3.down,out var hit, raycastDistance, ~layermask);
-        bool ground = Physics.BoxCast(m_Collider.bounds.center, transform.localScale, -transform.up,out _hit,transform.rotation, raycastDistance , ~layermask );
+        bool ground = Physics.BoxCast(_mCollider.bounds.center, transform.localScale, -transform.up,out _hit,transform.rotation, raycastDistance , ~layermask );
+        if(_hit.collider != null)
+            if(_hit.collider.GetComponent<Renderer>() != null)
+                ColorParticles = _hit.collider.transform.GetComponent<Renderer>().material.color;
         
         /*if (_hit.collider != null)
         {
@@ -335,7 +365,6 @@ public class PlayerController : PlayerStateMachine
         _rigidbody.velocity = _dashDirection * dashingPower;
         tr.emitting = true;
         yield return new WaitForSeconds(dashingTime);
-        //Animator.Play("Stop Dash");
         Animator.SetInteger("State", 8);
         yield return new WaitForSeconds(dashEndTime);
         tr.emitting = false;
@@ -350,13 +379,13 @@ public class PlayerController : PlayerStateMachine
         totalTime += Time.deltaTime;
         if (!(totalTime > interfall)) return;
         var rotAmount = Quaternion.Euler(90, 0, 0);
-        if (leftFootActive)
+        if (_leftFootActive)
         {
             var footPrint = Instantiate(footPrintsLeft, (transform.position), (transform.rotation * rotAmount));
             footPrint.transform.SetParent(transform);
             footPrint.transform.localPosition = new Vector3(-.5f,0,0);
             footPrint.transform.SetParent(null);
-            leftFootActive = false;
+            _leftFootActive = false;
 
         }
         else
@@ -365,17 +394,28 @@ public class PlayerController : PlayerStateMachine
             footPrint.transform.SetParent(transform);
             footPrint.transform.localPosition = new Vector3(.5f,0,0);
             footPrint.transform.SetParent(null);
-            leftFootActive = true;
+            _leftFootActive = true;
         }
             
         totalTime = 0;
     }
+
+    public GameObject InstantiateFunc(GameObject obj, Vector3 pos, Quaternion rot)
+    {
+        return Instantiate(obj, pos, rot);
+    }
     
+    public void DestroyFunc(GameObject obj)
+    {
+        Destroy(obj);
+    }
     public void EndSwing()
     {
         lr.positionCount = 0;
         Destroy(joint);
         _isSwinging = false;
+        Scythe.transform.localPosition = new Vector3(0.004f, 0, -0.0037f);
+        Scythe.transform.localEulerAngles = new Vector3(20, 280, 90);
         player.GetComponent<Rigidbody>().AddForce(ExitForce * Vector3.up, ForceMode.Impulse);
         StartCoroutine(SwingDelayTimer());
     }
@@ -384,7 +424,17 @@ public class PlayerController : PlayerStateMachine
         yield return new WaitForSeconds(SwingDelay);
         _canSwing = true;
     }
-    
+
+    public void WaitSecs(float sec)
+    {
+        StartCoroutine(WaitSec(sec));
+    }
+    private IEnumerator WaitSec(float sec)
+    {
+        WaitOver = false;
+        yield return new WaitForSeconds(sec);
+        WaitOver = true;
+    }
     public IEnumerator KeyDebounce()
     {
         KeyDebounced = false;
@@ -394,36 +444,47 @@ public class PlayerController : PlayerStateMachine
 
     public void StartSpeedBoost(float boost, float duration, Color color)
     {
-        if(SpeedboostActive) StopCoroutine(SpeedboostCoroutine);
-        SpeedboostCoroutine = ESpeedBoost(boost, duration,color);
-        StartCoroutine(SpeedboostCoroutine);
+        if(_speedBoostActive) StopCoroutine(_speedBoostCoroutine);
+        _speedBoostCoroutine = ESpeedBoost(boost, duration,color);
+        StartCoroutine(_speedBoostCoroutine);
         
     }
 
     private IEnumerator ESpeedBoost(float boost, float duration,Color color)
     {
-        SpeedboostActive = true;
-        SpeedBoostMultiplier = boost;
+        _speedBoostActive = true;
+        speedBoostMultiplier = boost;
+        _arduinoInterface.ColorToBlue();
         visualEffect.SetVector4("Color",color);
         yield return new WaitForSeconds(duration);
         visualEffect.SetVector4("Color",_visualEffectBaseColor);
-        SpeedBoostMultiplier = 1f;
-        SpeedboostActive = false;
+        _arduinoInterface.ColorToPurple();
+        speedBoostMultiplier = 1f;
+        _speedBoostActive = false;
     }
 
     public void EnableGrimParticles(bool enable)
     {
         if (enable)
         {
+            _arduinoInterface.EnableLED();
             visualEffect.SetFloat("FlameRate", 50f);
             visualEffect.SetFloat("SmokeRate", 2f);
             visualEffect.SetFloat("AmberRate", 16f);
         }
         else
         {
+            _arduinoInterface.DisableLED();
             visualEffect.SetFloat("FlameRate", 0f);
             visualEffect.SetFloat("SmokeRate", 0f);
             visualEffect.SetFloat("AmberRate", 0f);
         }
+    }
+    
+    public void OnCameraZoom(InputValue value)
+    {
+        var cameraZoom = FindObjectOfType<CameraZoom>();
+        if (cameraZoom == null) return;
+        cameraZoom.zAxis.Value += (value.Get<float>()*0.1f);
     }
 }

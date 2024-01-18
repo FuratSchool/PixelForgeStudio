@@ -23,12 +23,15 @@ public static class LoadSaveSettings
     {
         var saveFilePath = Application.persistentDataPath + "/Settings.json";
         var saveSettingsData = JsonUtility.ToJson(settings);
+        Debug.Log(saveSettingsData);
         File.WriteAllText(saveFilePath, saveSettingsData);
+        Debug.Log(saveFilePath);
+        Debug.Log("Saved file to: " + saveFilePath);
     }
     
     public static SettingsData NewData()
     {
-        var settings = new SettingsData("",1920,1080,0,0,0,true,false,false,5f,5f);
+        var settings = new SettingsData("",1920,1080,0,0,0,true,false,false,2);
         SaveData(settings);
         return settings;
     }

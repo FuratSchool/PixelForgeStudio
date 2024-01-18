@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -14,9 +15,11 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject OptionsButton;
     [SerializeField] private GameObject UIObject;
     [SerializeField] private GameObject CoinsUI;
-
-    public static bool isPaused;
+    [SerializeField] private GameObject SignUI;
+    [SerializeField] private BoardController _boardController;
+    public  bool isPaused;
     
+    private bool SignUIActive;
     private bool isOptionsOpen;
     private GameObject _player;
 
@@ -25,7 +28,6 @@ public class PauseMenu : MonoBehaviour
     void Start()
     {
         pauseMenu.SetActive(false);
-        optionsMenu.GetComponent<SettingsMenu>().InGameScene = true;
         _player = GameObject.Find("PlayerObject");
     }
 
@@ -34,20 +36,53 @@ public class PauseMenu : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7)) //if the escape key is pressed
         {
-            if(isPaused) //if the game is paused
+            if (SignUIActive)
             {
-                if (isOptionsOpen)
+                _player.GetComponent<PlayerController>().InteractPressed = true;
+                CloseSign();
+            }
+            else if (_boardController != null)
+            {
+                if (_boardController.BoardUIActive)
                 {
-                    CloseOptionsMenu();
+                    _player.GetComponent<PlayerController>().InteractPressed = true;
                 }
                 else
                 {
-                    ResumeGame(); //resumes the game
+                    if(isPaused) //if the game is paused
+                    {
+                        if (isOptionsOpen)
+                        {
+                            optionsMenu.GetComponent<NewSettingsMenu>().OnBack(null);
+                        }
+                        else
+                        {
+                            ResumeGame(); //resumes the game
+                        }
+                    }
+                    else
+                    {
+                        PauseGame(); //pauses the game
+                    }
                 }
             }
             else
             {
-                PauseGame(); //pauses the game
+                if(isPaused) //if the game is paused
+                {
+                    if (isOptionsOpen)
+                    {
+                        optionsMenu.GetComponent<NewSettingsMenu>().OnBack(null);
+                    }
+                    else
+                    {
+                        ResumeGame(); //resumes the game
+                    }
+                }
+                else
+                {
+                    PauseGame(); //pauses the game
+                }
             }
         }
         
@@ -64,6 +99,8 @@ public class PauseMenu : MonoBehaviour
     public void PauseGame()
     {
         pauseMenu.SetActive(true);
+        _player.GetComponent<PlayerInput>().enabled = false;
+        optionsMenu.GetComponent<PlayerInput>().enabled = true;
         FindObjectOfType<UIController>().SetCoinAlpha(1);
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstSelectedButton);
@@ -74,6 +111,8 @@ public class PauseMenu : MonoBehaviour
 
     public void ResumeGame()
     {
+        _player.GetComponent<PlayerInput>().enabled = true;
+        optionsMenu.GetComponent<PlayerInput>().enabled = false;
         FindObjectOfType<UIController>().SetCoinAlpha(0);
         pauseMenu.SetActive(false);
         Time.timeScale = 1f; //resumes the ingame time
@@ -90,6 +129,7 @@ public class PauseMenu : MonoBehaviour
     
     public void CloseOptionsMenu()
     {
+        Debug.Log("Closing options menu");
         optionsMenu.SetActive(false);
         pauseMenu.transform.GetChild(0).gameObject.SetActive(true);
         CoinsUI.SetActive(true);
@@ -106,5 +146,23 @@ public class PauseMenu : MonoBehaviour
     public void QuitGame()
     {
         Application.Quit(); //quits the game - only works in build
+    }
+    
+    public void OpenSign(string text)
+    {
+        SignUIActive = true;
+        SignUI.GetComponentInChildren<TMP_Text>().text = text;
+        SignUI.SetActive(true);
+    }
+    
+    public void UpdateSignText(string text)
+    {
+        SignUI.GetComponentInChildren<TMP_Text>().text = text;
+    }
+    
+    public void CloseSign()
+    {
+        SignUIActive = false;
+        SignUI.SetActive(false);
     }
 }

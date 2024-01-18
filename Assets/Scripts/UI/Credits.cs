@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,13 @@ public class Credits : MonoBehaviour
     [SerializeField] private GameObject _mainMenu;
     [SerializeField] private EventSystem _eventSystem;
     [SerializeField] private GameObject _CreditsButton;
-    
+
+    public void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.F4))
+            EndCredits();
+    }
+
     public void EndCredits()
     {
         _credits.SetActive(false);

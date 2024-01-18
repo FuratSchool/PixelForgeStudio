@@ -2,96 +2,93 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class SwingingState : IPlayerState
+public class SwingingState : PlayerState
 {
-    public SwingingState (PlayerController pc) : base("SwingingState", pc) {_pc = (PlayerController)this._playerStateMachine;}
+    public SwingingState (PlayerController pc) : base("SwingingState", pc) {PC = (PlayerController)this.PlayerStateMachine;}
     public override void EnterState()
     {
         base.EnterState();
-        //_playerStateMachine.Animator.Play("Swinging");
-        _playerStateMachine.Animator.SetInteger("State", 5);
-        if (!_pc._isSwinging && _pc.inSwingingRange)
+        PlayerStateMachine.Animator.SetInteger("State", 5);
+        if (!PC._isSwinging && PC.inSwingingRange)
         {
             Swing();
         }
 
     }
-    public override void FixedUpdateState()
-    {
-    }
+    public override void FixedUpdateState() { }
     public override void UpdateState()
     {
         base.UpdateState();
-        if (!_pc.SwingPressed && _pc._isSwinging)
+        if (!PC.SwingPressed && PC._isSwinging)
         {
-            _pc.EndSwing();
+            PC.EndSwing();
         }
-        
-        
-        if (!_pc._isSwinging)
-            _playerStateMachine.ChangeState(_pc.FallingState);
+        else if (!PC._isSwinging)
+            PlayerStateMachine.ChangeState(PC.FallingState);
     }
 
     public override void LateUpdateState()
     {
         base.LateUpdateState();
-        if (!_pc.joint) return;
-        if (_pc.lr.positionCount != 0)
+        if (!PC.joint) return;
+        if (PC.lr.positionCount != 0)
         {
-            _pc.lr.SetPosition(0, _pc.Hand.transform.position);
-            _pc.lr.SetPosition(1, _pc.SwingableObjectPos); 
+            PC.lr.SetPosition(0, PC.Hand.transform.position);
+            PC.lr.SetPosition(1, PC.Handle.transform.position);
+            PC.Scythe.transform.position = PC.SwingableObjectGAME.transform.position;
+            PC.Scythe.transform.LookAt(PC.Hand.transform);
+            PC.Scythe.transform.localEulerAngles = new Vector3(0, PC.Scythe.transform.localEulerAngles.y, 0);
+
         }
     }
 
-    public override void ExitState()
-    {
-
-    }
+    public override void ExitState() {
+        PC.StopCoroutine(TimedSwing());
+        PC.ExitSwing = true;
+     }
 
     private void Swing()
     {
-        if (_pc._canSwing)
+        if (PC._canSwing)
         {
-            _pc._swingpoint = _pc.SwingableObjectGAME.transform.position;
-            if(_pc.SwingPressed)
+            PC._swingpoint = PC.SwingableObjectGAME.transform.position;
+            if(PC.SwingPressed)
             {
-                _pc.StartCoroutine(TimedSwing());
+                PC.StartCoroutine(TimedSwing());
 
-                _pc.SwingableObjectPos = _pc.SwingableObjectGAME.transform.gameObject.transform.position;
-                MakeJoint(_pc._swingpoint);
-                _pc.lr.positionCount = 2;
-                _pc._isSwinging = true;
-                _pc._canSwing = false;
+                PC.SwingableObjectPos = PC.SwingableObjectGAME.transform.gameObject.transform.position;
+                MakeJoint(PC._swingpoint);
+                PC.lr.positionCount = 2;
+                PC._isSwinging = true;
+                PC._canSwing = false;
             }
         }
     }
     
     private void MakeJoint(Vector3 hit)
     {
-        _pc.joint = _pc.player.gameObject.AddComponent<ConfigurableJoint>();
-        _pc.joint.autoConfigureConnectedAnchor = false;
+        PC.joint = PC.player.gameObject.AddComponent<ConfigurableJoint>();
+        PC.joint.autoConfigureConnectedAnchor = false;
         //joint.connectedBody = hit.rigidbody;
-        _pc.joint.connectedAnchor = hit;
-        _pc.joint.anchor = new Vector3(0,0,0);
+        PC.joint.connectedAnchor = hit;
+        PC.joint.anchor = new Vector3(0,0,0);
         
-        _pc.joint.xMotion = ConfigurableJointMotion.Limited;
-        _pc.joint.yMotion = ConfigurableJointMotion.Limited;
-        _pc.joint.zMotion = ConfigurableJointMotion.Limited;
+        PC.joint.xMotion = ConfigurableJointMotion.Limited;
+        PC.joint.yMotion = ConfigurableJointMotion.Limited;
+        PC.joint.zMotion = ConfigurableJointMotion.Limited;
         var limit = new SoftJointLimit();
-        limit.limit = _pc.SwingDistance;
+        limit.limit = PC.SwingDistance;
         limit.bounciness = 0f;
         limit.contactDistance = 0f;
-        _pc.joint.linearLimit = limit;
+        PC.joint.linearLimit = limit;
     }
     
     private IEnumerator TimedSwing()
     {
-        yield return new WaitForSeconds(_pc.SwingTime);
-        if (_pc.joint != null)
+        yield return new WaitForSeconds(PC.SwingTime);
+        if (PC.joint != null)
         {
-            _pc.EndSwing();
+            PC.EndSwing();
         }
-        
-        
     }
 }

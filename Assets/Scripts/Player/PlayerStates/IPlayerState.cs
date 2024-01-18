@@ -1,40 +1,39 @@
 using UnityEngine.InputSystem;
 
-public class IPlayerState
+public class PlayerState
 {
-    public string name;
-    protected PlayerStateMachine _playerStateMachine;
-    protected PlayerController _pc;
+    public string Name;
+    protected PlayerStateMachine PlayerStateMachine;
+    protected PlayerController PC;
     
-    
-    public IPlayerState(string name,PlayerStateMachine playerStateMachine)
+    public PlayerState(string name,PlayerStateMachine playerStateMachine)
     {
-        this.name = name;
-        this._playerStateMachine = playerStateMachine;
-        _pc = (PlayerController)this._playerStateMachine;
+        this.Name = name;
+        this.PlayerStateMachine = playerStateMachine;
+        PC = (PlayerController)this.PlayerStateMachine;
     }
     public virtual void EnterState() { }
 
     public virtual void UpdateState()
     {
         IsTransitioning();
-        if (!_pc.SpacePressed) _pc.CanJumpAgain = true;
-        if (_pc.GetRigidbody().transform.position.y < _pc.deathRange || _pc.touchedWater)
+        if (!PC.SpacePressed) PC.CanJumpAgain = true;
+        if (PC.GetRigidbody().transform.position.y < -40 || PC.touchedWater)
         {
-            _playerStateMachine.ChangeState(_pc.DeathState);
+            PlayerStateMachine.ChangeState(PC.DeathState);
         }
 
-        _pc.MoveSpeed = _pc._isRunning ? _pc.SprintSpeed : _pc.WalkSpeed;
+        PC.MoveSpeed = PC.isRunning ? PC.SprintSpeed : PC.WalkSpeed;
     }
     public virtual void FixedUpdateState() { }
 
     public virtual void LateUpdateState()
     {
-        _pc.grounded = _pc.IsGrounded();
-        if (_pc.IsGrounded())
+        PC.grounded = PC.IsGrounded();
+        if (PC.IsGrounded())
         {
-            
-
+            PC.canJump = true;
+            PC.canDoubleJump = true;
         }
     }
     public virtual void ExitState() { }
@@ -84,15 +83,15 @@ public class IPlayerState
     
     public bool CheckSwing()
     {
-        if(!_pc.IsSwinging && _pc.canSwing && _pc.inSwingingRange)
+        if(!PC.IsSwinging && PC.canSwing && PC.inSwingingRange)
             return true;
         return false;
     }
     
     public bool IsTransitioning()
     {
-        if (_pc.isTransitioning && _playerStateMachine.GetCurrentState() != _pc.TransitionState)
-            _pc.ChangeState(_pc.TransitionState);
+        if (PC.isTransitioning && PlayerStateMachine.GetCurrentState() != PC.TransitionState)
+            PC.ChangeState(PC.TransitionState);
         return false;
     }
     
