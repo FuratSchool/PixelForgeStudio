@@ -17,7 +17,8 @@ public class TutorialKeybindings : MonoBehaviour
     [SerializeField] private string ControllerBindingId2;
     [SerializeField] private string tutorialText2;
     
-    
+    [SerializeField] private bool isforSign = false;
+    public bool SignActive = false;
     
     private string keybind;
     private string keybind2;
@@ -37,8 +38,9 @@ public class TutorialKeybindings : MonoBehaviour
         
         var deviceLayoutName = default(string);
         var controlPath = default(string);
-
+        
         var device = input.currentControlScheme;
+        Debug.Log(device);
         if(device.Equals("Controller"))
         {
             if (m_Action.name == "Movement/Move")
@@ -100,5 +102,10 @@ public class TutorialKeybindings : MonoBehaviour
         }
         var output2 = string.Format(tutorialText2, keybind2);
         TutorialText = output + " " + output2;
+        if (isforSign)
+        {
+            if(!SignActive) return;
+            FindObjectOfType<TutorialSign>().updateText(TutorialText);
+        }
     }
 }

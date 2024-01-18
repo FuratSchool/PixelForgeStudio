@@ -44,12 +44,19 @@ public class TutorialSign : MonoBehaviour
             {
                 _signActive = false;
                 _pauseMenu.CloseSign();
+                GetComponentInChildren<TutorialKeybindings>().SignActive = false;
             }
             else
             {
                 _pauseMenu.OpenSign(GetComponentInChildren<TutorialKeybindings>().TutorialText);
                 _signActive = true;
+                GetComponentInChildren<TutorialKeybindings>().SignActive = true;
             }
         }
+    }
+
+    public void updateText(string text)
+    {
+        _pauseMenu.UpdateSignText(text);
     }
 }

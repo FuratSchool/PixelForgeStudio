@@ -7764,6 +7764,8 @@ MonoBehaviour:
   KeyboardBindingId2: 
   ControllerBindingId2: 
   tutorialText2: 
+  isforSign: 0
+  SignActive: 0
   TutorialText: 
 --- !u!1001 &338543507
 PrefabInstance:
@@ -12917,12 +12919,12 @@ PrefabInstance:
     - target: {fileID: 1100662664474211893, guid: 365caf1c5aacf3c44bde62c7883df8ca,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.09271453
+      value: 0.092714496
       objectReference: {fileID: 0}
     - target: {fileID: 1100662664474211893, guid: 365caf1c5aacf3c44bde62c7883df8ca,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.014850208
+      value: -0.014850201
       objectReference: {fileID: 0}
     - target: {fileID: 1100662664474211893, guid: 365caf1c5aacf3c44bde62c7883df8ca,
         type: 3}
@@ -12953,6 +12955,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Main Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 6859759751673130496, guid: 365caf1c5aacf3c44bde62c7883df8ca,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15058,6 +15065,230 @@ Transform:
   - {fileID: 1024000615}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &643328685
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 643328687}
+  - component: {fileID: 643328686}
+  m_Layer: 0
+  m_Name: CameraPath
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &643328686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643328685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2edac0b6f5e12204bbc4b9f4391db7ec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  useMainCamera: 1
+  selectedCamera: {fileID: 0}
+  lookAtTarget: 0
+  target: {fileID: 0}
+  playOnAwake: 1
+  playOnAwakeTime: 10
+  points:
+  - position: {x: -545.499, y: 685.55237, z: 818.0096}
+    rotation: {x: 0.132091, y: -0.36589336, z: 0.078831464, w: 0.917856}
+    handleprev: {x: 0, y: 0, z: -1}
+    handlenext: {x: 0, y: 0, z: 1}
+    curveTypeRotation: 0
+    rotationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    curveTypePosition: 1
+    positionCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    chained: 1
+  - position: {x: -547.96075, y: 526.5053, z: 816.60236}
+    rotation: {x: 0.3155507, y: -0.43228477, z: 0.16466515, w: 0.8285185}
+    handleprev: {x: -16.89209, y: 40.264435, z: -21.560852}
+    handlenext: {x: 16.89209, y: -40.264435, z: 21.560852}
+    curveTypeRotation: 0
+    rotationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    curveTypePosition: 1
+    positionCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    chained: 1
+  - position: {x: -595.15533, y: 362.60425, z: 924.00824}
+    rotation: {x: 0.045843642, y: 0.59925044, z: -0.03433679, w: 0.7985101}
+    handleprev: {x: 0, y: 0, z: -1}
+    handlenext: {x: 0, y: 0, z: 1}
+    curveTypeRotation: 0
+    rotationCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    curveTypePosition: 1
+    positionCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 0
+        inSlope: 0
+        outSlope: 1
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 1
+        inSlope: 1
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    chained: 1
+  visual:
+    pathColor: {r: 0, g: 1, b: 0, a: 1}
+    inactivePathColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+    frustrumColor: {r: 1, g: 1, b: 1, a: 1}
+    handleColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  looped: 0
+  alwaysShow: 1
+  afterLoop: 0
+--- !u!4 &643328687
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 643328685}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.9056203, z: -0, w: 0.42408958}
+  m_LocalPosition: {x: -718.3, y: 251.6, z: 987.2}
+  m_LocalScale: {x: 1.8079048, y: 1.807905, z: 1.8079048}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 129.814, z: 0}
 --- !u!4 &646682511 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 42daa78e520f2dd49bbf701aedc6c0f8,
@@ -17648,12 +17879,12 @@ PrefabInstance:
     - target: {fileID: 508038981007421547, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.092968695
+      value: 0.09296866
       objectReference: {fileID: 0}
     - target: {fileID: 508038981007421547, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.013165791
+      value: -0.013165783
       objectReference: {fileID: 0}
     - target: {fileID: 1863149323569572988, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
@@ -17673,12 +17904,12 @@ PrefabInstance:
     - target: {fileID: 2565389217574949188, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.09271453
+      value: 0.09271452
       objectReference: {fileID: 0}
     - target: {fileID: 2565389217574949188, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.014850206
+      value: -0.014850203
       objectReference: {fileID: 0}
     - target: {fileID: 5347032101694491550, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
@@ -18343,6 +18574,8 @@ MonoBehaviour:
   KeyboardBindingId2: 
   ControllerBindingId2: 
   tutorialText2: 
+  isforSign: 0
+  SignActive: 0
   TutorialText: 
 --- !u!114 &763175245
 MonoBehaviour:
@@ -23681,6 +23914,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2740200232097415735, guid: d9c6a12f22541a14eb3eb6df2e83a221,
+        type: 3}
+      propertyPath: EnableMovement
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4521968622420406398, guid: d9c6a12f22541a14eb3eb6df2e83a221,
         type: 3}
       propertyPath: m_Name
@@ -25630,6 +25868,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: -3368611770219014681, guid: 174f732700430d74cbeb10912ebc3441,
         type: 3}
+    - target: {fileID: 5658124749776560028, guid: 5fe5f4d3fda9ac04fbfaf6535a2945bc,
+        type: 3}
+      propertyPath: isforSign
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5658124749776560028, guid: 5fe5f4d3fda9ac04fbfaf6535a2945bc,
         type: 3}
       propertyPath: m_Action2
@@ -34664,6 +34907,8 @@ MonoBehaviour:
   KeyboardBindingId2: 
   ControllerBindingId2: 
   tutorialText2: 
+  isforSign: 0
+  SignActive: 0
   TutorialText: 
 --- !u!114 &1456441184
 MonoBehaviour:
@@ -42601,6 +42846,8 @@ MonoBehaviour:
   KeyboardBindingId2: 
   ControllerBindingId2: 
   tutorialText2: 
+  isforSign: 0
+  SignActive: 0
   TutorialText: 
 --- !u!114 &1785565901
 MonoBehaviour:
@@ -45724,6 +45971,8 @@ MonoBehaviour:
   KeyboardBindingId2: 
   ControllerBindingId2: 
   tutorialText2: 
+  isforSign: 0
+  SignActive: 0
   TutorialText: 
 --- !u!114 &1938802213
 MonoBehaviour:
@@ -50350,8 +50599,13 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Action
       value: 
-      objectReference: {fileID: -3368611770219014681, guid: 174f732700430d74cbeb10912ebc3441,
+      objectReference: {fileID: 2509013775822973389, guid: 174f732700430d74cbeb10912ebc3441,
         type: 3}
+    - target: {fileID: 5658124749776560028, guid: 5fe5f4d3fda9ac04fbfaf6535a2945bc,
+        type: 3}
+      propertyPath: isforSign
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5658124749776560028, guid: 5fe5f4d3fda9ac04fbfaf6535a2945bc,
         type: 3}
       propertyPath: m_Action2
@@ -50486,8 +50740,13 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Action
       value: 
-      objectReference: {fileID: -3368611770219014681, guid: 174f732700430d74cbeb10912ebc3441,
+      objectReference: {fileID: -3764719609941198317, guid: 174f732700430d74cbeb10912ebc3441,
         type: 3}
+    - target: {fileID: 5658124749776560028, guid: 5fe5f4d3fda9ac04fbfaf6535a2945bc,
+        type: 3}
+      propertyPath: isforSign
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5658124749776560028, guid: 5fe5f4d3fda9ac04fbfaf6535a2945bc,
         type: 3}
       propertyPath: m_Action2
@@ -52076,6 +52335,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5658124749776560028, guid: 5fe5f4d3fda9ac04fbfaf6535a2945bc,
         type: 3}
+      propertyPath: isforSign
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5658124749776560028, guid: 5fe5f4d3fda9ac04fbfaf6535a2945bc,
+        type: 3}
       propertyPath: TutorialtextObject
       value: 
       objectReference: {fileID: 538921324}
@@ -52111,3 +52375,4 @@ SceneRoots:
   - {fileID: 1043664178}
   - {fileID: 2085735374}
   - {fileID: 2080042913}
+  - {fileID: 643328687}

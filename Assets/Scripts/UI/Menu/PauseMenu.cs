@@ -155,6 +155,11 @@ public class PauseMenu : MonoBehaviour
         SignUI.SetActive(true);
     }
     
+    public void UpdateSignText(string text)
+    {
+        SignUI.GetComponentInChildren<TMP_Text>().text = text;
+    }
+    
     public void CloseSign()
     {
         SignUIActive = false;
