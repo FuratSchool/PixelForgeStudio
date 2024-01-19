@@ -18,7 +18,7 @@ public class PlayerState
     {
         IsTransitioning();
         if (!PC.SpacePressed) PC.CanJumpAgain = true;
-        if (PC.GetRigidbody().transform.position.y < -40 || PC.touchedWater)
+        if (PC.GetRigidbody().transform.position.y < PC.deathRange || PC.touchedWater)
         {
             PlayerStateMachine.ChangeState(PC.DeathState);
         }

@@ -3,7 +3,22 @@ guid: ef441cbc545aa442aa52309d4041a26c
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Cloak
+    second: {fileID: 2100000, guid: 98ed6b2e6be5f4df79e4292bf163d880, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Dark
+    second: {fileID: 2100000, guid: 07de96592a6a24a158d1402b8fbaa7cc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Skin
+    second: {fileID: 2100000, guid: c2a4f08883fb14738a0fc85fa48e02bc, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
