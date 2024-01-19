@@ -115,10 +115,10 @@ public class PlayerController : PlayerStateMachine
     private UIController _uiController;
     private DialogueManager _dialogueManager;
     private PlayerInput _playerInput;
-    public AudioClip WalkingSound;
-    public AudioClip RunningSound;
-    public AudioClip JumpingSound;
-    public AudioClip LandingSound;
+    public AudioSource WalkingSound;
+    public AudioSource RunningSound;
+    public AudioSource JumpingSound;
+    public AudioSource LandingSound;
     
     public bool isTransitioning = false;
     

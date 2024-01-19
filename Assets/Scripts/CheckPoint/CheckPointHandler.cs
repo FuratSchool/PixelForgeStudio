@@ -19,6 +19,8 @@ public class CheckPointHandler : MonoBehaviour
     {
         if (other.CompareTag("Player") && !triggered)
         {
+            var audio = GetComponentInParent<AudioSource>();
+            audio.Play();
             if(other.transform.parent != null) return;
             Debug.Log("Player entered the checkpoint");
             SavePlayerProgress();

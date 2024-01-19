@@ -5,9 +5,12 @@ public class SprintingState : PlayerState
     public SprintingState (PlayerController pc) : base("SprintingState", pc) {PC = (PlayerController)this.PlayerStateMachine;}
 
     private bool _textActive = false;
+    private AudioSource RunningSound;
     public override void EnterState()
     {
         base.EnterState();
+        RunningSound= PC.RunningSound;
+        RunningSound.Play();
         PlayerStateMachine.Animator.SetInteger("State", 2);
     }
     public override void UpdateState()
@@ -53,7 +56,7 @@ public class SprintingState : PlayerState
 
     public override void ExitState()
     {
-        PC.GetAudio().Stop();
+        RunningSound.Stop();
         if (_textActive)
         {
             DisableInteractDialogueActive(PC.GetUIController());
