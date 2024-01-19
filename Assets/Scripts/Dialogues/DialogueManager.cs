@@ -60,6 +60,7 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
+        currentDialogueIndex = 0;
         dialogueCanvas.SetActive(true); // show the canvas when dialogue starts
         dialogueActive = true;
         nameText.text = dialogue.name[currentDialogueIndex];
