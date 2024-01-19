@@ -16,7 +16,8 @@ public class TutorialKeybindings : MonoBehaviour
     [SerializeField] private string KeyboardBindingId2;
     [SerializeField] private string ControllerBindingId2;
     [SerializeField] private string tutorialText2;
-    
+
+    [SerializeField] private bool DialogueBox = false;
     [SerializeField] private bool isforSign = false;
     public bool SignActive = false;
     
@@ -102,6 +103,10 @@ public class TutorialKeybindings : MonoBehaviour
         }
         var output2 = string.Format(tutorialText2, keybind2);
         TutorialText = output + " " + output2;
+        if (DialogueBox)
+        {
+            GetComponent<TMP_Text>().text = TutorialText;
+        }
         if (isforSign)
         {
             if(!SignActive) return;

@@ -18,6 +18,7 @@ public class SceneController : MonoBehaviour
     private GameObject LoadingScreen;
     private bool loadingDone = false;
     private AsyncOperation asyncLoad;
+    [SerializeField] private GameObject LoadingScreenPrefab;
     private void Awake()
     {
         if(spawned == false)
@@ -57,7 +58,16 @@ public class SceneController : MonoBehaviour
     {
         if (LoadingScreen == null)
         {
-            LoadingScreen = FindObjectOfType<Navigation>().LoadingScreen;
+            if(FindObjectOfType<Navigation>() != null)
+                LoadingScreen = FindObjectOfType<Navigation>().LoadingScreen;
+        }
+
+        if (LoadingScreen == null)
+        {
+            var obj = Instantiate(LoadingScreenPrefab);
+            obj.transform.SetParent(transform.GetChild(0));
+            LoadingScreen = obj;
+            
         }
         LoadingScreen.SetActive(true);
         StartCoroutine(LoadSceneAsyncCoroutine(sceneName));
@@ -72,6 +82,12 @@ public class SceneController : MonoBehaviour
             yield return null;
             loadingDone= true;
         }
+    }
+
+    public void DestroyLoading()
+    {
+        if(LoadingScreen != null)
+            Destroy(LoadingScreen);
     }
     
     private IEnumerator LoadTime(float sec)
