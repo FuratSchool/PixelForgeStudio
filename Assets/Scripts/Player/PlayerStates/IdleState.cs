@@ -16,7 +16,12 @@ public class IdleState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-        
+        if (PC.autoTrigger)
+        {
+            PlayerStateMachine.ChangeState(PC.TalkingState);
+            PC.autoTrigger = false;
+            return;
+        }
         if (PC.InDialogeTriggerZone && PC.NPC.hasBeenTalkedTo == false)
         {
             _textActive = true;
@@ -26,13 +31,6 @@ public class IdleState : PlayerState
                 PlayerStateMachine.ChangeState(PC.TalkingState);
                 return;
             }
-        }
-
-        if (PC.autoTrigger)
-        {
-            PlayerStateMachine.ChangeState(PC.TalkingState);
-            PC.autoTrigger = false;
-            return;
         }
         if(PC.InteractableRange){
             _textActive = true;

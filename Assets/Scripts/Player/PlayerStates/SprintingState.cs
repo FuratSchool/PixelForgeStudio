@@ -28,6 +28,12 @@ public class SprintingState : PlayerState
                 return;
             }
         }
+        if (PC.autoTrigger)
+        {
+            PlayerStateMachine.ChangeState(PC.TalkingState);
+            PC.autoTrigger = false;
+            return;
+        }
         if (PC.InDialogeTriggerZone && PC.NPC.hasBeenTalkedTo == false)
         {
             _textActive = true;

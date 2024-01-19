@@ -15,7 +15,12 @@ public class WalkingState : PlayerState
     public override void UpdateState()
     {
         base.UpdateState();
-        
+        if (PC.autoTrigger)
+        {
+            PlayerStateMachine.ChangeState(PC.TalkingState);
+            PC.autoTrigger = false;
+            return;
+        }
         if (PC.InDialogeTriggerZone && PC.NPC.hasBeenTalkedTo == false)
         {
             _textActive = true;
