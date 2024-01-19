@@ -126,6 +126,7 @@ public class PlayerController : PlayerStateMachine
     public bool dashPressed;
     public bool _canSwing = true;
     public bool InRange { get; set; }
+    public float deathRange = -80f;
     
     public bool touchedWater { get; set; }
 

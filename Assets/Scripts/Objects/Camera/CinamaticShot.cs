@@ -39,6 +39,7 @@ public class CinamaticShot : MonoBehaviour
     {
         _playerController = FindObjectOfType<PlayerController>();
         _freeLook = FindObjectOfType<CinemachineFreeLook>();
+        
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -52,6 +53,7 @@ public class CinamaticShot : MonoBehaviour
             }
             else if(!Once && SecondCinematic)
             {
+                if(!NPC.GetComponent<DialogueTrigger>().hasBeenTalkedTo) return;
                 _playerController.isTransitioning = true;
                 Camera.main.GetComponent<CinemachineBrain>().enabled = false;
                 StartCoroutine(Wait(PlayTime-1));
@@ -131,7 +133,7 @@ public class CinamaticShot : MonoBehaviour
 
             if (waited && CinematicStarted)
             {
-                if(Vector3.Distance(CameraPos.transform.position, Camera.main.transform.position) < 0.1f)
+                if(Vector3.Distance(CameraPos.transform.position, Camera.main.transform.position) < 0.5f)
                 {
                     CinematicStarted = false;
                     Camera.main.GetComponent<CinemachineBrain>().enabled = true;
