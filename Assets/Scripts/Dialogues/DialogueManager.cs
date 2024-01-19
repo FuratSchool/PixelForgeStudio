@@ -49,7 +49,8 @@ public class DialogueManager : MonoBehaviour
                 else
                 {
                     DisplayNextSentence();
-                    currentDialogueIndex++;
+                    if(currentDialogueIndex < dialogue.name.Length -1)
+                        currentDialogueIndex++;
                     nameText.text = dialogue.name[currentDialogueIndex];
                 }
             }
