@@ -55,8 +55,7 @@ public class WhiteScreen : MonoBehaviour
     {
         _playerController = FindObjectOfType<PlayerController>();
         player = GameObject.FindObjectOfType<PlayerController>().gameObject;
-        
-            _Pos = TeleportPosition.transform.position;
+        _Pos = TeleportPosition.transform.position;
         
     }
 

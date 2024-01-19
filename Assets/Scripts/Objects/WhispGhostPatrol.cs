@@ -76,6 +76,8 @@ public class WhispGhostPatrol : MonoBehaviour
     
     IEnumerator Wait(){
         yield return new WaitForSeconds(5);
+        FindObjectOfType<SceneController>().FromFirstLevel = true;
+        FindObjectOfType<SceneController>().LoadSceneAsync("Mainhub");
         Destroy(gameObject);
     }
 }
