@@ -133,7 +133,7 @@ public class CinamaticShot : MonoBehaviour
 
             if (waited && CinematicStarted)
             {
-                if(Vector3.Distance(CameraPos.transform.position, Camera.main.transform.position) < 0.1f)
+                if(Vector3.Distance(CameraPos.transform.position, Camera.main.transform.position) < 0.5f)
                 {
                     CinematicStarted = false;
                     Camera.main.GetComponent<CinemachineBrain>().enabled = true;
