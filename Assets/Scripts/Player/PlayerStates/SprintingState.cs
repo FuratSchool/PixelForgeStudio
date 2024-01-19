@@ -9,8 +9,11 @@ public class SprintingState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        RunningSound= PC.RunningSound;
-        RunningSound.Play();
+        /*RunningSound= PC.RunningSound;
+        RunningSound.Play();*/
+        //PC.source.loop = true;
+        PC.source.clip = PC._runningSounds[Random.Range(0, PC._runningSounds.Length)];
+        PC.source.Play();
         PlayerStateMachine.Animator.SetInteger("State", 2);
     }
     public override void UpdateState()
@@ -56,7 +59,9 @@ public class SprintingState : PlayerState
 
     public override void ExitState()
     {
-        RunningSound.Stop();
+        //PC.source.loop = false;
+        PC.source.Stop();
+        //RunningSound.Stop();
         if (_textActive)
         {
             DisableInteractDialogueActive(PC.GetUIController());

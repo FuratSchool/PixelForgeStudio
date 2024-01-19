@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 using UnityEngine.VFX;
+using Random = UnityEngine.Random;
 
 public class PlayerController : PlayerStateMachine
 {
@@ -144,6 +145,13 @@ public class PlayerController : PlayerStateMachine
     [HideInInspector] public LandingState LandingState;
     [HideInInspector] public InteractingState InteractingState;
     [HideInInspector] public EmoteState EmoteState;
+    
+    public AudioSource source = new AudioSource();
+    [SerializeField] public AudioClip _deathSound;
+    [SerializeField] public AudioClip[] _jumpSounds;
+    [SerializeField] public AudioClip[] _runningSounds;
+    [SerializeField] public AudioClip[] _scytheRobeSounds;
+    [SerializeField] public AudioClip _scytheSwingSounds;
     public float MoveSpeed
     {
         get => _moveSpeed;
@@ -417,6 +425,9 @@ public class PlayerController : PlayerStateMachine
         _isSwinging = false;
         Scythe.transform.localPosition = new Vector3(0.004f, 0, -0.0037f);
         Scythe.transform.localEulerAngles = new Vector3(20, 280, 90);
+        
+        source.PlayOneShot(_scytheRobeSounds[Random.Range(0, _scytheRobeSounds.Length)]);
+        
         player.GetComponent<Rigidbody>().AddForce(ExitForce * Vector3.up, ForceMode.Impulse);
         StartCoroutine(SwingDelayTimer());
     }

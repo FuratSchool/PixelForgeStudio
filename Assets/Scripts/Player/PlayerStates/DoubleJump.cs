@@ -11,10 +11,12 @@ public class DoubleJump : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        JumpingSound= PC.JumpingSound;
+        /*JumpingSound= PC.JumpingSound;
         JumpingSound.pitch = 1.3f;
         JumpingSound.volume = .8f;
-        JumpingSound.Play();
+        JumpingSound.Play();*/
+        
+        PC.source.PlayOneShot(PC._jumpSounds[Random.Range(0, PC._jumpSounds.Length)]);
         
         PC.GetRigidbody().velocity = new Vector3(PC.GetRigidbody().velocity.x, 0f , PC.GetRigidbody().velocity.z);
         PC.GetRigidbody().AddForce(Vector3.up * (PC.force * 1f), ForceMode.Impulse); PC.canDoubleJump = false;
@@ -43,7 +45,7 @@ public class DoubleJump : PlayerState
     
     public override void ExitState()
     {
-        JumpingSound.pitch = 1f;
-        JumpingSound.volume = 1f;
+        /*JumpingSound.pitch = 1f;
+        JumpingSound.volume = 1f;*/
     }
 }

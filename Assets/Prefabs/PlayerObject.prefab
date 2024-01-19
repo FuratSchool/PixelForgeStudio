@@ -489,6 +489,24 @@ MonoBehaviour:
   _canDash: 1
   dashPressed: 0
   _canSwing: 1
+  deathRange: -80
+  source: {fileID: 4439422585046631411}
+  _deathSound: {fileID: 8300000, guid: f64dc779217cc1f4093bc9de3ca0d2c3, type: 3}
+  _jumpSounds:
+  - {fileID: 8300000, guid: 393084afa1f6fc840a9db890af649a5c, type: 3}
+  - {fileID: 8300000, guid: 221917cbd0743644db79dcd5482ee16a, type: 3}
+  - {fileID: 8300000, guid: e929ff3c4bd4ca246b430f2c9843534b, type: 3}
+  - {fileID: 8300000, guid: cf969e6fb8bcfe341af958ea913c6c3a, type: 3}
+  - {fileID: 8300000, guid: 58de4595a30627e4080eea28b46e3dad, type: 3}
+  _runningSounds:
+  - {fileID: 8300000, guid: a46ab29ca7aef0b448b45afe97586615, type: 3}
+  - {fileID: 8300000, guid: a9ca6fed1e9b9f54eb2095d4d7e0fa07, type: 3}
+  - {fileID: 8300000, guid: f8b3f3d318b80964e8c6c15781ccedab, type: 3}
+  - {fileID: 8300000, guid: 17ba127366df4fc43a92bcbc3451fb50, type: 3}
+  _scytheRobeSounds:
+  - {fileID: 8300000, guid: a0f89c3fc8eb74043ab090139e54a794, type: 3}
+  - {fileID: 8300000, guid: 309142ee884329b459a6bc061ddd41c9, type: 3}
+  _scytheSwingSounds: {fileID: 8300000, guid: c507419c2c4eb094e89318e0a5d662d1, type: 3}
 --- !u!120 &6113694536196822892
 LineRenderer:
   serializedVersion: 2

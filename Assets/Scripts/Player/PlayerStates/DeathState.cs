@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class DeathState : PlayerState
 {
     public DeathState (PlayerController pc) : base("DeathState", pc) {PC = (PlayerController)this.PlayerStateMachine;}
@@ -5,6 +7,7 @@ public class DeathState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
+        PC.source.PlayOneShot(PC._deathSound);
         PC.GetRigidbody().isKinematic = true;
     }
 

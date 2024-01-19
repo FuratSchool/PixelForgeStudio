@@ -13,8 +13,9 @@ public class JumpingState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
-        JumpingSound= PC.JumpingSound;
-        JumpingSound.Play();
+        /*JumpingSound= PC.JumpingSound;
+        JumpingSound.Play();*/
+        PC.source.PlayOneShot(PC._jumpSounds[Random.Range(0, PC._jumpSounds.Length)]);
         PC.jumped = true;
         PC.isJumping = true;
         PC.EnableGrimParticles(false);
