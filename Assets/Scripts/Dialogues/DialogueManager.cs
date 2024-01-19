@@ -56,8 +56,8 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueCanvas.SetActive(true); // show the canvas when dialogue starts
         dialogueActive = true;
-        //nameText.text = dialogue.name;
-        sentences.Clear();
+        nameText.text = dialogue.name;
+        sentences.Clear();  
         foreach (var sentence in dialogue.sentences) sentences.Enqueue(sentence);
         DisplayNextSentence();
     }

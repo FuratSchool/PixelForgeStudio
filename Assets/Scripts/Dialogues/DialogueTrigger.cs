@@ -10,7 +10,7 @@ public class DialogueTrigger : MonoBehaviour
     public bool canTalkAgain = true; //allows initial interaction with npc.
     public bool hasBeenTalkedTo = false;
     private UIController _uiController;
-
+    public bool autoTrigger = false;
     private void Start()
     {
         _uiController = FindObjectOfType<UIController>();
@@ -19,6 +19,13 @@ public class DialogueTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player")){
+            if (autoTrigger && !hasBeenTalkedTo)
+            {
+                FindObjectOfType<PlayerController>().NPC = this;
+                FindObjectOfType<PlayerController>().autoTrigger = true;
+                autoTrigger = false;
+            }
+
             if ((canTalkAgain || !hasBeenTalkedTo))
             {
                 FindObjectOfType<PlayerController>().NPC = this;
