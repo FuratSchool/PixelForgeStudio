@@ -26095,7 +26095,7 @@ PrefabInstance:
     - target: {fileID: 508038981007421547, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.021640621
+      value: -0.021640623
       objectReference: {fileID: 0}
     - target: {fileID: 508038981007421547, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
@@ -26140,22 +26140,22 @@ PrefabInstance:
     - target: {fileID: 2565389217574949188, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.054142304
+      value: -0.054142322
       objectReference: {fileID: 0}
     - target: {fileID: 2565389217574949188, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0206618
+      value: -0.020661807
       objectReference: {fileID: 0}
     - target: {fileID: 2565389217574949188, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.93270993
+      value: 0.9327099
       objectReference: {fileID: 0}
     - target: {fileID: 2565389217574949188, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.35594097
+      value: -0.355941
       objectReference: {fileID: 0}
     - target: {fileID: 5347032101694491550, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
@@ -75267,6 +75267,14 @@ PrefabInstance:
         type: 3}
       propertyPath: isforSign
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5658124749776560028, guid: 5fe5f4d3fda9ac04fbfaf6535a2945bc,
+        type: 3}
+      propertyPath: tutorialText
+      value: "If you are reading this, it means you made the fall, Congrats. My name
+        is Faron your creator, and I\u2019ve got a job for you.  My Job. I will grant
+        you the powers to judge souls, when you reach the cave at the feet of the
+        statue. But since you're new try to walk first. You walk with {0},"
       objectReference: {fileID: 0}
     - target: {fileID: 5658124749776560028, guid: 5fe5f4d3fda9ac04fbfaf6535a2945bc,
         type: 3}
