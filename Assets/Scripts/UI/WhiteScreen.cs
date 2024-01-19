@@ -31,6 +31,7 @@ public class WhiteScreen : MonoBehaviour
     private bool _fadeOutStarted;
     private bool _fadeOutFinished;
     private bool _isTransitioning;
+    [SerializeField] private AudioSource _audioSource;
     
     public bool isTransitioning { get { return _isTransitioning; } }
     // Start is called before the first frame update
@@ -39,6 +40,7 @@ public class WhiteScreen : MonoBehaviour
         if(_sceneController.FromFirstLevel) return;
         if (other.CompareTag("Player"))
         {
+            _audioSource.Play();
             player = other.gameObject;
             if (other.transform.parent != null) return;
             Debug.Log(player);

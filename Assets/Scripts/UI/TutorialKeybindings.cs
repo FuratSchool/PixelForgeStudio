@@ -25,6 +25,8 @@ public class TutorialKeybindings : MonoBehaviour
     private string keybind2;
     public string TutorialText;
 
+    private bool Landing = false;
+
     void OnEnable()
     {
         ChangeText(FindObjectOfType<PlayerInput>());
@@ -112,5 +114,13 @@ public class TutorialKeybindings : MonoBehaviour
             if(!SignActive) return;
             FindObjectOfType<TutorialSign>().updateText(TutorialText);
         }
+    }
+    
+    void OnTriggerEnter(Collider collider)
+    {
+        if (!collider.gameObject.CompareTag("Player")) return;
+        if (Landing) return;
+        GetComponent<AudioSource>().Play();
+        Landing = true;
     }
 }

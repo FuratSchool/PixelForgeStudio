@@ -8,6 +8,7 @@ public class SwingingState : PlayerState
     public override void EnterState()
     {
         base.EnterState();
+        PC.source.PlayOneShot(PC._scytheSwingSounds);
         PlayerStateMachine.Animator.SetInteger("State", 5);
         if (!PC._isSwinging && PC.inSwingingRange)
         {

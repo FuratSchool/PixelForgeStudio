@@ -5,10 +5,11 @@ public class WalkingState : PlayerState
     public WalkingState (PlayerController pc) : base("WalkingState", pc) {PC = (PlayerController)this.PlayerStateMachine;}
     
     private bool _textActive = false;
+    private AudioSource WalkingSound;
     public override void EnterState()
     {
-        PC.GetAudio().clip = PC.WalkingSound;
-        PC.GetAudio().Play();
+        WalkingSound= PC.WalkingSound;
+        WalkingSound.Play();
         PlayerStateMachine.Animator.SetInteger("State", 1);
     }
     public override void UpdateState()
@@ -57,7 +58,7 @@ public class WalkingState : PlayerState
 
     public override void ExitState()
     {    
-        PC.GetAudio().Stop();
+        WalkingSound.Stop();
         if (_textActive)
         {
             DisableInteractDialogueActive(PC.GetUIController());

@@ -3,9 +3,14 @@ using UnityEngine;
 
 public class DashingState : PlayerState
 {
+    private AudioSource dashSound;
     public DashingState (PlayerController pc) : base("DashingState", pc) {PC = (PlayerController)this.PlayerStateMachine;}
     public override void EnterState()
     {
+        dashSound= PC.JumpingSound;
+        dashSound.pitch = 0.6f;
+        dashSound.volume = 0.6f;
+        dashSound.Play();
         PlayerStateMachine.Animator.SetInteger("State", 4);
         PC.StartCoroutine(PC.Dash());
     }
@@ -26,6 +31,10 @@ public class DashingState : PlayerState
         }
 
     }
-    
-    public override void ExitState() { }
+
+    public override void ExitState()
+    {
+        dashSound.pitch = 1f;
+        dashSound.volume = 1f;
+    }
 }

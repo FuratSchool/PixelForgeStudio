@@ -7,8 +7,11 @@ public class LandingState : PlayerState
     
     private bool _waitStarted;
     private float timePassed;
+    private AudioSource landingSound;
     public override void EnterState()
     {
+        landingSound= PC.LandingSound;
+        landingSound.Play();
         PC.landingParticles.Stop();
         var main = PC.landingParticles.main;
         main.startColor = PC.ColorParticles;

@@ -13,11 +13,17 @@ public class Navigation : MonoBehaviour
     [SerializeField] private GameObject fistMainMenu;
     public bool inMenu;
     public GameObject LoadingScreen;
+    public AudioSource menuClick;
 
     private void Update()
     {
         if(!inMenu) return;
         if (EventSystem.current.currentSelectedGameObject == null)
             EventSystem.current.SetSelectedGameObject(fistMainMenu);
+    }
+    
+    public void PlaySound()
+    {
+        menuClick.Play();
     }
 }

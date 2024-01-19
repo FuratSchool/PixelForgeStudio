@@ -18,6 +18,6 @@ public class PlayerCollision : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
         transform.parent = null;
-        transform.GetComponent<PlayerController>().raycastDistance = 1.7f;
+        transform.GetComponent<PlayerController>().raycastDistance = 1.9f;
     }
 }
