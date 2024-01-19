@@ -26,7 +26,9 @@ Material:
   m_Parent: {fileID: 2100000, guid: 26fbdfcf62afc0b42a9325614ae90742, type: 2}
   m_ModifiedSerializedProperties: 2
   m_ValidKeywords: []
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _EMISSIVE_SIMPLE
+  - _OUTLINE_NML
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
