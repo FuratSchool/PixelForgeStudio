@@ -8,6 +8,7 @@ public class WhispGhostPatrol : MonoBehaviour
     [SerializeField] private GameObject[] _waypoints;
     [SerializeField] private float speed;
     [SerializeField] private float offset_swing = 0.5f;
+    [SerializeField] private AudioSource _audioSource;
     private WaypointTrigger _waypointTrigger;
     private int index = 0;
     private Vector3 TargetPos;
@@ -28,6 +29,7 @@ public class WhispGhostPatrol : MonoBehaviour
         if(_waypointTrigger.CanLock){
             if (_waypointTrigger.Triggered)
             {
+                _audioSource.Play();
                 _waypointTrigger.Lock();
                 index++;
                 if (index >= _waypoints.Length)
