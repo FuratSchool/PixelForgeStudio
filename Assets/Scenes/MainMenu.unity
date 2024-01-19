@@ -384,7 +384,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -4353}
+  m_AnchoredPosition: {x: 0, y: -5707}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &440478932
@@ -593,7 +593,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -2698}
+  m_AnchoredPosition: {x: 0, y: -4003}
   m_SizeDelta: {x: 1000, y: 1200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &631806314
@@ -1210,7 +1210,7 @@ MonoBehaviour:
           m_MethodName: set_sprite
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 21300000, guid: 66c17a7346d602546a12f5fe8e24f285,
+            m_ObjectArgument: {fileID: 21300000, guid: c3e65f7acb1bf6f409cba5cb451a1f48,
               type: 3}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
             m_IntArgument: 0
@@ -1227,7 +1227,7 @@ MonoBehaviour:
           m_MethodName: set_sprite
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 21300000, guid: b2e68485f6966064e9252f53f2f35261,
+            m_ObjectArgument: {fileID: 21300000, guid: a1122317a52135a46bec52ab6ed16f94,
               type: 3}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
             m_IntArgument: 0
@@ -1244,7 +1244,7 @@ MonoBehaviour:
           m_MethodName: set_sprite
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 21300000, guid: 66c17a7346d602546a12f5fe8e24f285,
+            m_ObjectArgument: {fileID: 21300000, guid: c3e65f7acb1bf6f409cba5cb451a1f48,
               type: 3}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
             m_IntArgument: 0
@@ -1261,7 +1261,7 @@ MonoBehaviour:
           m_MethodName: set_sprite
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 21300000, guid: b2e68485f6966064e9252f53f2f35261,
+            m_ObjectArgument: {fileID: 21300000, guid: a1122317a52135a46bec52ab6ed16f94,
               type: 3}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
             m_IntArgument: 0
@@ -1345,7 +1345,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b2e68485f6966064e9252f53f2f35261, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a1122317a52135a46bec52ab6ed16f94, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1397,8 +1397,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -81.37, y: -1138.69}
-  m_SizeDelta: {x: 700, y: 1000}
+  m_AnchoredPosition: {x: -278, y: -1707}
+  m_SizeDelta: {x: 700, y: 2246.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1017102920
 MonoBehaviour:
@@ -1426,17 +1426,31 @@ MonoBehaviour:
     Game Programmer
 
 
+
+
+
     Concept Art
 
 
-    Effects &
-    Shaders
+
+
+
+    Effects
+    & Shaders
+
 
 
     Level design
 
 
+
+
+
+
+
     Sound Design
+
+
 
 
     Animators
@@ -1445,8 +1459,13 @@ MonoBehaviour:
     Modelers
 
 
+
+
     Story
-    telling'
+    telling
+
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7cecb27306b90c84da42c6360b42afde, type: 2}
   m_sharedMaterial: {fileID: -6224534206717645769, guid: 7cecb27306b90c84da42c6360b42afde,
@@ -1933,8 +1952,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 278, y: -1138.69}
-  m_SizeDelta: {x: 700, y: 1000}
+  m_AnchoredPosition: {x: 450, y: -1707}
+  m_SizeDelta: {x: 700, y: 2246.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1212038297
 MonoBehaviour:
@@ -1956,31 +1975,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Mike
-
-
-    Mike
-
-
-    MIke
-
-
-    Mike
-
-
-    Mike
-
-
-    Mike
-
-
-    Mike
-
-
-    mike
-
-
-    mike'
+  m_text: "Mike Oudshoorn\n\nMike Oudshoorn\nTom Daamen\nFurat Dahsh\nIbrahim zoulali\n\nIra
+    Peeva\nRoeland Van der Velde\nDylan van Munsteren\nCeyda \xD6zkan\n\nMike Oudshoorn\nTim
+    van Daalen\n\nMike Oudshoorn\nIra Peeva\nTom Daamen\nRoeland Van der Velde\nCeyda
+    \xD6zkan\nFurat Dahsh\n\nIra Peeva\nTom Daamen\nRoeland Van der Velde\n\nTim
+    van Daalen\n\nTim van Daalen\nFurat Dahsh\nRoeland Van der Velde\n\nIra Peeva\nRoeland
+    Van der Velde"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7cecb27306b90c84da42c6360b42afde, type: 2}
   m_sharedMaterial: {fileID: -6224534206717645769, guid: 7cecb27306b90c84da42c6360b42afde,
@@ -2015,7 +2015,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 116.1
   m_fontStyle: 16
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -2719,7 +2719,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 30f5d8b738c1e514abf23cc7ed735f88, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 495af763b97a4c04ab13be6d4cb7a71f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2751,7 +2751,7 @@ MonoBehaviour:
           m_MethodName: set_sprite
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 21300000, guid: e0866a14e70e26348aaa146ba7550940,
+            m_ObjectArgument: {fileID: 21300000, guid: 495af763b97a4c04ab13be6d4cb7a71f,
               type: 3}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
             m_IntArgument: 0
@@ -2768,7 +2768,7 @@ MonoBehaviour:
           m_MethodName: set_sprite
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 21300000, guid: 30f5d8b738c1e514abf23cc7ed735f88,
+            m_ObjectArgument: {fileID: 21300000, guid: 99f531743ae47d242b4c8d1e20366dd5,
               type: 3}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
             m_IntArgument: 0
@@ -2883,7 +2883,7 @@ MonoBehaviour:
         m_MethodName: set_sprite
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 21300000, guid: 30f5d8b738c1e514abf23cc7ed735f88,
+          m_ObjectArgument: {fileID: 21300000, guid: 495af763b97a4c04ab13be6d4cb7a71f,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
           m_IntArgument: 0
@@ -3293,7 +3293,7 @@ MonoBehaviour:
           m_MethodName: set_sprite
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 21300000, guid: 098b03c568cc79246ae9a1025172f184,
+            m_ObjectArgument: {fileID: 21300000, guid: 653de7628df1c67469e92af66c1ec858,
               type: 3}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
             m_IntArgument: 0
@@ -3310,7 +3310,7 @@ MonoBehaviour:
           m_MethodName: set_sprite
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 21300000, guid: 5d2d9036448440f4e80695c3bac210c4,
+            m_ObjectArgument: {fileID: 21300000, guid: c5bcf6270a6c0ca44a9cef9ce3e69a6d,
               type: 3}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
             m_IntArgument: 0
@@ -3327,7 +3327,7 @@ MonoBehaviour:
           m_MethodName: set_sprite
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 21300000, guid: 098b03c568cc79246ae9a1025172f184,
+            m_ObjectArgument: {fileID: 21300000, guid: 653de7628df1c67469e92af66c1ec858,
               type: 3}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
             m_IntArgument: 0
@@ -3344,7 +3344,7 @@ MonoBehaviour:
           m_MethodName: set_sprite
           m_Mode: 2
           m_Arguments:
-            m_ObjectArgument: {fileID: 21300000, guid: 5d2d9036448440f4e80695c3bac210c4,
+            m_ObjectArgument: {fileID: 21300000, guid: c5bcf6270a6c0ca44a9cef9ce3e69a6d,
               type: 3}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
             m_IntArgument: 0
@@ -3425,7 +3425,7 @@ MonoBehaviour:
         m_MethodName: set_sprite
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 21300000, guid: 5d2d9036448440f4e80695c3bac210c4,
+          m_ObjectArgument: {fileID: 21300000, guid: c5bcf6270a6c0ca44a9cef9ce3e69a6d,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Sprite, UnityEngine
           m_IntArgument: 0
@@ -3453,7 +3453,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 5d2d9036448440f4e80695c3bac210c4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: c5bcf6270a6c0ca44a9cef9ce3e69a6d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
