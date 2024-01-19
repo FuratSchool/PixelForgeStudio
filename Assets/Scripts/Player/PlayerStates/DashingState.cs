@@ -9,7 +9,7 @@ public class DashingState : PlayerState
     {
         dashSound= PC.JumpingSound;
         dashSound.pitch = 0.6f;
-        dashSound.volume = 0.6f;
+        dashSound.volume = 0.2f;
         dashSound.Play();
         PlayerStateMachine.Animator.SetInteger("State", 4);
         PC.StartCoroutine(PC.Dash());
