@@ -27,6 +27,13 @@ public class IdleState : PlayerState
                 return;
             }
         }
+
+        if (PC.autoTrigger)
+        {
+            PlayerStateMachine.ChangeState(PC.TalkingState);
+            PC.autoTrigger = false;
+            return;
+        }
         if(PC.InteractableRange){
             _textActive = true;
             EnableInteractDialogueActive(PC.GetUIController(), PC.GetPlayerInput(),PC.InteractableText);

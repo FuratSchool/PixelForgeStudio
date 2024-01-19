@@ -17,7 +17,9 @@ public class DialogueManager : MonoBehaviour
     private Queue<string> sentences; // FIFO data structure
     private PlayerController PC;
     private bool isdelayTrigger;
-
+    
+    private int currentDialogueIndex = 0; 
+    private Dialogue dialogue;
     private void Start()
     {
         sentences = new Queue<string>();
@@ -47,6 +49,8 @@ public class DialogueManager : MonoBehaviour
                 else
                 {
                     DisplayNextSentence();
+                    currentDialogueIndex++;
+                    nameText.text = dialogue.name[currentDialogueIndex];
                 }
             }
         }
@@ -56,10 +60,11 @@ public class DialogueManager : MonoBehaviour
     {
         dialogueCanvas.SetActive(true); // show the canvas when dialogue starts
         dialogueActive = true;
-        //nameText.text = dialogue.name;
-        sentences.Clear();
+        nameText.text = dialogue.name[currentDialogueIndex];
+        sentences.Clear();  
         foreach (var sentence in dialogue.sentences) sentences.Enqueue(sentence);
         DisplayNextSentence();
+        this.dialogue = dialogue;
     }
 
     public void DisplayNextSentence()

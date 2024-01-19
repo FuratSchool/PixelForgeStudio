@@ -105,6 +105,8 @@ public class PlayerController : PlayerStateMachine
     public bool InDialogeTriggerZone { get; set; }
     public bool DialogueActive { get; set; }
     public DialogueTrigger NPC { get; set; }
+    public bool autoTrigger { get; set; } = false; // allows dialogue to start without player interaction
+
     
     [Header("footprints")]
     public float footstepIntervalWalking = 0.3f;
