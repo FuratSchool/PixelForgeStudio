@@ -18,7 +18,8 @@ public class Artifact : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            GetComponent<AudioSource>().Play();
+            var sound = GetComponentInParent<AudioSource>();
+            sound.Play();
             _boardController.AddItemToBoard(_ArtefactModel);
             Destroy(gameObject);
         }

@@ -93,7 +93,7 @@ public class PauseMenu : MonoBehaviour
         
         if (isPaused && !isOptionsOpen)
         {
-            if (EventSystem.current.currentSelectedGameObject == null &&
+             if (EventSystem.current.currentSelectedGameObject == null &&
                 _player.GetComponent<PlayerInput>().currentControlScheme.Equals("Controller"))
             {
                 EventSystem.current.SetSelectedGameObject(firstSelectedButton);
