@@ -8,12 +8,13 @@ public class DeathState : PlayerState
     {
         base.EnterState();
         PC.source.PlayOneShot(PC._deathSound);
-        PC.GetRigidbody().isKinematic = true;
+        
     }
 
     public override void UpdateState()
     {
-        
+        if(PC.source.isPlaying) return;
+        PC.GetRigidbody().isKinematic = true;
         var spawnPoint = PC.GetComponent<PlayerStatus>().GetSpawnPoint();
         PC.transform.position = spawnPoint;
             PC.touchedWater = false;

@@ -41,6 +41,7 @@ public class DialogueManager : MonoBehaviour
                 
                 if (isTyping)
                 {
+                    GetComponent<AudioSource>().Stop();
                     StopAllCoroutines();
                     StartCoroutine(Wait(0.3f));
                     dialogueText.text = currentSentence;
@@ -70,6 +71,7 @@ public class DialogueManager : MonoBehaviour
 
     public void DisplayNextSentence()
     {
+        GetComponent<AudioSource>().Play();
         if (sentences.Count == 0)
         {
             EndDialogue();
@@ -90,7 +92,7 @@ public class DialogueManager : MonoBehaviour
             dialogueText.text += letter;
             yield return null;
         }
-
+        GetComponent<AudioSource>().Stop();
         isTyping = false;
     }
     
@@ -109,6 +111,7 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
+        GetComponent<AudioSource>().Stop();
         dialogueCanvas.SetActive(false); // hide the canvas when dialogue ends
         FindObjectOfType<PlayerController>().DialogueActive = false;
     }

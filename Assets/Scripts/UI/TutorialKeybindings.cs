@@ -120,7 +120,6 @@ public class TutorialKeybindings : MonoBehaviour
     {
         if (!collider.gameObject.CompareTag("Player")) return;
         if (Landing) return;
-        GetComponent<AudioSource>().Play();
         Landing = true;
     }
 }
