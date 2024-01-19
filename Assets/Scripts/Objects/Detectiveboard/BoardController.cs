@@ -116,7 +116,7 @@ public class BoardController : MonoBehaviour
     {
         if (_currentItemsOnBoard >= MaxItemsOnBoard)
         {
-            Debug.Log("Board is full");
+            Debug.Log("Boarxd is full");
             return null;
         }
         else
