@@ -14,6 +14,7 @@ public class EmoteState : PlayerState
         {
             _chair = PC.InstantiateFunc(PC.chair, GameObject.Find("ChairSpawnPoint").transform.position,
                 Quaternion.identity);
+            _chair.transform.parent = PC.transform;
             _chair.transform.Rotate((_chair.transform.rotation.x - 90), PC.transform.localRotation.eulerAngles.y, 0);
             PC.WaitSecs(5);
         }else

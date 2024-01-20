@@ -281,6 +281,7 @@ public class PlayerController : PlayerStateMachine
     private void OnSwing(InputValue inputValue)
     {
         SwingPressed = Convert.ToBoolean(inputValue.Get<float>());
+        Debug.Log(SwingPressed);
     }
 
     public void OnInteract(InputValue inputValue)
