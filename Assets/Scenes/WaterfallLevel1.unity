@@ -63389,9 +63389,59 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2740200232097415735, guid: d9c6a12f22541a14eb3eb6df2e83a221,
         type: 3}
+      propertyPath: _deathSound
+      value: 
+      objectReference: {fileID: 8300000, guid: eddf25005270f8e4ab23f46ecfb67b42, type: 3}
+    - target: {fileID: 2740200232097415735, guid: d9c6a12f22541a14eb3eb6df2e83a221,
+        type: 3}
       propertyPath: swingDistance
       value: 21
       objectReference: {fileID: 0}
+    - target: {fileID: 2740200232097415735, guid: d9c6a12f22541a14eb3eb6df2e83a221,
+        type: 3}
+      propertyPath: _jumpSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 1fce627902ba3a34e9b46adcf23a607d, type: 3}
+    - target: {fileID: 2740200232097415735, guid: d9c6a12f22541a14eb3eb6df2e83a221,
+        type: 3}
+      propertyPath: _jumpSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: a710dcdb9963be84d9b5fd702e0254f6, type: 3}
+    - target: {fileID: 2740200232097415735, guid: d9c6a12f22541a14eb3eb6df2e83a221,
+        type: 3}
+      propertyPath: _jumpSounds.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: d7d23158c6d406441a0a3439b374f677, type: 3}
+    - target: {fileID: 2740200232097415735, guid: d9c6a12f22541a14eb3eb6df2e83a221,
+        type: 3}
+      propertyPath: _jumpSounds.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: e798b4e1da841834093a18f9d1255309, type: 3}
+    - target: {fileID: 2740200232097415735, guid: d9c6a12f22541a14eb3eb6df2e83a221,
+        type: 3}
+      propertyPath: _jumpSounds.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: 339807fd836c80440aa0a8ba711cc855, type: 3}
+    - target: {fileID: 2740200232097415735, guid: d9c6a12f22541a14eb3eb6df2e83a221,
+        type: 3}
+      propertyPath: _runningSounds.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: ce2868e6a6cbfed488f044d33b885384, type: 3}
+    - target: {fileID: 2740200232097415735, guid: d9c6a12f22541a14eb3eb6df2e83a221,
+        type: 3}
+      propertyPath: _runningSounds.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: cd3ed622761af774b968e6908f6e13d1, type: 3}
+    - target: {fileID: 2740200232097415735, guid: d9c6a12f22541a14eb3eb6df2e83a221,
+        type: 3}
+      propertyPath: _runningSounds.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 3a4550b6798856345a7c7fdef39bd450, type: 3}
+    - target: {fileID: 2740200232097415735, guid: d9c6a12f22541a14eb3eb6df2e83a221,
+        type: 3}
+      propertyPath: _runningSounds.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: c388cb7433535d046a51730395496d91, type: 3}
     - target: {fileID: 4521968622420406398, guid: d9c6a12f22541a14eb3eb6df2e83a221,
         type: 3}
       propertyPath: m_Name
