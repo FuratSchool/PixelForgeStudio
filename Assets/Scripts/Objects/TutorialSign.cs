@@ -12,6 +12,7 @@ public class TutorialSign : MonoBehaviour
     private PlayerController _playerController;
     private PauseMenu _pauseMenu;
     private bool _signActive;
+    [SerializeField] private bool PlaySound;
     
     private void Start()
     {
@@ -20,6 +21,7 @@ public class TutorialSign : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
+        if(PlaySound) GetComponent<AudioSource>().Play();
         if (other.gameObject.CompareTag("Player"))
         {
             _inRange = true;

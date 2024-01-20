@@ -28,8 +28,8 @@ public class TalkingState : PlayerState
         PC.StartCoroutine(PC.KeyDebounce());
         PC.NPC.hasBeenTalkedTo = true;
         PC.SpacePressed = false;
+        PC.NPC.autoTrigger = false;
         if(PC.NPC.canTalkAgain)
             PC.NPC.hasBeenTalkedTo = false;
-
     }
 }

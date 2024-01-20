@@ -17,7 +17,9 @@ public class DialogueManager : MonoBehaviour
     private Queue<string> sentences; // FIFO data structure
     private PlayerController PC;
     private bool isdelayTrigger;
-
+    
+    private int currentDialogueIndex = 0; 
+    private Dialogue dialogue;
     private void Start()
     {
         sentences = new Queue<string>();
@@ -39,6 +41,7 @@ public class DialogueManager : MonoBehaviour
                 
                 if (isTyping)
                 {
+                    GetComponent<AudioSource>().Stop();
                     StopAllCoroutines();
                     StartCoroutine(Wait(0.3f));
                     dialogueText.text = currentSentence;
@@ -47,6 +50,9 @@ public class DialogueManager : MonoBehaviour
                 else
                 {
                     DisplayNextSentence();
+                    if(currentDialogueIndex < dialogue.name.Length -1)
+                        currentDialogueIndex++;
+                    nameText.text = dialogue.name[currentDialogueIndex];
                 }
             }
         }
@@ -54,16 +60,19 @@ public class DialogueManager : MonoBehaviour
 
     public void StartDialogue(Dialogue dialogue)
     {
+        currentDialogueIndex = 0;
         dialogueCanvas.SetActive(true); // show the canvas when dialogue starts
         dialogueActive = true;
-        //nameText.text = dialogue.name;
-        sentences.Clear();
+        nameText.text = dialogue.name[currentDialogueIndex];
+        sentences.Clear();  
         foreach (var sentence in dialogue.sentences) sentences.Enqueue(sentence);
         DisplayNextSentence();
+        this.dialogue = dialogue;
     }
 
     public void DisplayNextSentence()
     {
+        GetComponent<AudioSource>().Play();
         if (sentences.Count == 0)
         {
             EndDialogue();
@@ -84,7 +93,7 @@ public class DialogueManager : MonoBehaviour
             dialogueText.text += letter;
             yield return null;
         }
-
+        GetComponent<AudioSource>().Stop();
         isTyping = false;
     }
     
@@ -103,6 +112,7 @@ public class DialogueManager : MonoBehaviour
 
     public void EndDialogue()
     {
+        GetComponent<AudioSource>().Stop();
         dialogueCanvas.SetActive(false); // hide the canvas when dialogue ends
         FindObjectOfType<PlayerController>().DialogueActive = false;
     }

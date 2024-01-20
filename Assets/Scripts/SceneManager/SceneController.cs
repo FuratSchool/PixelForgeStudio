@@ -11,6 +11,8 @@ public class SceneController : MonoBehaviour
 {
     private static bool spawned = false;
     
+    public int coins;
+    public bool FromFirstLevel = false;
     public InputActionAsset act;
     public AudioMixer audioMixer;
     private string ActiveSceneName;

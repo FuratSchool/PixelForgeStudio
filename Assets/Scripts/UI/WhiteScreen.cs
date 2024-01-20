@@ -15,7 +15,9 @@ public class WhiteScreen : MonoBehaviour
     [SerializeField] private float FadeIteration = .01f;
     [SerializeField] private bool InRange = false;
     [SerializeField] public bool lockMovement = false;
-    
+
+    [SerializeField] private GameObject npc_woman;
+    [SerializeField] private GameObject ParkourToWoman;
     [SerializeField] private bool _ChangeScene = false;
     [SerializeField] private string _Scene;
     public Image canvas;
@@ -23,6 +25,7 @@ public class WhiteScreen : MonoBehaviour
     private GameObject player;
     private Vector3 _Pos;
     private PlayerController _playerController;
+    private SceneController _sceneController;
     private bool _fadeInStarted;
     private bool _fadeInFinished;
     private bool _fadeOutStarted;
@@ -34,6 +37,7 @@ public class WhiteScreen : MonoBehaviour
     // Start is called before the first frame update
     private void OnTriggerEnter(Collider other)
     {
+        if(_sceneController.FromFirstLevel) return;
         if (other.CompareTag("Player"))
         {
             _audioSource.Play();
@@ -42,7 +46,6 @@ public class WhiteScreen : MonoBehaviour
             Debug.Log(player);
             InRange = true;
         }
-        
     }
 
     private void OnTriggerExit(Collider other)
@@ -51,15 +54,22 @@ public class WhiteScreen : MonoBehaviour
         {
             InRange = false;
         }
+
+        
     }
 
     private void Start()
     {
         _playerController = FindObjectOfType<PlayerController>();
         player = GameObject.FindObjectOfType<PlayerController>().gameObject;
-        
-            _Pos = TeleportPosition.transform.position;
-        
+        _Pos = TeleportPosition.transform.position;
+        _sceneController = FindObjectOfType<SceneController>();
+        if (_sceneController.FromFirstLevel)
+        {
+            _playerController.transform.position = transform.position;
+            npc_woman.SetActive(false);
+            ParkourToWoman.SetActive(false);
+        }
     }
 
     private void Update()

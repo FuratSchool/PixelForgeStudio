@@ -20,6 +20,7 @@ public class CinamaticShot : MonoBehaviour
     [SerializeField] private GameObject Campfire;
     [SerializeField] private GameObject Chair;
     [SerializeField] private GameObject NPC;
+    [SerializeField] private AudioClip _audioClip;
     private float timePassed;
     public bool Once = false;
     private bool FadeOut = false;
@@ -48,13 +49,18 @@ public class CinamaticShot : MonoBehaviour
             if(other.transform.parent != null) return;
             if (!Once && FirstCinematic)
             {
+                GetComponent<AudioSource>().Play();
+                GameObject.Find("Game Manager").GetComponent<AudioSource>().Stop();
                 Once = true;
                 StartFade();
             }
             else if(!Once && SecondCinematic)
             {
+                GameObject.Find("Game Manager").GetComponent<AudioSource>().Stop();
+                GetComponent<AudioSource>().PlayDelayed(0.5f);
                 if(!NPC.GetComponent<DialogueTrigger>().hasBeenTalkedTo) return;
                 _playerController.isTransitioning = true;
+                
                 Camera.main.GetComponent<CinemachineBrain>().enabled = false;
                 StartCoroutine(Wait(PlayTime-1));
                 CinematicStarted = true;
@@ -125,6 +131,7 @@ public class CinamaticShot : MonoBehaviour
                 }
                 else
                 {
+                    GameObject.Find("Game Manager").GetComponent<AudioSource>().Play();
                     EnableCave();
                     FadeOut = false;
                     StartCinematic();

@@ -43,6 +43,7 @@ public class CutsceneScript : MonoBehaviour
         GetComponentInChildren<RawImage>().texture = loopRenderTexture;
         LoopVideoPlayer.Play();
         IntroVideoPlayer.time = 0;
+        IntroVideoPlayer.enabled = false;
         _MainMenu.SetActive(true);
         _ended = true;
         var buttons = FindObjectsOfType<Button>();
