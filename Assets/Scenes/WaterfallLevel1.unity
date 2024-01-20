@@ -1201,7 +1201,7 @@ Transform:
   m_GameObject: {fileID: 23677521}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 88.6, y: 35.14, z: 622.28}
+  m_LocalPosition: {x: -372.77, y: -17.6, z: 973.09}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -40560,6 +40560,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 865f7542092524d418d40924c5d5129f,
         type: 2}
+    - target: {fileID: 3377147601046667868, guid: 498f6efba4d57a94bad67c86a4ec515e,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3377147601046667868, guid: 498f6efba4d57a94bad67c86a4ec515e,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3377147601046667868, guid: 498f6efba4d57a94bad67c86a4ec515e,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3377147601046667868, guid: 498f6efba4d57a94bad67c86a4ec515e,
         type: 3}
       propertyPath: m_hasFontAssetChanged
@@ -84980,17 +84995,17 @@ PrefabInstance:
     - target: {fileID: 2565389217574949188, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.48785475
+      value: -0.48785472
       objectReference: {fileID: 0}
     - target: {fileID: 2565389217574949188, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.18617523
+      value: -0.18617524
       objectReference: {fileID: 0}
     - target: {fileID: 2565389217574949188, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7967916
+      value: 0.7967917
       objectReference: {fileID: 0}
     - target: {fileID: 2565389217574949188, guid: ec90d8a0462c69d4bb32642e6a121647,
         type: 3}
