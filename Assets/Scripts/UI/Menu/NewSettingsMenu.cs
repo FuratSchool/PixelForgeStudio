@@ -129,7 +129,8 @@ public class NewSettingsMenu : MonoBehaviour
     {
         if (!InputDisable)
         {
-            _input.actions.actionMaps[0].Enable();
+            if(_input != null)
+                _input.actions.actionMaps[0].Enable();
             InputDisable = false;
             sceneController.Settings.rebinds = _input.actions.SaveBindingOverridesAsJson();
             activeMenu = startMenu;
