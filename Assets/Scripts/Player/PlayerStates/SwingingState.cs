@@ -5,26 +5,23 @@ using UnityEngine.InputSystem;
 public class SwingingState : PlayerState
 {
     public SwingingState (PlayerController pc) : base("SwingingState", pc) {PC = (PlayerController)this.PlayerStateMachine;}
+    private bool hasFinishedInit = false;
     public override void EnterState()
     {
+        hasFinishedInit = false;
         base.EnterState();
         PC.source.PlayOneShot(PC._scytheSwingSounds);
         PlayerStateMachine.Animator.SetInteger("State", 5);
-        if (!PC._isSwinging && PC.inSwingingRange)
-        {
-            Swing();
-        }
-
+        Debug.Log(PC._isSwinging.ToString() + PC.inSwingingRange.ToString() + PC.SwingPressed.ToString() + PC._canSwing.ToString());
+        Swing();
+        hasFinishedInit = true;
     }
     public override void FixedUpdateState() { }
     public override void UpdateState()
     {
+        if(!hasFinishedInit) return;
         base.UpdateState();
-        if (!PC.SwingPressed && PC._isSwinging)
-        {
-            PC.EndSwing();
-        }
-        else if (!PC._isSwinging)
+        if (!PC._isSwinging || !PC.SwingPressed)
             PlayerStateMachine.ChangeState(PC.FallingState);
     }
 
@@ -44,26 +41,21 @@ public class SwingingState : PlayerState
     }
 
     public override void ExitState() {
-        PC.StopCoroutine(TimedSwing());
+        PC.StopAllCoroutines();
+        PC.EndSwing();
         PC.ExitSwing = true;
      }
 
     private void Swing()
     {
-        if (PC._canSwing)
-        {
-            PC._swingpoint = PC.SwingableObjectGAME.transform.position;
-            if(PC.SwingPressed)
-            {
-                PC.StartCoroutine(TimedSwing());
+        PC._swingpoint = PC.SwingableObjectGAME.transform.position;
+        PC.StartCoroutine(TimedSwing());
 
-                PC.SwingableObjectPos = PC.SwingableObjectGAME.transform.gameObject.transform.position;
-                MakeJoint(PC._swingpoint);
-                PC.lr.positionCount = 2;
-                PC._isSwinging = true;
-                PC._canSwing = false;
-            }
-        }
+        PC.SwingableObjectPos = PC.SwingableObjectGAME.transform.gameObject.transform.position;
+        MakeJoint(PC._swingpoint);
+        PC.lr.positionCount = 2;
+        PC._isSwinging = true;
+        PC._canSwing = false;
     }
     
     private void MakeJoint(Vector3 hit)

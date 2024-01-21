@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class DashingState : PlayerState
 {
@@ -7,6 +8,8 @@ public class DashingState : PlayerState
     public DashingState (PlayerController pc) : base("DashingState", pc) {PC = (PlayerController)this.PlayerStateMachine;}
     public override void EnterState()
     {
+        if(Gamepad.current != null)
+            Gamepad.current.SetMotorSpeeds(PC.MotorRumbleLowFreq,PC.MotorRumbleHighFreq);
         dashSound= PC.JumpingSound;
         dashSound.pitch = 0.6f;
         dashSound.volume = 0.2f;
@@ -34,6 +37,8 @@ public class DashingState : PlayerState
 
     public override void ExitState()
     {
+        if(Gamepad.current != null)
+            Gamepad.current.SetMotorSpeeds(0,0);
         dashSound.pitch = 1f;
         dashSound.volume = 1f;
     }

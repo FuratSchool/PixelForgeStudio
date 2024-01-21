@@ -64,6 +64,8 @@ public class PlayerController : PlayerStateMachine
     [SerializeField] public float dashingCooldown = 2f;
     [SerializeField] private float dashingPower = 30f;
     [SerializeField] private float dashEndTime = .35f;
+    [SerializeField] public float MotorRumbleLowFreq = 0.1f;
+    [SerializeField] public float MotorRumbleHighFreq = 0.25f;
     public bool isDashing;
     private Vector3 _dashDirection;
 

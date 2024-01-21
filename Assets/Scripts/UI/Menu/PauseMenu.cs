@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -104,9 +105,11 @@ public class PauseMenu : MonoBehaviour
     public void PauseGame()
     {
         pauseMenu.SetActive(true);
+        FindObjectOfType<CinemachineFreeLook>().enabled = false;
         _player.GetComponent<PlayerInput>().enabled = false;
         optionsMenu.GetComponent<PlayerInput>().enabled = true;
         FindObjectOfType<UIController>().SetCoinAlpha(1);
+        
         EventSystem.current.SetSelectedGameObject(null);
         EventSystem.current.SetSelectedGameObject(firstSelectedButton);
         Time.timeScale = 0f; //stops the ingame time
@@ -116,6 +119,7 @@ public class PauseMenu : MonoBehaviour
 
     public void ResumeGame()
     {
+        FindObjectOfType<CinemachineFreeLook>().enabled = true;
         _player.GetComponent<PlayerInput>().enabled = true;
         optionsMenu.GetComponent<PlayerInput>().enabled = false;
         FindObjectOfType<UIController>().SetCoinAlpha(0);

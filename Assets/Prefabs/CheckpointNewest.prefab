@@ -422,7 +422,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 75fc8ba9c42ac47c9be094851611257f,
         type: 3}
       propertyPath: m_Name
-      value: Checkpoint
+      value: CheckpointNewest
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 75fc8ba9c42ac47c9be094851611257f,
         type: 3}
@@ -529,7 +529,7 @@ AudioSource:
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 98a68ebc720aef345b1761a90b35dce4, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.457
   m_Pitch: 1
   Loop: 0
   Mute: 0
